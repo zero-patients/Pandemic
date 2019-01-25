@@ -32,7 +32,6 @@ async function updateCount() {
 const App = () => {
   return (
     <div>
-      <Navbar />
       <Routes />
       <button onClick={updateCount}>Click</button>
     </div>
