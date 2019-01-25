@@ -1,18 +1,24 @@
-const Sequelize = require('sequelize')
-const pkg = require('../../package.json')
+const firebase = require('firebase')
+// Required for side-effects
+require('firebase/firestore')
 
-const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
-
-const db = new Sequelize(
-  process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`,
-  {
-    logging: false
-  }
-)
-module.exports = db
-
-// This is a global Mocha hook used for resource cleanup.
-// Otherwise, Mocha v4+ does not exit after tests.
-if (process.env.NODE_ENV === 'test') {
-  after('close database connection', () => db.close())
+const config = {
+  apiKey: 'AIzaSyC_be_HurO66NNFNffkvrtOUSwoh3g20AY',
+  authDomain: 'pandemic-clone.firebaseapp.com',
+  databaseURL: 'https://pandemic-clone.firebaseio.com',
+  projectId: 'pandemic-clone',
+  storageBucket: 'pandemic-clone.appspot.com',
+  messagingSenderId: '414108898313'
 }
+
+firebase.initializeApp(config)
+
+// Initialize Cloud Firestore through Firebase
+const db = firebase.firestore()
+
+// Disable deprecated features
+db.settings({
+  timestampsInSnapshots: true
+})
+
+module.exports = db
