@@ -1,6 +1,5 @@
 import React from 'react'
 
-import {Navbar} from './components'
 import Routes from './routes'
 import db from '../server/db'
 
@@ -33,7 +32,9 @@ const App = () => {
   return (
     <div>
       <Routes />
-      <button onClick={updateCount}>Click</button>
+      <button type="button" onClick={updateCount}>
+        Click
+      </button>
     </div>
   )
 }
