@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Board = () => {
-  return <p>The Board</p>
+  return <canvas className="board" width={1920} height={1080} />
 }
 
 export default Board

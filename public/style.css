@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  padding: 0px;
+  margin: 0px;
 }
 
 a {
@@ -18,4 +20,8 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.board {
+  background-color: royalblue;
 }
