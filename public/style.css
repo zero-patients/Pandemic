@@ -23,5 +23,7 @@ form div {
 }
 
 .board {
-  background-color: royalblue;
+  /* background-color: royalblue; */
+  width: 1920;
+  height: 1080;
 }

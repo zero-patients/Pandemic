@@ -10,17 +10,17 @@ game.onSnapshot(doc => {
   // document.querySelector('#counter').innerHTML = 'count: ' + data.count
 })
 
-const googleLogin = async function() {
-  try {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    const result = await firebase.auth().signInWithPopup(provider)
-    const user = result.user
-    document.write(`Hello ${user.displayName}`)
-    console.log('user', user)
-  } catch (error) {
-    console.log(error)
-  }
-}
+// const googleLogin = async function() {
+//   try {
+//     const provider = new firebase.auth.GoogleAuthProvider()
+//     const result = await firebase.auth().signInWithPopup(provider)
+//     const user = result.user
+//     document.write(`Hello ${user.displayName}`)
+//     console.log('user', user)
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
 
 async function updateCount() {
   const doc = await game.get()
