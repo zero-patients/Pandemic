@@ -171,6 +171,46 @@ class Board extends React.Component {
         }
       }
     }
+
+    const centerX = Math.floor(height / 2)
+    const centerY = Math.floor(width / 2)
+    const radius = 10
+
+    //  Blue Player
+    oCTX.beginPath()
+    oCTX.arc(centerX + 800, centerY - 500, radius, 0, 2 * Math.PI)
+    oCTX.fillStyle = 'royalblue'
+    oCTX.fill()
+    oCTX.lineWidth = 3
+    oCTX.strokeStyle = 'black'
+    oCTX.stroke()
+
+    //  Yellow Player
+    oCTX.beginPath()
+    oCTX.arc(centerX - 200, centerY - 500, radius, 0, 2 * Math.PI)
+    oCTX.fillStyle = 'gold'
+    oCTX.fill()
+    oCTX.lineWidth = 3
+    oCTX.strokeStyle = 'black'
+    oCTX.stroke()
+
+    //  Red Player
+    oCTX.beginPath()
+    oCTX.arc(centerX + 550, centerY - 250, radius, 0, 2 * Math.PI)
+    oCTX.fillStyle = 'crimson'
+    oCTX.fill()
+    oCTX.lineWidth = 3
+    oCTX.strokeStyle = 'black'
+    oCTX.stroke()
+
+    //  Green Player
+    oCTX.beginPath()
+    oCTX.arc(centerX, centerY, radius, 0, 2 * Math.PI)
+    oCTX.fillStyle = 'green'
+    oCTX.fill()
+    oCTX.lineWidth = 3
+    oCTX.strokeStyle = 'black'
+    oCTX.stroke()
   }
 
   render() {
