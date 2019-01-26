@@ -182,7 +182,7 @@ class Board extends React.Component {
     oCTX.fillStyle = 'royalblue'
     oCTX.fill()
     oCTX.lineWidth = 3
-    oCTX.strokeStyle = 'black'
+    oCTX.strokeStyle = 'blue'
     oCTX.stroke()
 
     //  Yellow Player
@@ -191,7 +191,7 @@ class Board extends React.Component {
     oCTX.fillStyle = 'gold'
     oCTX.fill()
     oCTX.lineWidth = 3
-    oCTX.strokeStyle = 'black'
+    oCTX.strokeStyle = 'orange'
     oCTX.stroke()
 
     //  Red Player
@@ -209,7 +209,7 @@ class Board extends React.Component {
     oCTX.fillStyle = 'green'
     oCTX.fill()
     oCTX.lineWidth = 3
-    oCTX.strokeStyle = 'black'
+    oCTX.strokeStyle = 'greenyellow'
     oCTX.stroke()
   }
 
