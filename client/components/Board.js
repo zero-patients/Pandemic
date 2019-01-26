@@ -12,8 +12,6 @@ class Board extends React.Component {
 
   componentDidMount() {
     const canvas = this.canvasRef.current
-    console.log(canvas.style)
-    console.log(worldMap)
     canvas.style.backgroundColor = '#87cefa'
     canvas.style.color = '#fffaf0'
     const padding = 20
