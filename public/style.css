@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  padding: 0px;
+  margin: 0px;
 }
 
 a {
@@ -18,4 +20,30 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.board {
+  /* background-color: royalblue; */
+  width: 1920;
+  height: 1080;
+}
+
+.player1 {
+  height: 100vh;
+  background-color: royalblue;
+}
+
+.player2 {
+  height: 100vh;
+  background-color: gold;
+}
+
+.player3 {
+  height: 100vh;
+  background-color: crimson;
+}
+
+.player4 {
+  height: 100vh;
+  background-color: green;
 }
