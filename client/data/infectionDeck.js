@@ -49,4 +49,4 @@ const infectionDeck = [
   'Washington'
 ]
 
-export default infectionDeck
+module.exports = infectionDeck
