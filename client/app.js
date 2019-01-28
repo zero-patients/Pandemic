@@ -32,9 +32,11 @@ const App = () => {
   return (
     <div>
       <Routes />
-      {/* <button type="button" onClick={updateCount}>
-      //   Click
-  // </button>*/}
+      {/*
+        <button type="button" onClick={updateCount}>
+          Click
+        </button>
+      */}
     </div>
   )
 }
