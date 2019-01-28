@@ -1,8 +1,8 @@
 /* eslint-disable complexity */
 /* eslint-disable max-statements */
 import React from 'react'
-import worldMap from './map.js'
-import mapDetails from './mapDetails'
+import worldMap from '../data/map.js'
+import mapDetails from '../data/mapDetails'
 import PlayerPawn from './PlayerPawn'
 
 class Board extends React.Component {
@@ -181,8 +181,8 @@ class Board extends React.Component {
           id="board"
           className="board"
           ref={this.canvasRef}
-          width={1920}
-          height={1080}
+          width={1916}
+          height={1076}
         />
         <PlayerPawn player={1} />
         <PlayerPawn player={2} />
