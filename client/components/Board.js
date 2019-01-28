@@ -3,7 +3,7 @@
 import React from 'react'
 import worldMap from './map.js'
 import mapDetails from './mapDetails'
-import db from '../../server/db'
+import PlayerPawn from './PlayerPawn'
 
 class Board extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class Board extends React.Component {
 
   componentDidMount() {
     const canvas = this.canvasRef.current
-    const game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
+    // const game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
 
     canvas.style.backgroundColor = '#87cefa'
     canvas.style.color = '#fffaf0'
@@ -172,36 +172,23 @@ class Board extends React.Component {
         }
       }
     }
-
-    const radius = 10
-    const lineWidth = 3
-
-    game.onSnapshot(doc => {
-      const data = doc.data()
-
-      const {player1Info, player2Info, player3Info, player4Info} = data
-      ;[player1Info, player2Info, player3Info, player4Info].forEach(player => {
-        oCTX.beginPath()
-        oCTX.arc(player.location.X, player.location.Y, radius, 0, 2 * Math.PI)
-        oCTX.fillStyle = player.fillStyle
-        oCTX.fill()
-        oCTX.lineWidth = lineWidth
-        oCTX.strokeStyle = player.strokeStyle
-        oCTX.stroke()
-      })
-    })
   }
 
   render() {
-    // WorldMap({id: 'board', padding: 0})/
     return (
-      <canvas
-        id="board"
-        className="board"
-        ref={this.canvasRef}
-        width={1920}
-        height={1080}
-      />
+      <div>
+        <canvas
+          id="board"
+          className="board"
+          ref={this.canvasRef}
+          width={1920}
+          height={1080}
+        />
+        <PlayerPawn player={1} />
+        <PlayerPawn player={2} />
+        <PlayerPawn player={3} />
+        <PlayerPawn player={4} />
+      </div>
     )
   }
 }
