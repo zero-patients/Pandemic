@@ -18,7 +18,7 @@ const db = firebase.firestore()
 
 // Disable deprecated features
 db.settings({
-  // timestampsInSnapshots: true
+  timestampsInSnapshots: true
 })
 
 module.exports = db
