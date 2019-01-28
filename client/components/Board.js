@@ -4,6 +4,10 @@ import React from 'react'
 import worldMap from '../data/map.js'
 import mapDetails from '../data/mapDetails'
 import PlayerPawn from './PlayerPawn'
+import cities from '../data/cities'
+import CityMarker from './CityMarker'
+
+const locations = Object.keys(cities)
 
 class Board extends React.Component {
   constructor(props) {
@@ -184,6 +188,14 @@ class Board extends React.Component {
           width={1916}
           height={1076}
         />
+        {locations.map((elem, idx) => {
+          return (
+            <div key={idx}>
+              <CityMarker name={elem} city={cities[elem]} />
+            </div>
+          )
+        })}
+
         <PlayerPawn player={1} />
         <PlayerPawn player={2} />
         <PlayerPawn player={3} />
