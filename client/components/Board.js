@@ -17,7 +17,6 @@ class Board extends React.Component {
 
   componentDidMount() {
     const canvas = this.canvasRef.current
-    // const game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
 
     canvas.style.backgroundColor = '#87cefa'
     canvas.style.color = '#fffaf0'
@@ -96,7 +95,7 @@ class Board extends React.Component {
     // draw "details" countries
     for (let sCountry in oSettings.detail) {
       if (oWorldMap[sCountry]) {
-        Draw(sCountry, oSettings.detail[sCountry])
+        // Draw(sCountry, oSettings.detail[sCountry])
       }
     }
 
