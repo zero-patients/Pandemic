@@ -30,7 +30,7 @@ class Routes extends Component {
         {/* Displays our Login component as a fallback */}
         {/*<Route component={Login} />*/}
         <Route path="/board" component={Board} />
-        <Route path="/controller" component={Controller} />
+        <Route path="/controller/:userId" component={Controller} />
       </Switch>
     )
   }

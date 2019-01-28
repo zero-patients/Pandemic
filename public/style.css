@@ -27,3 +27,23 @@ form div {
   width: 1920;
   height: 1080;
 }
+
+.player1 {
+  height: 100vh;
+  background-color: royalblue;
+}
+
+.player2 {
+  height: 100vh;
+  background-color: gold;
+}
+
+.player3 {
+  height: 100vh;
+  background-color: crimson;
+}
+
+.player4 {
+  height: 100vh;
+  background-color: green;
+}
