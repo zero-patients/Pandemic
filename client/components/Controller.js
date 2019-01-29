@@ -18,21 +18,35 @@ const Controller = props => {
   const goToAsia = () => {
     game.set({[`${style}Info`]: {location: {X: 1500, Y: 515}}}, {merge: true})
   }
-
+  const isTurn = true
+  const remainingMoves = 4
   return (
-    <div className={style}>
-      <button type="button" onClick={() => goToEurope()}>
-        Europe
-      </button>
-      <button type="button" onClick={() => goToAmerica()}>
-        America
-      </button>
-      <button type="button" onClick={() => goToSouthAmerica()}>
-        South America
-      </button>
-      <button type="button" onClick={() => goToAsia()}>
-        Asia
-      </button>
+    <div id="controller" className={style}>
+      {isTurn && remainingMoves > 0 ? (
+        <div className="controllerBookend">
+          <p className="controllerPanel">
+            Its your turn, the world is counting on you. You have{' '}
+            {remainingMoves} moves left. CHoose carefully.
+          </p>
+        </div>
+      ) : (
+        <div className="controllerBookend">
+          <p className="controllerPanel">
+            Its not your turn, be a good teammate
+          </p>
+        </div>
+      )}
+
+      <div className="controllerMiddle" />
+
+      <div className="controllerBookend">
+        <button className="controllerPanel"> MOVE</button>
+        <button className="controllerPanel"> HAND</button>
+        <button className="controllerPanel"> BUILD</button>
+        <button className="controllerPanel"> CURE</button>
+        <button className="controllerPanel"> EVENT</button>
+        <button className="controllerPanel"> SPECIALS</button>
+      </div>
     </div>
   )
 }

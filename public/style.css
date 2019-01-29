@@ -111,3 +111,33 @@ form div {
   -o-transform: rotate(45deg) scale(0.8);
   transform: rotate(45deg) scale(0.8);
 }
+
+#controller {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.controllerBookend {
+  display: flex;
+  width: 100vw;
+  height: 15vh;
+  flex-direction: row;
+}
+
+.controllerMiddle {
+  display: flex;
+  width: 100vw;
+  height: 70vh;
+  flex-direction: row;
+}
+
+.controllerPanel {
+  display: flex;
+  flex-grow: 1;
+  border-width: 2px;
+  border-style: solid;
+  border-color: black;
+  background-color: aliceblue;
+}
