@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-// import { isAbsolute } from 'path';
-import db from '../../server/db'
 
 class CityMarker extends Component {
   constructor(props) {
@@ -26,13 +24,8 @@ class CityMarker extends Component {
       position: 'absolute',
       left: `${this.state.location[0]}px`,
       top: `${this.state.location[1]}px`,
-      fontSize: '10px'
-    }
-    let cityStyles = {
-      background: `${this.state.color}`,
-      border: '4px solid #808080',
-      width: '20px',
-      height: '20px'
+      fontSize: '12px',
+      color: `${this.state.color}`
     }
 
     return (
