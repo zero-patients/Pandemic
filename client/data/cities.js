@@ -37,13 +37,13 @@ const cities = {
     neighbors: ['Seoul', 'Shanghai']
   },
   Bogota: {
-    color: 'yellow',
+    color: 'darkgoldenrod',
     diseases: [0, 0, 0, 0],
     location: [535, 657],
     neighbors: ['Miami', 'Mexico-City', 'Lima', 'Buenos-Aires', 'Sao-Paulo']
   },
   'Buenos-Aires': {
-    color: 'yellow',
+    color: 'darkgoldenrod',
     diseases: [0, 0, 0, 0],
     location: [630, 850],
     neighbors: ['Bogota', 'Sao-Paulo', 'Santiago', 'Johannesburg']
@@ -123,7 +123,7 @@ const cities = {
     neighbors: ['Chennai', 'Bangkok', 'Ho-Chi-Minh-City', 'Sydney']
   },
   Johannesburg: {
-    color: 'yellow',
+    color: 'darkgoldenrod',
     diseases: [0, 0, 0, 0],
     location: [1035, 850],
     neighbors: ['Buenos-Aires', 'Kinshasa', 'Khartoum']
@@ -135,13 +135,13 @@ const cities = {
     neighbors: ['Tehran', 'Delhi', 'Mumbai', 'Riyadh']
   },
   Khartoum: {
-    color: 'yellow',
+    color: 'darkgoldenrod',
     diseases: [0, 0, 0, 0],
     location: [1045, 600],
     neighbors: ['Cairo', 'Lagos', 'Kinshasa', 'Johannesburg']
   },
   Kinshasa: {
-    color: 'yellow',
+    color: 'darkgoldenrod',
     diseases: [0, 0, 0, 0],
     location: [950, 735],
     neighbors: ['Lagos', 'Khartoum', 'Johannesburg']
@@ -153,13 +153,13 @@ const cities = {
     neighbors: ['Delhi', 'Chennai', 'Bangkok', 'Hong-Kong']
   },
   Lagos: {
-    color: 'yellow',
+    color: 'darkgoldenrod',
     diseases: [0, 0, 0, 0],
     location: [905, 655],
     neighbors: ['Sao-Paulo', 'Khartoum', 'Kinshasa']
   },
   Lima: {
-    color: 'yellow',
+    color: 'darkgoldenrod',
     diseases: [0, 0, 0, 0],
     location: [480, 770],
     neighbors: ['Los-Angeles', 'Mexico-City', 'Bogota', 'Santiago']
@@ -171,7 +171,7 @@ const cities = {
     neighbors: ['New-York', 'Madrid', 'Paris', 'Essen']
   },
   'Los-Angeles': {
-    color: 'yellow',
+    color: 'darkgoldenrod',
     diseases: [0, 0, 0, 0],
     location: [265, 505],
     neighbors: ['Sydney', 'Lima', 'Mexico-City', 'Chicago', 'San-Francisco']
@@ -186,22 +186,16 @@ const cities = {
     color: 'red',
     diseases: [0, 0, 0, 0],
     location: [1615, 680],
-    neighbors: [
-      'Taipei',
-      'San-Francisco',
-      'Los-Angeles',
-      'Ho-Chi-Minh-City',
-      'Hong-Kong'
-    ]
+    neighbors: ['Taipei', 'San-Francisco', 'Ho-Chi-Minh-City', 'Hong-Kong']
   },
   'Mexico-City': {
-    color: 'yellow',
+    color: 'darkgoldenrod',
     diseases: [0, 0, 0, 0],
     location: [375, 570],
     neighbors: ['Chicago', 'Miami', 'Bogota', 'Lima', 'Los-Angeles']
   },
   Miami: {
-    color: 'yellow',
+    color: 'darkgoldenrod',
     diseases: [0, 0, 0, 0],
     location: [505, 540],
     neighbors: ['Atlanta', 'Washington', 'Bogota', 'Mexico-City']
@@ -261,13 +255,13 @@ const cities = {
     neighbors: ['Tokyo', 'Manila', 'Los-Angeles', 'Chicago']
   },
   Santiago: {
-    color: 'yellow',
+    color: 'darkgoldenrod',
     diseases: [0, 0, 0, 0],
     location: [480, 915],
     neighbors: ['Lima', 'Buenos-Aires']
   },
   'Sao-Paulo': {
-    color: 'yellow',
+    color: 'darkgoldenrod',
     diseases: [0, 0, 0, 0],
     location: [660, 788],
     neighbors: ['Buenos-Aires', 'Bogota', 'Madrid', 'Lagos']

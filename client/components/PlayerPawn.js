@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-// import { isAbsolute } from 'path';
 import db from '../../server/db'
 
 class PlayerPawn extends Component {
@@ -12,7 +11,6 @@ class PlayerPawn extends Component {
         Y: 0
       },
       fillStyle: '',
-      hand: [],
       strokeStyle: ''
     }
   }
@@ -23,9 +21,7 @@ class PlayerPawn extends Component {
       const data = await doc.data()
       let playerInfo = data[`player${this.props.player}Info`]
 
-      // this.setState({x: playerInfo.location.X, y: playerInfo.location.Y})
       this.setState({...playerInfo})
-      // console.log('playerInfo', playerInfo)
     })
   }
 
@@ -37,11 +33,12 @@ class PlayerPawn extends Component {
       background: this.state.fillStyle,
       border: '2px solid ' + this.state.strokeStyle,
       borderRadius: '50%',
-      width: '10px',
-      height: '10px'
+      textAlign: 'center',
+      width: '20px',
+      height: '20px'
     }
 
-    return <div style={styles}>{/* <p>Player {this.props.player}</p> */}</div>
+    return <div style={styles}>{this.props.player}</div>
   }
 }
 
