@@ -47,3 +47,67 @@ form div {
   height: 100vh;
   background-color: green;
 }
+
+/* Hexagon styles from http://csshexagon.com/ */
+.hexagon {
+  position: relative;
+  width: 20px;
+  height: 11.55px;
+  background-color: #ffff99;
+  margin: 5.77px 0;
+}
+
+.hexagon:before,
+.hexagon:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+.hexagon:before {
+  bottom: 100%;
+  border-bottom: 5.77px solid #ffff99;
+}
+
+.hexagon:after {
+  top: 100%;
+  width: 0;
+  border-top: 5.77px solid #ffff99;
+}
+
+/* https://codepen.io/keithwyland/pen/qHwFz */
+.jewel {
+  width: 10px;
+  height: 10px;
+  float: left;
+  margin: 6px;
+}
+
+.square {
+  background: #ff232f;
+  border-width: 5px;
+  border-style: solid;
+  border-radius: 5px;
+  border-top-color: #7f1118;
+  border-left-color: #7f1118;
+  border-right-color: #ff6f78;
+  border-bottom-color: #ff6f78;
+}
+
+.diamond {
+  background: gold;
+  border-width: 6px;
+  border-style: solid;
+  border-radius: 6px;
+  border-top-color: #fff7a1;
+  border-left-color: #7f7611;
+  border-right-color: #fff7a1;
+  border-bottom-color: #7f7611;
+  -webkit-transform: rotate(45deg) scale(0.8);
+  -moz-transform: rotate(45deg) scale(0.8);
+  -ms-transform: rotate(45deg) scale(0.8);
+  -o-transform: rotate(45deg) scale(0.8);
+  transform: rotate(45deg) scale(0.8);
+}
