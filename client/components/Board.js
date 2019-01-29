@@ -4,15 +4,32 @@ import React from 'react'
 import worldMap from '../data/map.js'
 import mapDetails from '../data/mapDetails'
 import PlayerPawn from './PlayerPawn'
-import cities from '../data/cities'
 import CityMarker from './CityMarker'
-
-const locations = Object.keys(cities)
+import db from '../../server/db'
 
 class Board extends React.Component {
   constructor(props) {
     super(props)
     this.canvasRef = React.createRef()
+
+    const docRef = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
+    this.state = {
+      docRef,
+      cities: {}
+    }
+    docRef.get().then(doc => {
+      const data = doc.data()
+      const {cities} = data
+      this.setState(() => ({cities}))
+    })
+  }
+
+  componentDidUpdate() {
+    this.state.docRef.get().then(doc => {
+      const data = doc.data()
+      const {cities} = data
+      this.setState(() => ({cities}))
+    })
   }
 
   componentDidMount() {
@@ -187,10 +204,10 @@ class Board extends React.Component {
           width={1916}
           height={1076}
         />
-        {locations.map((elem, idx) => {
+        {Object.keys(this.state.cities).map(cityName => {
           return (
-            <div key={idx}>
-              <CityMarker name={elem} city={cities[elem]} />
+            <div key={this.state.cities[cityName].id}>
+              <CityMarker name={cityName} city={this.state.cities[cityName]} />
             </div>
           )
         })}
