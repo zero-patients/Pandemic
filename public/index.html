@@ -3,6 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script
+      type="text/javascript"
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"
+    ></script>
+    <!-- <script type="text/javascript" src="worldmap.js"></script> -->
+
     <title>Pandemic</title>
     <link rel="stylesheet" href="/style.css" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -12,8 +18,19 @@
 
     <script defer src="/bundle.js"></script>
   </head>
+  <!-- <body onload="Init();"> -->
   <body>
-    <h3>Pandemic</h3>
+    <!-- <script type="text/javascript">
+      function Init() {
+        /* we override the Init function. */
+        WorldMap({
+          id: 'worldmap',
+          padding: 10,
+          detail: {us: 'royalblue', ca: 'royalblue', br: 'gold', cn: 'crimson'}
+        })
+      }
+    </script> -->
+    <!-- <canvas id="worldmap" height="1050" width="1890"></canvas> -->
     <div id="app"></div>
   </body>
 </html>
