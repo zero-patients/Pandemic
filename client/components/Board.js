@@ -213,10 +213,7 @@ class Board extends React.Component {
       ctx.stroke()
 
       ctx.beginPath()
-      ctx.moveTo(
-        cities.Sydney.location[0] + 17,
-        cities.Sydney.location[1] + 53
-      )
+      ctx.moveTo(cities.Sydney.location[0] + 17, cities.Sydney.location[1] + 53)
       ctx.lineTo(1920, 670)
       ctx.stroke()
 
@@ -230,10 +227,7 @@ class Board extends React.Component {
       ctx.stroke()
 
       ctx.beginPath()
-      ctx.moveTo(
-        cities.Tokyo.location[0] + 17,
-        cities.Tokyo.location[1] + 53
-      )
+      ctx.moveTo(cities.Tokyo.location[0] + 17, cities.Tokyo.location[1] + 53)
       ctx.lineTo(1920, 450)
       ctx.stroke()
 
@@ -247,10 +241,7 @@ class Board extends React.Component {
       ctx.stroke()
 
       ctx.beginPath()
-      ctx.moveTo(
-        cities.Manila.location[0] + 17,
-        cities.Manila.location[1] + 53
-      )
+      ctx.moveTo(cities.Manila.location[0] + 17, cities.Manila.location[1] + 53)
       ctx.lineTo(1920, 600)
       ctx.stroke()
     }
