@@ -3,27 +3,29 @@ import db from '../../server/db'
 
 const Controller = props => {
   const {userId} = props.match.params
-  const style = `player${userId}`
+  const playerId = `player${userId}`
   const game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
+  const cities = game.cities
 
-  const goToEurope = () => {
-    game.set({[`${style}Info`]: {location: {X: 910, Y: 410}}}, {merge: true})
+  const goToAtlanta = () => {
+    game.set({[`${playerId}Info`]: {location: 'Atlanta'}}, {merge: true})
   }
-  const goToAmerica = () => {
-    game.set({[`${style}Info`]: {location: {X: 475, Y: 475}}}, {merge: true})
+  const goToParis = () => {
+    game.set({[`${playerId}Info`]: {location: 'Paris'}}, {merge: true})
   }
-  const goToSouthAmerica = () => {
-    game.set({[`${style}Info`]: {location: {X: 650, Y: 750}}}, {merge: true})
+  const goToBogota = () => {
+    game.set({[`${playerId}Info`]: {location: 'Bogota'}}, {merge: true})
   }
-  const goToAsia = () => {
-    game.set({[`${style}Info`]: {location: {X: 1500, Y: 515}}}, {merge: true})
+  const goToShanghai = () => {
+    game.set({[`${playerId}Info`]: {location: 'Shanghai'}}, {merge: true})
   }
+
   const isTurn = true
   const remainingMoves = 4
   const currentView = 'move'
   const playerCards = [1, 2]
   return (
-    <div id="controller" className={style}>
+    <div id="controller" className={playerId}>
       {isTurn && remainingMoves > 0 ? (
         <div className="controllerBookend">
           <p className="controllerPanel">
@@ -100,38 +102,38 @@ const Controller = props => {
         <button
           className="controllerPanel"
           onClick={() => {
-            goToAmerica()
+            goToParis()
           }}
         >
           {' '}
-          MOVE/ go to a hardcoded space
+          MOVE/ go to Paris
         </button>
         <button
           className="controllerPanel"
           onClick={() => {
-            goToAsia()
+            goToShanghai()
           }}
         >
           {' '}
-          HAND/ go to a hardcoded space
+          HAND/ go to Shanghai
         </button>
         <button
           className="controllerPanel"
           onClick={() => {
-            goToEurope()
+            goToAtlanta()
           }}
         >
           {' '}
-          BUILD/ go to a hardcoded space
+          BUILD/ go to Atlanta
         </button>
         <button
           className="controllerPanel"
           onClick={() => {
-            goToSouthAmerica()
+            goToBogota()
           }}
         >
           {' '}
-          CURE/ go to a hardcoded space
+          CURE/ go to Bogota
         </button>
         <button className="controllerPanel"> EVENT</button>
         <button className="controllerPanel"> SPECIALS</button>
