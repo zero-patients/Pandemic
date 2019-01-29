@@ -20,13 +20,15 @@ const Controller = props => {
   }
   const isTurn = true
   const remainingMoves = 4
+  const currentView = 'move'
+  const playerCards = [1, 2]
   return (
     <div id="controller" className={style}>
       {isTurn && remainingMoves > 0 ? (
         <div className="controllerBookend">
           <p className="controllerPanel">
             Its your turn, the world is counting on you. You have{' '}
-            {remainingMoves} moves left. CHoose carefully.
+            {remainingMoves} moves left. Choose carefully.
           </p>
         </div>
       ) : (
@@ -37,7 +39,62 @@ const Controller = props => {
         </div>
       )}
 
-      <div className="controllerMiddle" />
+      <div className="controllerMiddle">
+        <div className="cardContainer">
+          <button className="playerCard">
+            <a>Card Name</a>
+            <a>Card Image</a>
+            <a>
+              <b>Move one Space to this City</b>
+            </a>
+          </button>
+          <button className="playerCard">
+            <a>Card Name</a>
+            <a>Card Image</a>
+            <a>
+              <b>Move one Space to this City</b>
+            </a>
+          </button>
+          <button className="playerCard">
+            <a>Card Name</a>
+            <a>Card Image</a>
+            <a>
+              <b>Move one Space to this City</b>
+            </a>
+          </button>
+          <button className="playerCard">
+            <a>Card Name</a>
+            <a>Card Image</a>
+            <a>
+              <b>Move one Space to this City</b>
+            </a>
+          </button>
+          <button className="playerCard">
+            <a>Card Name</a>
+            <a>Card Image</a>
+            <a>
+              <b>Move one Space to this City</b>
+            </a>
+          </button>
+          <button className="playerCard">
+            <a>Card Name</a>
+            <a>Card Image</a>
+            <a>
+              <b>Move one Space to this City</b>
+            </a>
+          </button>
+          <button className="playerCard">
+            <a>Card Name</a>
+            <a>Card Image</a>
+            <a>
+              <b>Move one Space to this City</b>
+            </a>
+          </button>
+        </div>
+
+        <div className="cardContainer" />
+        <div className="cardContainer" />
+      </div>
 
       <div className="controllerBookend">
         <button className="controllerPanel"> MOVE</button>
