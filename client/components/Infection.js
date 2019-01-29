@@ -21,9 +21,9 @@ class Infection extends Component {
     const orbit = () => {
       this.setState(
         {
-          left: getX(0, this.state.angle, radius + this.props.addRadius),
-          top: getY(0, this.state.angle, radius + this.props.addRadius),
-          angle: (this.state.angle + speed) % 360
+          left: getX(0, this.state.angle, radius),
+          top: getY(0, this.state.angle, radius),
+          angle: (this.state.angle + speed + this.props.addSpeed) % 360
         },
         () => {
           window.requestAnimationFrame(orbit)

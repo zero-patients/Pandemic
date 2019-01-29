@@ -50,28 +50,28 @@ class CityMarker extends Component {
         {this.state.blueInfections ? (
           <InfectionGroup
             color="blue"
-            radius={0}
+            speed={0}
             count={this.state.blueInfections}
           />
         ) : null}
         {this.state.yellowInfections ? (
           <InfectionGroup
             color="yellow"
-            radius={1}
+            speed={0.01}
             count={this.state.yellowInfections}
           />
         ) : null}
         {this.state.blackInfections ? (
           <InfectionGroup
             color="black"
-            radius={2}
+            speed={0.02}
             count={this.state.blackInfections}
           />
         ) : null}
         {this.state.redInfections ? (
           <InfectionGroup
             color="red"
-            radius={3}
+            speed={0.03}
             count={this.state.redInfections}
           />
         ) : null}
