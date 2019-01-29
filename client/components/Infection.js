@@ -5,6 +5,8 @@ const getY = (centerY, angle, radius) => centerY + Math.sin(angle) * radius
 
 const radius = 10
 const speed = 0.05
+const xShift = 13
+const yShift = 53
 
 class Infection extends Component {
   constructor(props) {
@@ -21,8 +23,8 @@ class Infection extends Component {
     const orbit = () => {
       this.setState(
         {
-          left: getX(0, this.state.angle, radius),
-          top: getY(0, this.state.angle, radius),
+          left: getX(0 + xShift, this.state.angle, radius),
+          top: getY(0 + yShift, this.state.angle, radius),
           angle: (this.state.angle + speed + this.props.addSpeed) % 360
         },
         () => {

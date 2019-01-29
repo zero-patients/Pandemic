@@ -41,7 +41,7 @@ class CityMarker extends Component {
     return (
       <div style={divStyles}>
         <p>{this.props.name}</p>
-        <div style={cityStyles} />
+        <div className="jewel diamond" />
         {this.state.blueInfections ? (
           <InfectionGroup
             color="blue"
