@@ -6,7 +6,6 @@ import db from '../server/db'
 const game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
 game.onSnapshot(doc => {
   const data = doc.data()
-  console.log('count: ', data.count)
   // document.querySelector('#counter').innerHTML = 'count: ' + data.count
 })
 
