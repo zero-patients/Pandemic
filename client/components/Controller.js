@@ -97,10 +97,42 @@ const Controller = props => {
       </div>
 
       <div className="controllerBookend">
-        <button className="controllerPanel"> MOVE</button>
-        <button className="controllerPanel"> HAND</button>
-        <button className="controllerPanel"> BUILD</button>
-        <button className="controllerPanel"> CURE</button>
+        <button
+          className="controllerPanel"
+          onClick={() => {
+            goToAmerica()
+          }}
+        >
+          {' '}
+          MOVE/ go to a hardcoded space
+        </button>
+        <button
+          className="controllerPanel"
+          onClick={() => {
+            goToAsia()
+          }}
+        >
+          {' '}
+          HAND/ go to a hardcoded space
+        </button>
+        <button
+          className="controllerPanel"
+          onClick={() => {
+            goToEurope()
+          }}
+        >
+          {' '}
+          BUILD/ go to a hardcoded space
+        </button>
+        <button
+          className="controllerPanel"
+          onClick={() => {
+            goToSouthAmerica()
+          }}
+        >
+          {' '}
+          CURE/ go to a hardcoded space
+        </button>
         <button className="controllerPanel"> EVENT</button>
         <button className="controllerPanel"> SPECIALS</button>
       </div>
