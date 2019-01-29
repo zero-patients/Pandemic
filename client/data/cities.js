@@ -186,13 +186,7 @@ const cities = {
     color: 'red',
     diseases: [0, 0, 0, 0],
     location: [1615, 680],
-    neighbors: [
-      'Taipei',
-      'San-Francisco',
-      'Los-Angeles',
-      'Ho-Chi-Minh-City',
-      'Hong-Kong'
-    ]
+    neighbors: ['Taipei', 'San-Francisco', 'Ho-Chi-Minh-City', 'Hong-Kong']
   },
   'Mexico-City': {
     color: 'darkgoldenrod',

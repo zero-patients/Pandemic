@@ -175,6 +175,76 @@ class Board extends React.Component {
         }
       }
     }
+
+    ctx.strokeStyle = '#AAA'
+    // all but pacific paths
+    for (let city in cities) {
+      cities[city].neighbors.forEach(neighbor => {
+        if (
+          !(
+            (city === 'San-Francisco' && neighbor === 'Tokyo') ||
+            (city === 'San-Francisco' && neighbor === 'Manila') ||
+            (city === 'Los-Angeles' && neighbor === 'Sydney') ||
+            (city === 'Tokyo' && neighbor === 'San-Francisco') ||
+            (city === 'Manila' && neighbor === 'San-Francisco') ||
+            (city === 'Sydney' && neighbor === 'Los-Angeles')
+          )
+        ) {
+          ctx.beginPath()
+          ctx.moveTo(
+            cities[city].location[0] + 17,
+            cities[city].location[1] + 53
+          )
+          ctx.lineTo(
+            cities[neighbor].location[0] + 17,
+            cities[neighbor].location[1] + 53
+          )
+          ctx.stroke()
+        }
+      })
+
+      // LA to Sydney
+      ctx.beginPath()
+      ctx.moveTo(
+        cities['Los-Angeles'].location[0] + 17,
+        cities['Los-Angeles'].location[1] + 53
+      )
+      ctx.lineTo(0, 670)
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(cities.Sydney.location[0] + 17, cities.Sydney.location[1] + 53)
+      ctx.lineTo(1920, 670)
+      ctx.stroke()
+
+      // SF to Tokyo
+      ctx.beginPath()
+      ctx.moveTo(
+        cities['San-Francisco'].location[0] + 17,
+        cities['San-Francisco'].location[1] + 53
+      )
+      ctx.lineTo(0, 440)
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(cities.Tokyo.location[0] + 17, cities.Tokyo.location[1] + 53)
+      ctx.lineTo(1920, 450)
+      ctx.stroke()
+
+      // SF to Manila
+      ctx.beginPath()
+      ctx.moveTo(
+        cities['San-Francisco'].location[0] + 17,
+        cities['San-Francisco'].location[1] + 53
+      )
+      ctx.lineTo(0, 550)
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(cities.Manila.location[0] + 17, cities.Manila.location[1] + 53)
+      ctx.lineTo(1920, 600)
+      ctx.stroke()
+    }
   }
 
   render() {
