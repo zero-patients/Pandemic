@@ -32,7 +32,7 @@ class Board extends React.Component {
     let oSettings = {}
     oSettings.detail = mapDetails
     let sBGColor = oSettings.bgcolor || '#87cefa'
-    let sFGColor = oSettings.fgcolor || '#fffaf0'
+    let sFGColor = oSettings.fgcolor || '#ccebc5' //'#fffaf0'
     let sBorderColor = oSettings.bordercolor || '#cdc9c9'
     let iPadding = (oSettings.padding || 10) * 2
     let sZoom = oSettings.zoom || 'ca,cl,us,ru'
@@ -126,7 +126,7 @@ class Board extends React.Component {
         oCTX.fill()
 
         // IE, again...
-        if (bIE == true) {
+        if (bIE === true) {
           oCTX.beginPath()
           oCTX.moveTo(
             oWorldMap[sCountry][iPath][0][0] * iRatio - iOffsetX,

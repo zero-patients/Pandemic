@@ -14,7 +14,7 @@ class CityMarker extends Component {
 
   componentDidMount() {
     const cityInfo = this.props.city
-    console.log(cityInfo, 'blahblahblah cityinfo')
+
     this.setState({
       location: cityInfo.location,
       color: cityInfo.color
@@ -38,7 +38,7 @@ class CityMarker extends Component {
     return (
       <div style={divStyles}>
         <p>{this.props.name}</p>
-        <div style={cityStyles} />
+        <div className="jewel diamond" />
       </div>
     )
   }
