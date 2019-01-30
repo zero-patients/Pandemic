@@ -116,3 +116,55 @@ form div {
   margin: 0;
   width: 100px;
 }
+
+#controller {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.controllerBookend {
+  display: flex;
+  width: 100vw;
+  height: 15vh;
+  flex-direction: row;
+}
+
+.controllerMiddle {
+  display: flex;
+  width: 100vw;
+  height: 70vh;
+  flex-direction: row;
+}
+
+.controllerPanel {
+  display: flex;
+  flex-grow: 1;
+  border-width: 1px;
+  border-style: solid;
+  border-color: black;
+  background-color: aliceblue;
+  height: 15vh;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  border-width: 1px;
+  border-style: solid;
+  width: 34vw;
+  border-color: black;
+  background-color: lightslategrey;
+  align-items: center;
+  justify-content: space-around;
+}
+.playerCard {
+  display: flex;
+  flex-direction: column;
+  width: 10vw;
+  height: 20vh;
+  background-color: lightsalmon;
+  align-items: center;
+}
