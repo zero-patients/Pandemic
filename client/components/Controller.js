@@ -48,6 +48,15 @@ class Controller extends Component {
     this.game.set({[`${this.playerId}Info`]: {location: city}}, {merge: true})
   }
 
+  buildResearchStation = city => {
+    // this.game.set({ 'cities': { [`${city}`] : {researchStation: true}}}, {merge: true})
+    console.log(this.game.researchStations)
+    this.game.set(
+      {researchStations: [...this.game.researchStations, city]},
+      {merge: true}
+    )
+  }
+
   componentDidMount() {
     this.game.onSnapshot(async doc => {
       const data = await doc.data()
@@ -114,7 +123,7 @@ class Controller extends Component {
           <button
             className="controllerPanel"
             onClick={() => {
-              this.goToParis()
+              this.buildResearchStation(this.state.playerCity)
             }}
           >
             {' '}
