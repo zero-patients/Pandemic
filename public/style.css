@@ -111,3 +111,8 @@ form div {
   -o-transform: rotate(45deg) scale(0.8);
   transform: rotate(45deg) scale(0.8);
 }
+
+.city-label {
+  margin: 0;
+  width: 100px;
+}

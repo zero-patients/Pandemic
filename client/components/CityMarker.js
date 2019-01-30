@@ -30,7 +30,7 @@ class CityMarker extends Component {
 
     return (
       <div style={divStyles}>
-        <p>{this.props.name}</p>
+        <p className="city-label">{this.props.name}</p>
         <div className="jewel diamond" />
       </div>
     )
