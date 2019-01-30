@@ -6,7 +6,8 @@ import mapDetails from '../data/mapDetails'
 import PlayerPawn from './PlayerPawn'
 import cities from '../data/cities'
 import CityMarker from './CityMarker'
-import EpidemicTracker from './EpidemicTracker'
+import CardBox from './CardBox'
+import InfectionCard from './InfectionCard.js'
 
 const locations = Object.keys(cities)
 
@@ -265,6 +266,10 @@ class Board extends React.Component {
             </div>
           )
         })}
+
+        <CardBox top={49} left={1199} />
+        <CardBox top={49} left={1499} />
+        <InfectionCard top={50} left={1200} />
 
         <PlayerPawn player={1} />
         <PlayerPawn player={2} />

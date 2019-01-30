@@ -1,27 +1,33 @@
 import React from 'react'
-import 'uikit/dist/css/uikit.css'
 
 const InfectionCard = props => {
-  return (
-    <div className="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
-      <div>
-        <div className="uk-card uk-card-default uk-card-body">
-          <h3 className="uk-card-title">Default</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-        </div>
-      </div>
-      <div>
-        <div className="uk-card uk-card-primary uk-card-body">
-          <h3 className="uk-card-title">Primary</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-        </div>
-      </div>
-      <div>
-        <div className="uk-card uk-card-secondary uk-card-body">
-          <h3 className="uk-card-title">Secondary</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-        </div>
-      </div>
+  let styles = {
+    position: 'absolute',
+    top: `${props.top}px`,
+    left: `${props.left}px`,
+    // background: 'red',
+    // border: '2px solid purple',
+    // textAlign: 'center',
+    width: '250px',
+    height: '200px'
+  }
+
+  let imgWidth = {
+    width: '100%',
+    margin: '0px',
+    padding: '0px'
+  }
+
+  let cityStyles = {
+    backgroundColor: 'whitesmoke',
+    padding: '10px'
+  }
+
+  return props.left === 1200 ? (
+    <img src="/playingCardRed.jpg" style={styles} />
+  ) : (
+    <div className="polaroid" style={styles}>
+      <img src="/light.jpg" alt="Norway" style={imgWidth} />
     </div>
   )
 }
