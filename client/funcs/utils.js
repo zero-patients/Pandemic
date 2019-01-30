@@ -58,3 +58,5 @@ const epidemicShuffle = (drawPile, discardPile) => {
 
   return [newPile, bottomCard]
 }
+
+export default {shuffle}

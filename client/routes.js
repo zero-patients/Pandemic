@@ -10,6 +10,7 @@ import {
   Controller,
   HomePage
 } from './components'
+import InfectionCard from './components/InfectionCard'
 import {me} from './store'
 
 /**
@@ -26,6 +27,7 @@ class Routes extends Component {
     return (
       <Switch>
         <Route path="/board" component={Board} />
+        <Route path="/card" component={InfectionCard} />
         <Route path="/controller/:userId" component={Controller} />
         <Route path="/" component={HomePage} />
       </Switch>
