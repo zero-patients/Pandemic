@@ -219,6 +219,7 @@ class Controller extends Component {
           </button>
           <button className="controllerPanel"> EVENT</button>
           <button className="controllerPanel"> SPECIALS</button>
+          <button className="controllerPanel">Draw Card</button>
         </div>
       </div>
     )
