@@ -8,6 +8,7 @@ import cities from '../data/cities'
 import CityMarker from './CityMarker'
 import CardBox from './CardBox'
 import InfectionDeck from './InfectionDeck'
+import InfectionDiscardDeck from './InfectionDiscardDeck'
 
 const locations = Object.keys(cities)
 
@@ -278,6 +279,7 @@ class Board extends React.Component {
         <CardBox top={49} left={1199} />
         <CardBox top={49} left={1499} />
         <InfectionDeck top={50} left={1200} />
+        <InfectionDiscardDeck top={50} left={1500} />
 
         <PlayerPawn player={1} />
         <PlayerPawn player={2} />
