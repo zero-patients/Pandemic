@@ -21,7 +21,7 @@ class PlayerPawn extends Component {
     const game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
     game.onSnapshot(async doc => {
       const data = await doc.data()
-      console.log('data', data)
+      // console.log('data', data)
       let playerInfo = data[`player${this.props.player}Info`]
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
