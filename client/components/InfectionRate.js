@@ -32,7 +32,8 @@ class InfectionRate extends Component {
     }
     const circles = {
       borderRadius: '50%',
-      margin: '0 8px',
+      border: '1px solid #000',
+      margin: '0px 8px',
       width: '50px',
       height: '50px',
       display: 'flex',
