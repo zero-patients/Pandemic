@@ -10,7 +10,10 @@ const {
   player4Info
 } = require('../client/data/playerInfo')
 
-// console.log(cities)
+const infectionIdx = 0
+const infectionRate = [2, 2, 2, 3, 3, 4, 4]
+const outbreakTracker = 0
+
 const gameSession = 'YzQ0qR6LZ7gxd8E03k1l'
 
 const seedFirestore = async () => {
@@ -24,6 +27,9 @@ const seedFirestore = async () => {
       player2Info,
       player3Info,
       player4Info,
+      infectionIdx,
+      infectionRate,
+      outbreakTracker,
       researchStations
     },
     {merge: true}

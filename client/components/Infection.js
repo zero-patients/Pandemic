@@ -43,7 +43,7 @@ class Infection extends Component {
       top: top,
       fontSize: '10px',
       background: this.props.color,
-      border: '1px solid #808080',
+      border: '1px solid #000',
       borderRadius: '50%',
       width: '5px',
       height: '5px'

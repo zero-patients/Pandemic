@@ -97,6 +97,8 @@ class Controller extends Component {
       let neighborCardColors = playerCityNeighbors.map(elem => {
         if (data.cities[elem].color === 'black') {
           return 'grey'
+        } else if (data.cities[elem].color === 'darkgoldenrod') {
+          return 'yellow'
         } else {
           return data.cities[elem].color
         }
@@ -104,6 +106,8 @@ class Controller extends Component {
       let researchStationCardColors = researchStations.map(elem => {
         if (data.cities[elem].color === 'black') {
           return 'grey'
+        } else if (data.cities[elem].color === 'darkgoldenrod') {
+          return 'yellow'
         } else {
           return data.cities[elem].color
         }
@@ -152,7 +156,7 @@ class Controller extends Component {
               return (
                 <div key={idx}>
                   <button
-                    style={{backgroundColor: color}}
+                    style={{backgroundColor: color, borderRadius: '5%'}}
                     className="playerCard"
                     onClick={() => {
                       this.goToCity(elem)
@@ -177,7 +181,7 @@ class Controller extends Component {
                   return (
                     <div key={idx}>
                       <button
-                        style={{backgroundColor: color}}
+                        style={{backgroundColor: color, borderRadius: '5%'}}
                         className="playerCard"
                         onClick={() => {
                           this.goToCity(elem)

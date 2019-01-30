@@ -9,6 +9,8 @@ import CityMarker from './CityMarker'
 import CardBox from './CardBox'
 import InfectionDeck from './InfectionDeck'
 import InfectionDiscardDeck from './InfectionDiscardDeck'
+import InfectionRate from './InfectionRate'
+import OutbreakTracker from './OutbreakTracker'
 
 const locations = Object.keys(cities)
 
@@ -285,7 +287,8 @@ class Board extends React.Component {
         <PlayerPawn player={2} />
         <PlayerPawn player={3} />
         <PlayerPawn player={4} />
-        {/* <EpidemicTracker /> */}
+        <InfectionRate />
+        <OutbreakTracker />
       </div>
     )
   }
