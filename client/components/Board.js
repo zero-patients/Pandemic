@@ -270,7 +270,7 @@ class Board extends React.Component {
         <PlayerPawn player={2} />
         <PlayerPawn player={3} />
         <PlayerPawn player={4} />
-        <EpidemicTracker />
+        {/* <EpidemicTracker /> */}
       </div>
     )
   }

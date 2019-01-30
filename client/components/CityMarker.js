@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 // import { isAbsolute } from 'path';
 import db from '../../server/db'
 import InfectionGroup from './InfectionGroup'
+import ResearchStation from './ResearchStation'
 
 class CityMarker extends Component {
   constructor(props) {
@@ -18,13 +19,16 @@ class CityMarker extends Component {
     game.onSnapshot(async doc => {
       const data = await doc.data()
       let cityInfo = data.cities[this.props.name]
+      let researchStations = data.researchStations
+      const isResearchStation = researchStations.includes(this.props.name)
       this.setState({
         location: cityInfo.location,
         color: cityInfo.color,
         blueInfections: cityInfo.diseases[0],
         yellowInfections: cityInfo.diseases[1],
         blackInfections: cityInfo.diseases[2],
-        redInfections: cityInfo.diseases[3]
+        redInfections: cityInfo.diseases[3],
+        isResearchStation
       })
     })
   }
@@ -42,6 +46,7 @@ class CityMarker extends Component {
       <div style={divStyles}>
         <p className="city-label">{this.props.name}</p>
         <div className="jewel diamond" />
+        {this.state.isResearchStation ? <ResearchStation /> : null}
         {this.state.blueInfections ? (
           <InfectionGroup
             color="blue"

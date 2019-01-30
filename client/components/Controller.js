@@ -8,7 +8,8 @@ class Controller extends Component {
 
     this.state = {
       playerCity: '',
-      playerCityNeighbors: []
+      playerCityNeighbors: [],
+      researchStations: []
     }
 
     this.game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
@@ -44,8 +45,28 @@ class Controller extends Component {
       {merge: true}
     )
   }
-  goToNeighbor = city => {
+  goToCity = city => {
     this.game.set({[`${this.playerId}Info`]: {location: city}}, {merge: true})
+  }
+
+  buildResearchStation = city => {
+    if (
+      !this.state.researchStations.includes(city) &&
+      this.state.researchStations.length < 6
+    ) {
+      this.game.set(
+        {researchStations: [...this.state.researchStations, city]},
+        {merge: true}
+      )
+    }
+    if (
+      !this.state.researchStations.includes(city) &&
+      this.state.researchStations.length > 5
+    ) {
+      const temp = this.state.researchStations
+      temp.shift()
+      this.game.set({researchStations: [...temp, city]}, {merge: true})
+    }
   }
 
   componentDidMount() {
@@ -55,17 +76,38 @@ class Controller extends Component {
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
       let playerCityNeighbors = playerCityInfo.neighbors
+      let researchStations = data.researchStations
+      let neighborCardColors = playerCityNeighbors.map(elem => {
+        if (data.cities[elem].color === 'black') {
+          return 'grey'
+        } else {
+          return data.cities[elem].color
+        }
+      })
+      let researchStationCardColors = researchStations.map(elem => {
+        if (data.cities[elem].color === 'black') {
+          return 'grey'
+        } else {
+          return data.cities[elem].color
+        }
+      })
+
       this.setState({
         ...playerInfo,
         playerCity: playerCity,
-        playerCityNeighbors: playerCityNeighbors
+        playerCityNeighbors: playerCityNeighbors,
+        researchStations: researchStations,
+        neighborCardColors: neighborCardColors,
+        researchStationCardColors: researchStationCardColors
       })
       // console.log('state', this.state)
     })
   }
 
   render() {
-    let styles = {}
+    let styles = {
+      backgroundColor: 'lightsalmon'
+    }
     return (
       <div id="controller" className={this.playerId}>
         {this.isTurn && this.remainingMoves > 0 ? (
@@ -87,12 +129,14 @@ class Controller extends Component {
           <div className="cardContainer">
             {/* Render the neighboring cities onto the controller */}
             {this.state.playerCityNeighbors.map((elem, idx) => {
+              const color = this.state.neighborCardColors[idx]
               return (
                 <div key={idx}>
                   <button
+                    style={{backgroundColor: color}}
                     className="playerCard"
                     onClick={() => {
-                      this.goToNeighbor(elem)
+                      this.goToCity(elem)
                     }}
                   >
                     <a>{elem}</a>
@@ -106,7 +150,32 @@ class Controller extends Component {
             })}
           </div>
 
-          <div className="cardContainer" />
+          <div className="cardContainer">
+            {/* Render the cities with Research Stations onto the controller */}
+            {this.state.researchStations.includes(this.state.playerCity)
+              ? this.state.researchStations.map((elem, idx) => {
+                  const color = this.state.researchStationCardColors[idx]
+                  return (
+                    <div key={idx}>
+                      <button
+                        style={{backgroundColor: color}}
+                        className="playerCard"
+                        onClick={() => {
+                          this.goToCity(elem)
+                        }}
+                      >
+                        <a>{elem}</a>
+                        <a>Card Image</a>
+                        <a>
+                          <b>Move one Space to this Research Station</b>
+                        </a>
+                      </button>
+                    </div>
+                  )
+                })
+              : null}
+          </div>
+
           <div className="cardContainer" />
         </div>
 
@@ -132,11 +201,12 @@ class Controller extends Component {
           <button
             className="controllerPanel"
             onClick={() => {
-              this.goToAtlanta()
+              // this.goToAtlanta()
+              this.buildResearchStation(this.state.playerCity)
             }}
           >
             {' '}
-            BUILD/ go to Atlanta
+            BUILD
           </button>
           <button
             className="controllerPanel"
