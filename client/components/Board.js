@@ -6,7 +6,7 @@ import mapDetails from '../data/mapDetails'
 import PlayerPawn from './PlayerPawn'
 import cities from '../data/cities'
 import CityMarker from './CityMarker'
-import EpidemicTracker from './EpidemicTracker'
+import InfectionRate from './InfectionRate'
 
 const locations = Object.keys(cities)
 
@@ -270,7 +270,7 @@ class Board extends React.Component {
         <PlayerPawn player={2} />
         <PlayerPawn player={3} />
         <PlayerPawn player={4} />
-        {/* <EpidemicTracker /> */}
+        <InfectionRate />
       </div>
     )
   }
