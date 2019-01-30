@@ -1,26 +1,26 @@
 const cities = {
   Algiers: {
     color: 'black',
-    diseases: [0, 0, 0, 0],
+    diseases: [0, 0, 3, 0],
     location: [933, 535],
     neighbors: ['Madrid', 'Paris', 'Istanbul', 'Cairo']
   },
   Atlanta: {
     color: 'blue',
     location: [434, 490],
-    diseases: [0, 0, 0, 0],
+    diseases: [2, 0, 0, 0],
     neighbors: ['Chicago', 'Washington', 'Miami'],
     researchStation: true
   },
   Baghdad: {
     color: 'black',
-    diseases: [0, 0, 0, 0],
+    diseases: [0, 0, 3, 0],
     location: [1149, 456],
     neighbors: ['Istanbul', 'Cairo', 'Tehran', 'Riyadh']
   },
   Bangkok: {
     color: 'red',
-    diseases: [0, 0, 0, 0],
+    diseases: [0, 0, 0, 3],
     location: [1429, 619],
     neighbors: [
       'Kolkata',
@@ -32,25 +32,25 @@ const cities = {
   },
   Beijing: {
     color: 'red',
-    diseases: [0, 0, 0, 0],
+    diseases: [0, 0, 0, 1],
     location: [1530, 360],
     neighbors: ['Seoul', 'Shanghai']
   },
   Bogota: {
     color: 'darkgoldenrod',
-    diseases: [0, 0, 0, 0],
+    diseases: [0, 3, 0, 0],
     location: [535, 657],
     neighbors: ['Miami', 'Mexico-City', 'Lima', 'Buenos-Aires', 'Sao-Paulo']
   },
   'Buenos-Aires': {
     color: 'darkgoldenrod',
-    diseases: [0, 0, 0, 0],
+    diseases: [0, 2, 0, 3],
     location: [630, 850],
     neighbors: ['Bogota', 'Sao-Paulo', 'Santiago', 'Johannesburg']
   },
   Cairo: {
     color: 'black',
-    diseases: [0, 0, 0, 0],
+    diseases: [0, 0, 1, 0],
     location: [1015, 515],
     neighbors: ['Algiers', 'Istanbul', 'Riyadh', 'Khartoum']
   },
@@ -62,7 +62,7 @@ const cities = {
   },
   Chicago: {
     color: 'blue',
-    diseases: [0, 0, 0, 0],
+    diseases: [2, 0, 1, 0],
     location: [380, 370],
     neighbors: [
       'Montreal',
