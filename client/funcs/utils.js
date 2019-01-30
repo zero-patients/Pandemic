@@ -46,3 +46,15 @@ const shufflePlayerDeck = () => {
 
   return finalShuffle
 }
+
+const epidemicShuffle = (drawPile, discardPile) => {
+  const drawPileCopy = drawPile
+  const discardPileCopy = discardPile
+  const bottomCard = drawPileCopy.shift()
+  discardPileCopy.push(bottomCard)
+  console.log('discard pile copy after pushing bottom card', discardPileCopy)
+  shuffle(discardPile)
+  const newPile = drawPileCopy.concat(discardPile)
+
+  return [newPile, bottomCard]
+}
