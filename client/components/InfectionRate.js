@@ -46,13 +46,13 @@ class InfectionRate extends Component {
       flexDirection: 'row'
     }
     const text = {
+      margin: '4px 4px',
       textAlign: 'center',
       color: 'white',
       textShadow: '-1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000'
     }
     return (
       <div style={styles}>
-        <h1 style={text}>Infection Rate Tracker</h1>
         <div style={circleDiv}>
           {this.state.infectionRate.map((ele, idx) => {
             if (idx === this.state.infectionIdx) {
@@ -73,6 +73,7 @@ class InfectionRate extends Component {
             }
           })}
         </div>
+        <h1 style={text}>Infection Rate Tracker</h1>
       </div>
     )
   }
