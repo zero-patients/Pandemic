@@ -9,7 +9,8 @@ class Controller extends Component {
     this.state = {
       playerCity: '',
       playerCityNeighbors: [],
-      researchStations: []
+      researchStations: [],
+      infectionDeck: []
     }
 
     this.game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
@@ -76,6 +77,7 @@ class Controller extends Component {
   componentDidMount() {
     this.game.onSnapshot(async doc => {
       const data = await doc.data()
+      console.log(data)
       let playerInfo = data[`${this.playerId}Info`]
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
@@ -102,9 +104,10 @@ class Controller extends Component {
         playerCityNeighbors: playerCityNeighbors,
         researchStations: researchStations,
         neighborCardColors: neighborCardColors,
-        researchStationCardColors: researchStationCardColors
+        researchStationCardColors: researchStationCardColors,
+        infectionDeck: data.infectionDeck
       })
-      // console.log('state', this.state)
+      console.log('state', this.state)
     })
   }
 

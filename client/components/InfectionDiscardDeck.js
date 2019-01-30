@@ -23,8 +23,6 @@ class InfectionDiscardDeck extends React.Component {
   }
 
   render() {
-    console.log('Render')
-    console.log(this.state)
     const styles = {
       position: 'absolute',
       top: `${this.state.top}px`,
