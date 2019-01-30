@@ -69,6 +69,10 @@ class Controller extends Component {
     }
   }
 
+  drawInfectionCard = () => {
+    console.log('Draw a card')
+  }
+
   componentDidMount() {
     this.game.onSnapshot(async doc => {
       const data = await doc.data()
@@ -219,7 +223,9 @@ class Controller extends Component {
           </button>
           <button className="controllerPanel"> EVENT</button>
           <button className="controllerPanel"> SPECIALS</button>
-          <button className="controllerPanel">Draw Card</button>
+          <button className="controllerPanel" onClick={this.drawInfectionCard}>
+            Draw Card
+          </button>
         </div>
       </div>
     )
