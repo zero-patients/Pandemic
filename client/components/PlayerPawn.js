@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import db from '../../server/db'
 
-const xShift = 7
-const yShift = 46
+const xShift = 5
+const yShift = 19
 
 class PlayerPawn extends Component {
   constructor(props) {

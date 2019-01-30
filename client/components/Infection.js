@@ -6,7 +6,7 @@ const getY = (centerY, angle, radius) => centerY + Math.sin(angle) * radius
 const radius = 10
 const speed = 0.05
 const xShift = 13
-const yShift = 53
+const yShift = 28
 
 class Infection extends Component {
   constructor(props) {

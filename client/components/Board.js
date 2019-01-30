@@ -6,6 +6,7 @@ import mapDetails from '../data/mapDetails'
 import PlayerPawn from './PlayerPawn'
 import cities from '../data/cities'
 import CityMarker from './CityMarker'
+import EpidemicTracker from './EpidemicTracker'
 
 const locations = Object.keys(cities)
 
@@ -193,11 +194,11 @@ class Board extends React.Component {
           ctx.beginPath()
           ctx.moveTo(
             cities[city].location[0] + 17,
-            cities[city].location[1] + 53
+            cities[city].location[1] + 33
           )
           ctx.lineTo(
             cities[neighbor].location[0] + 17,
-            cities[neighbor].location[1] + 53
+            cities[neighbor].location[1] + 33
           )
           ctx.stroke()
         }
@@ -207,13 +208,13 @@ class Board extends React.Component {
       ctx.beginPath()
       ctx.moveTo(
         cities['Los-Angeles'].location[0] + 17,
-        cities['Los-Angeles'].location[1] + 53
+        cities['Los-Angeles'].location[1] + 33
       )
       ctx.lineTo(0, 670)
       ctx.stroke()
 
       ctx.beginPath()
-      ctx.moveTo(cities.Sydney.location[0] + 17, cities.Sydney.location[1] + 53)
+      ctx.moveTo(cities.Sydney.location[0] + 17, cities.Sydney.location[1] + 33)
       ctx.lineTo(1920, 670)
       ctx.stroke()
 
@@ -221,13 +222,13 @@ class Board extends React.Component {
       ctx.beginPath()
       ctx.moveTo(
         cities['San-Francisco'].location[0] + 17,
-        cities['San-Francisco'].location[1] + 53
+        cities['San-Francisco'].location[1] + 31
       )
       ctx.lineTo(0, 440)
       ctx.stroke()
 
       ctx.beginPath()
-      ctx.moveTo(cities.Tokyo.location[0] + 17, cities.Tokyo.location[1] + 53)
+      ctx.moveTo(cities.Tokyo.location[0] + 17, cities.Tokyo.location[1] + 31)
       ctx.lineTo(1920, 450)
       ctx.stroke()
 
@@ -235,13 +236,13 @@ class Board extends React.Component {
       ctx.beginPath()
       ctx.moveTo(
         cities['San-Francisco'].location[0] + 17,
-        cities['San-Francisco'].location[1] + 53
+        cities['San-Francisco'].location[1] + 31
       )
       ctx.lineTo(0, 550)
       ctx.stroke()
 
       ctx.beginPath()
-      ctx.moveTo(cities.Manila.location[0] + 17, cities.Manila.location[1] + 53)
+      ctx.moveTo(cities.Manila.location[0] + 17, cities.Manila.location[1] + 31)
       ctx.lineTo(1920, 600)
       ctx.stroke()
     }
@@ -269,6 +270,7 @@ class Board extends React.Component {
         <PlayerPawn player={2} />
         <PlayerPawn player={3} />
         <PlayerPawn player={4} />
+        {/* <EpidemicTracker /> */}
       </div>
     )
   }
