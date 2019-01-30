@@ -1,17 +1,19 @@
 import React, {Component} from 'react'
 import db from '../../server/db'
 
+const xShift = 7
+const yShift = 46
+
 class PlayerPawn extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      location: {
-        X: 0,
-        Y: 0
-      },
+      location: '',
       fillStyle: '',
-      strokeStyle: ''
+      strokeStyle: '',
+      playerX: 0,
+      playerY: 0
     }
   }
 
@@ -19,17 +21,22 @@ class PlayerPawn extends Component {
     const game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
     game.onSnapshot(async doc => {
       const data = await doc.data()
+      // console.log('data', data)
       let playerInfo = data[`player${this.props.player}Info`]
+      let playerCity = playerInfo.location
+      let playerCityInfo = data.cities[playerCity]
+      let playerX = playerCityInfo.location[0] + playerInfo.offset[0] + xShift
+      let playerY = playerCityInfo.location[1] + playerInfo.offset[1] + yShift
 
-      this.setState({...playerInfo})
+      this.setState({...playerInfo, playerX: playerX, playerY: playerY})
     })
   }
 
   render() {
     let styles = {
       position: 'absolute',
-      top: `${this.state.location.Y}px`,
-      left: `${this.state.location.X}px`,
+      top: `${this.state.playerY}px`,
+      left: `${this.state.playerX}px`,
       background: this.state.fillStyle,
       border: '2px solid ' + this.state.strokeStyle,
       borderRadius: '50%',
