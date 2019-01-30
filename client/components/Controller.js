@@ -11,7 +11,6 @@ class Controller extends Component {
       playerCityNeighbors: []
     }
 
-    this.goToAtlanta = this.goToAtlanta.bind(this)
     this.game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
     this.userId = props.match.params.userId
     this.playerId = `player${this.userId}`
@@ -44,6 +43,9 @@ class Controller extends Component {
       {[`${this.playerId}Info`]: {location: 'Shanghai'}},
       {merge: true}
     )
+  }
+  goToNeighbor = city => {
+    this.game.set({[`${this.playerId}Info`]: {location: city}}, {merge: true})
   }
 
   componentDidMount() {
@@ -85,58 +87,23 @@ class Controller extends Component {
           <div className="cardContainer">
             {/* Render the neighboring cities onto the controller */}
             {this.state.playerCityNeighbors.map((elem, idx) => {
-              return <div key={idx}>{elem}</div>
+              return (
+                <div key={idx}>
+                  <button
+                    className="playerCard"
+                    onClick={() => {
+                      this.goToNeighbor(elem)
+                    }}
+                  >
+                    <a>{elem}</a>
+                    <a>Card Image</a>
+                    <a>
+                      <b>Move one Space to this City</b>
+                    </a>
+                  </button>
+                </div>
+              )
             })}
-
-            <button className="playerCard">
-              <a>Card Name</a>
-              <a>Card Image</a>
-              <a>
-                <b>Move one Space to this City</b>
-              </a>
-            </button>
-            <button className="playerCard">
-              <a>Card Name</a>
-              <a>Card Image</a>
-              <a>
-                <b>Move one Space to this City</b>
-              </a>
-            </button>
-            <button className="playerCard">
-              <a>Card Name</a>
-              <a>Card Image</a>
-              <a>
-                <b>Move one Space to this City</b>
-              </a>
-            </button>
-            <button className="playerCard">
-              <a>Card Name</a>
-              <a>Card Image</a>
-              <a>
-                <b>Move one Space to this City</b>
-              </a>
-            </button>
-            <button className="playerCard">
-              <a>Card Name</a>
-              <a>Card Image</a>
-              <a>
-                <b>Move one Space to this City</b>
-              </a>
-            </button>
-            <button className="playerCard">
-              <a>Card Name</a>
-              <a>Card Image</a>
-              <a>
-                <b>Move one Space to this City</b>
-              </a>
-            </button>
-            <button className="playerCard">
-              <a>Card Name</a>
-              <a>Card Image</a>
-              <a>
-                <b>Move one Space to this City</b>
-              </a>
-            </button>
           </div>
 
           <div className="cardContainer" />
