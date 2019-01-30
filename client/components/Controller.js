@@ -10,7 +10,8 @@ class Controller extends Component {
       playerCity: '',
       playerCityNeighbors: [],
       researchStations: [],
-      infectionDeck: []
+      infectionDeck: [],
+      infectionDiscard: []
     }
 
     this.game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
@@ -70,14 +71,24 @@ class Controller extends Component {
     }
   }
 
-  drawInfectionCard = () => {
-    console.log('Draw a card')
+  drawInfectionCard = async () => {
+    // console.log('Draw a card')
+    const [card] = this.state.infectionDeck.slice(-1)
+    // console.log(card)
+    // console.log('Discards : ', ...this.state.infectionDiscard)
+    await this.game.set(
+      {
+        infectionDiscard: [...this.state.infectionDiscard, card],
+        infectionDeck: [...this.state.infectionDeck.slice(0, -1)]
+      },
+      {merge: true}
+    )
   }
 
   componentDidMount() {
     this.game.onSnapshot(async doc => {
       const data = await doc.data()
-      console.log(data)
+      // console.log(data)
       let playerInfo = data[`${this.playerId}Info`]
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
@@ -105,7 +116,8 @@ class Controller extends Component {
         researchStations: researchStations,
         neighborCardColors: neighborCardColors,
         researchStationCardColors: researchStationCardColors,
-        infectionDeck: data.infectionDeck
+        infectionDeck: data.infectionDeck,
+        infectionDiscard: data.infectionDiscard
       })
       console.log('state', this.state)
     })
