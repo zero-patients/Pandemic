@@ -1,7 +1,7 @@
 import React from 'react'
 import CardBox from './CardBox'
-import InfectionDeck from './InfectionDeck'
-import InfectionDiscardDeck from './InfectionDiscardDeck'
+import PlayerDeck from './PlayerDeck'
+import PlayerDiscardDeck from './PlayerDiscardDeck'
 
 class PlayerCardContainer extends React.Component {
   render() {
@@ -12,10 +12,13 @@ class PlayerCardContainer extends React.Component {
       top,
       left
     }
+
     return (
       <div style={positioning}>
         <CardBox top={0} left={0} outline="playerCardBox" />
         <CardBox top={0} left={300} outline="playerCardBox" />
+        <PlayerDeck top={1} left={1} />
+        <PlayerDiscardDeck top={1} left={301} />
       </div>
     )
   }
