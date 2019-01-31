@@ -1,243 +1,243 @@
 const playerCards = {
   Algiers: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'black',
+    population: 2946000
   },
   Atlanta: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'blue',
+    population: 4715000
   },
   Baghdad: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'black',
+    population: 6204000
   },
   Bangkok: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'red',
+    population: 7151000
   },
   Beijing: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'red',
+    population: 17311000
   },
   Bogota: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'yellow',
+    population: 8702000
   },
   'Buenos Aires': {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'yellow',
+    population: 13639000
   },
   Cairo: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'black',
+    population: 14718000
   },
   Chennai: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'black',
+    population: 8865000
   },
   Chicago: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'blue',
+    population: 9121000
   },
   Delhi: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'black',
+    population: 22242000
   },
   Essen: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'blue',
+    population: 575000
   },
   'Ho Chi Minh City': {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'red',
+    population: 8314000
   },
   'Hong Kong': {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'red',
+    population: 7106000
   },
   Istanbul: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'black',
+    population: 13576000
   },
   Jakarta: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'red',
+    population: 26063000
   },
   Johannesburg: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'yellow',
+    population: 3888000
   },
   Karachi: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'black',
+    population: 20711000
   },
   Khartoum: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'yellow',
+    population: 4887000
   },
   Kinshasa: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'yellow',
+    population: 9046000
   },
   Kolkata: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'black',
+    population: 14374000
   },
   Lagos: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'yellow',
+    population: 11547000
   },
   Lima: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'yellow',
+    population: 9121000
   },
   London: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'blue',
+    population: 8586000
   },
   'Los Angeles': {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'yellow',
+    population: 14900000
   },
   Madrid: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'blue',
+    population: 5427000
   },
   Manila: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'red',
+    population: 20767000
   },
   'Mexico City': {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'yellow',
+    population: 19463000
   },
   Miami: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'yellow',
+    population: 5582000
   },
   Milan: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'blue',
+    population: 5232000
   },
   Montreal: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'blue',
+    population: 3429000
   },
   Moscow: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'black',
+    population: 15512000
   },
   Mumbai: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'black',
+    population: 16910000
   },
   'New York': {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'blue',
+    population: 20464000
   },
   Osaka: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'red',
+    population: 2871000
   },
   Paris: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'blue',
+    population: 10755000
   },
   Riyadh: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'black',
+    population: 5037000
   },
   'San Francisco': {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'blue',
+    population: 5864000
   },
   Santiago: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'yellow',
+    population: 6015000
   },
   'Sao Paulo': {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'yellow',
+    population: 20186000
   },
   Seoul: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'red',
+    population: 22547000
   },
   Shanghai: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'red',
+    population: 13482000
   },
   'St Petersburg': {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'blue',
+    population: 4879000
   },
   Sydney: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'red',
+    population: 3785000
   },
   Taipei: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'red',
+    population: 8338000
   },
   Tehran: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'black',
+    population: 7419000
   },
   Tokyo: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'red',
+    population: 13189000
   },
   Washington: {
     type: 'city',
-    color: '',
-    population: 0
+    color: 'blue',
+    population: 4679000
   },
   'One Quiet Night': {
     type: 'event',
