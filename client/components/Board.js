@@ -11,6 +11,7 @@ import InfectionDeck from './InfectionDeck'
 import InfectionDiscardDeck from './InfectionDiscardDeck'
 import InfectionRate from './InfectionRate'
 import OutbreakTracker from './OutbreakTracker'
+import StatusBar from './StatusBar'
 
 const locations = Object.keys(cities)
 
@@ -289,6 +290,7 @@ class Board extends React.Component {
         <PlayerPawn player={4} />
         <InfectionRate />
         <OutbreakTracker />
+        <StatusBar />
       </div>
     )
   }
