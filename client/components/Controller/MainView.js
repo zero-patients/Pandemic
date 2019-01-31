@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 import React, {Component} from 'react'
 import db from '../../../server/db'
-import Header from './Header'
+import {Header} from './Header'
 import Footer from './Footer'
 
 const CURRENT_GAME = 'YzQ0qR6LZ7gxd8E03k1l'
@@ -102,26 +102,16 @@ class MainView extends Component {
         infectionDeck: data.infectionDeck,
         infectionDiscard: data.infectionDiscard
       })
-      console.log('state', this.state)
     })
   }
   render() {
     return (
       <div id="controller" className={this.playerId}>
-        {this.isTurn && this.remainingMoves > 0 ? (
-          <div className="controllerBookend">
-            <p className="controllerPanel">
-              Its your turn, the world is counting on you. You have{' '}
-              {this.remainingMoves} moves left. Choose carefully.
-            </p>
-          </div>
-        ) : (
-          <div className="controllerBookend">
-            <p className="controllerPanel">
-              Its not your turn, be a good teammate
-            </p>
-          </div>
-        )}
+        <Header
+          className="controllerBookend"
+          isTurn={this.isTurn}
+          remainingMoves={this.remainingMoves}
+        />
 
         <div className="controllerMiddle">
           <div className="cardContainer">

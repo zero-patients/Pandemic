@@ -1,3 +1,3 @@
-import Controller from './Controller'
+import MainView from './MainView'
 
-export default Controller
+export default MainView

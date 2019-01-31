@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, Board, HomePage} from './components'
-import Controller from './components/Controller'
+import MainView from './components/Controller/MainView'
 import InfectionCard from './components/InfectionCard'
 import {me} from './store'
 
@@ -22,7 +22,7 @@ class Routes extends Component {
       <Switch>
         <Route path="/board" component={Board} />
         <Route path="/card" component={InfectionCard} />
-        <Route path="/controller/:userId" component={Controller} />
+        <Route path="/controller/:userId" component={MainView} />
         <Route path="/" component={HomePage} />
       </Switch>
     )
