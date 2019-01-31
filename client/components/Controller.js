@@ -242,7 +242,11 @@ class Controller extends Component {
           </button>
           <button className="controllerPanel"> EVENT</button>
           <button className="controllerPanel"> SPECIALS</button>
-          <button className="controllerPanel" onClick={this.drawInfectionCard}>
+          <button
+            className="controllerPanel"
+            onClick={this.drawInfectionCard}
+            disabled={this.state.infectionDeck.length === 0}
+          >
             Draw Card
           </button>
         </div>

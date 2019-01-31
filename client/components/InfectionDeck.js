@@ -15,7 +15,7 @@ class InfectionDeck extends React.Component {
   async componentDidMount() {
     await db
       .collection('rooms')
-      .doc('frankRoom')
+      .doc('YzQ0qR6LZ7gxd8E03k1l')
       .onSnapshot(async doc => {
         const data = await doc.data()
         this.setState({cards: data.infectionDeck})

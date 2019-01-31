@@ -15,11 +15,13 @@ class InfectionDiscardDeck extends React.Component {
   async componentDidMount() {
     await db
       .collection('rooms')
-      .doc('frankRoom')
+      .doc('YzQ0qR6LZ7gxd8E03k1l')
       .onSnapshot(async doc => {
         const data = await doc.data()
         this.setState({cards: data.infectionDiscard})
       })
+    console.log('Discard')
+    console.log(this.state)
   }
 
   render() {
@@ -35,7 +37,9 @@ class InfectionDiscardDeck extends React.Component {
     }
     return this.state.cards.length === 0 ? null : (
       <img
-        src={`/${this.state.cards[this.state.cards.length - 1]}.jpg`}
+        src={`/images/cities/${
+          this.state.cards[this.state.cards.length - 1]
+        }.jpg`}
         style={styles}
       />
     )

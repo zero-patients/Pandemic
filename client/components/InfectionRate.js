@@ -25,7 +25,7 @@ class InfectionRate extends Component {
   render() {
     const styles = {
       position: 'absolute',
-      left: '1200px',
+      left: '600px',
       top: '150px',
       display: 'flex',
       flexDirection: 'column'
