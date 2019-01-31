@@ -14,6 +14,7 @@ class MainView extends Component {
     this.state = {
       playerCity: '',
       playerCityNeighbors: [],
+      playerCards: [],
       researchStations: [],
       infectionDeck: [],
       infectionDiscard: [],
