@@ -2,7 +2,10 @@ const db = require('../server/db')
 const cities = require('../client/data/cities')
 const infectionDeck = require('../client/data/infectionDeck')
 const infectionDiscard = require('../client/data/infectionDiscard')
+const infectionStatus = require('../client/data/infectionStatus')
 const researchStations = require('../client/data/researchStations')
+const roles = require('../client/data/roles')
+const playerCards = require('../client/data/playerCards')
 const {
   player1Info,
   player2Info,
@@ -27,10 +30,13 @@ const seedFirestore = async () => {
       player2Info,
       player3Info,
       player4Info,
+      playerCards,
       infectionIdx,
       infectionRate,
+      infectionStatus,
       outbreakTracker,
-      researchStations
+      researchStations,
+      roles
     },
     {merge: true}
   )

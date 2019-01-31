@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, Board, HomePage} from './components'
 import MainView from './components/Controller/MainView'
 import InfectionCard from './components/InfectionCard'
+import InfectionCardsContainer from './components/InfectionCardsContainer'
 import {me} from './store'
 
 /**
@@ -21,8 +22,8 @@ class Routes extends Component {
     return (
       <Switch>
         <Route path="/board" component={Board} />
-        <Route path="/card" component={InfectionCard} />
-        <Route path="/controller/:userId" component={MainView} />
+        <Route path="/card" component={InfectionCardsContainer} />
+        <Route path="/controller/:userId" component={Controller} />
         <Route path="/" component={HomePage} />
       </Switch>
     )
