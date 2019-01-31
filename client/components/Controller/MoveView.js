@@ -1,30 +1,27 @@
 import React from 'react'
+import {DriveMoves} from './DriveMoves'
 
 export const MoveView = props => {
   return (
     <div className="controllerMiddle">
       <div className="cardContainer">
-        {/* Render the neighboring cities onto the controller */}
-        {props.state.playerCityNeighbors.map((elem, idx) => {
-          const color = props.state.neighborCardColors[idx]
-          return (
-            <div key={idx}>
-              <button
-                style={{backgroundColor: color, borderRadius: '5%'}}
-                className="playerCard"
-                onClick={() => {
-                  props.goToCity(elem)
-                }}
-              >
-                <a>{elem}</a>
-                <a>Card Image</a>
-                <a>
-                  <b>Move one Space to this City</b>
-                </a>
-              </button>
-            </div>
-          )
-        })}
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+          <h4>Spend one action to go to neighboring city</h4>
+          {/* Render the neighboring cities onto the controller */}
+          <div style={{display: 'flex', flexDirection: 'row', flex: 'wrap'}}>
+            {props.state.playerCityNeighbors.map((elem, idx) => {
+              const color = props.state.neighborCardColors[idx]
+              return (
+                <DriveMoves
+                  key={idx}
+                  goToCity={props.goToCity}
+                  color={color}
+                  elem={elem}
+                />
+              )
+            })}
+          </div>
+        </div>
       </div>
 
       <div className="cardContainer">

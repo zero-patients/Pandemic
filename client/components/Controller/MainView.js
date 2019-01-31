@@ -29,6 +29,7 @@ class MainView extends Component {
     // this.currentView = 'move'
     this.buildResearchStation = this.buildResearchStation.bind(this)
     this.drawInfectionCard = this.drawInfectionCard.bind(this)
+    this.goToCity = this.goToCity.bind(this)
     this.handleViewChange = this.handleViewChange.bind(this)
   }
 
@@ -125,7 +126,9 @@ class MainView extends Component {
           remainingMoves={this.remainingMoves}
         />
 
-        {this.state.currentView === 'move' && <MoveView state={this.state} />}
+        {this.state.currentView === 'move' && (
+          <MoveView state={this.state} goToCity={this.goToCity} />
+        )}
 
         {this.state.currentView === 'hand' && <h1>VIEW IS HAND</h1>}
         {this.state.currentView === 'event' && <h1>YOUR EVENTS</h1>}

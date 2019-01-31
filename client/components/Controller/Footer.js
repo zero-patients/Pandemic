@@ -9,7 +9,6 @@ export const Footer = props => {
       </button>
 
       <button className="controllerPanel" onClick={() => props.onClick('hand')}>
-        {' '}
         HAND
       </button>
 
@@ -19,16 +18,15 @@ export const Footer = props => {
           props.buildResearchStation(props.playerCity)
         }}
       >
-        {' '}
         BUILD
       </button>
+
       <button className="controllerPanel"> CURE</button>
 
       <button
         className="controllerPanel"
         onClick={() => props.onClick('event')}
       >
-        {' '}
         EVENT
       </button>
 
@@ -36,13 +34,12 @@ export const Footer = props => {
         className="controllerPanel"
         onClick={() => props.onClick('special')}
       >
-        {' '}
         SPECIALS
       </button>
 
       <button
         className="controllerPanel"
-        onClick={props.drawInfectionCard}
+        onClick={() => props.drawInfectionCard()}
         disabled={props.infectionDeck.length === 0}
       >
         Draw Card
