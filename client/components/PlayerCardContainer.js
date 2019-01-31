@@ -3,7 +3,7 @@ import CardBox from './CardBox'
 import InfectionDeck from './InfectionDeck'
 import InfectionDiscardDeck from './InfectionDiscardDeck'
 
-class InfectionCardsContainer extends React.Component {
+class PlayerCardContainer extends React.Component {
   render() {
     const {top, left} = this.props
 
@@ -14,13 +14,11 @@ class InfectionCardsContainer extends React.Component {
     }
     return (
       <div style={positioning}>
-        <CardBox top={0} left={0} outline="infectionCardBox" />
-        <CardBox top={0} left={300} outline="infectionCardBox" />
-        <InfectionDeck top={1} left={1} />
-        <InfectionDiscardDeck top={1} left={301} />
+        <CardBox top={0} left={0} outline="playerCardBox" />
+        <CardBox top={0} left={300} outline="playerCardBox" />
       </div>
     )
   }
 }
 
-export default InfectionCardsContainer
+export default PlayerCardContainer

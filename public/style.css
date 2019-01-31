@@ -191,3 +191,21 @@ div.cardbox {
   /* in order: x offset, y offset, blur size, spread size, color */
   /* blur size and spread size are optional (they default to 0) */
 }
+
+div.infectionCardBox {
+  width: 251px;
+  height: 151px;
+  box-shadow: 0px 0px 10px 5px rgba(176, 231, 47, 0.904);
+
+  /* in order: x offset, y offset, blur size, spread size, color */
+  /* blur size and spread size are optional (they default to 0) */
+}
+
+div.playerCardBox {
+  width: 251px;
+  height: 151px;
+  box-shadow: 0px 0px 10px 5px rgba(47, 179, 231, 0.904);
+
+  /* in order: x offset, y offset, blur size, spread size, color */
+  /* blur size and spread size are optional (they default to 0) */
+}
