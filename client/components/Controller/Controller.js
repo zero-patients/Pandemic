@@ -1,6 +1,6 @@
 /* eslint-disable react/button-has-type */
 import React, {Component} from 'react'
-import db from '../../server/db'
+import db from '../../../server/db'
 
 class Controller extends Component {
   constructor(props) {
@@ -23,30 +23,30 @@ class Controller extends Component {
     this.currentView = 'move'
     this.playerCards = [1, 2]
   }
-  goToAtlanta = () => {
-    this.game.set(
-      {[`${this.playerId}Info`]: {location: 'Atlanta'}},
-      {merge: true}
-    )
-  }
-  goToParis = () => {
-    this.game.set(
-      {[`${this.playerId}Info`]: {location: 'Paris'}},
-      {merge: true}
-    )
-  }
-  goToBogota = () => {
-    this.game.set(
-      {[`${this.playerId}Info`]: {location: 'Bogota'}},
-      {merge: true}
-    )
-  }
-  goToShanghai = () => {
-    this.game.set(
-      {[`${this.playerId}Info`]: {location: 'Shanghai'}},
-      {merge: true}
-    )
-  }
+  // goToAtlanta = () => {
+  //   this.game.set(
+  //     {[`${this.playerId}Info`]: {location: 'Atlanta'}},
+  //     {merge: true}
+  //   )
+  // }
+  // goToParis = () => {
+  //   this.game.set(
+  //     {[`${this.playerId}Info`]: {location: 'Paris'}},
+  //     {merge: true}
+  //   )
+  // }
+  // goToBogota = () => {
+  //   this.game.set(
+  //     {[`${this.playerId}Info`]: {location: 'Bogota'}},
+  //     {merge: true}
+  //   )
+  // }
+  // goToShanghai = () => {
+  //   this.game.set(
+  //     {[`${this.playerId}Info`]: {location: 'Shanghai'}},
+  //     {merge: true}
+  //   )
+  // }
   goToCity = city => {
     this.game.set({[`${this.playerId}Info`]: {location: city}}, {merge: true})
   }
