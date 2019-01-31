@@ -1,12 +1,12 @@
 import React from 'react'
 
-export const DriveMoves = props => {
+export const Moves = props => {
   return (
     <button
       style={{backgroundColor: props.color, borderRadius: '5%'}}
       className="playerCard"
       onClick={() => {
-        props.goToCity(props.elem)
+        props.move(props.elem)
       }}
     >
       <a>{props.elem}</a>
