@@ -9,6 +9,7 @@ import CityMarker from './CityMarker'
 import CardBox from './CardBox'
 import InfectionDeck from './InfectionDeck'
 import InfectionDiscardDeck from './InfectionDiscardDeck'
+import InfectionCardsContainer from './InfectionCardsContainer'
 import InfectionRate from './InfectionRate'
 import OutbreakTracker from './OutbreakTracker'
 
@@ -278,10 +279,7 @@ class Board extends React.Component {
           )
         })}
 
-        <CardBox top={49} left={1199} />
-        <CardBox top={49} left={1499} />
-        <InfectionDeck top={50} left={1200} />
-        <InfectionDiscardDeck top={50} left={1500} />
+        <InfectionCardsContainer top={50} left={1200} />
 
         <PlayerPawn player={1} />
         <PlayerPawn player={2} />
