@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import db from '../../../server/db'
 import {Header} from './Header'
 import {Footer} from './Footer'
+import {MoveView} from './MoveView'
 
 const CURRENT_GAME = 'YzQ0qR6LZ7gxd8E03k1l'
 
@@ -15,7 +16,8 @@ class MainView extends Component {
       playerCityNeighbors: [],
       researchStations: [],
       infectionDeck: [],
-      infectionDiscard: []
+      infectionDiscard: [],
+      currentView: 'move'
     }
 
     this.game = db.collection('rooms').doc(CURRENT_GAME)
@@ -24,7 +26,10 @@ class MainView extends Component {
 
     this.isTurn = true
     this.remainingMoves = 4
-    this.currentView = 'move'
+    // this.currentView = 'move'
+    this.buildResearchStation = this.buildResearchStation.bind(this)
+    this.drawInfectionCard = this.drawInfectionCard.bind(this)
+    this.handleViewChange = this.handleViewChange.bind(this)
   }
 
   goToCity = city => {
@@ -104,6 +109,13 @@ class MainView extends Component {
       })
     })
   }
+
+  handleViewChange = newView => {
+    this.setState({
+      currentView: newView
+    })
+  }
+
   render() {
     return (
       <div id="controller" className={this.playerId}>
@@ -113,65 +125,18 @@ class MainView extends Component {
           remainingMoves={this.remainingMoves}
         />
 
-        <div className="controllerMiddle">
-          <div className="cardContainer">
-            {/* Render the neighboring cities onto the controller */}
-            {this.state.playerCityNeighbors.map((elem, idx) => {
-              const color = this.state.neighborCardColors[idx]
-              return (
-                <div key={idx}>
-                  <button
-                    style={{backgroundColor: color, borderRadius: '5%'}}
-                    className="playerCard"
-                    onClick={() => {
-                      this.goToCity(elem)
-                    }}
-                  >
-                    <a>{elem}</a>
-                    <a>Card Image</a>
-                    <a>
-                      <b>Move one Space to this City</b>
-                    </a>
-                  </button>
-                </div>
-              )
-            })}
-          </div>
+        {this.state.currentView === 'move' && <MoveView state={this.state} />}
 
-          <div className="cardContainer">
-            {/* Render the cities with Research Stations onto the controller */}
-            {this.state.researchStations.includes(this.state.playerCity)
-              ? this.state.researchStations.map((elem, idx) => {
-                  const color = this.state.researchStationCardColors[idx]
-                  return (
-                    <div key={idx}>
-                      <button
-                        style={{backgroundColor: color, borderRadius: '5%'}}
-                        className="playerCard"
-                        onClick={() => {
-                          this.goToCity(elem)
-                        }}
-                      >
-                        <a>{elem}</a>
-                        <a>Card Image</a>
-                        <a>
-                          <b>Move one Space to this Research Station</b>
-                        </a>
-                      </button>
-                    </div>
-                  )
-                })
-              : null}
-          </div>
-
-          <div className="cardContainer" />
-        </div>
+        {this.state.currentView === 'hand' && <h1>VIEW IS HAND</h1>}
+        {this.state.currentView === 'event' && <h1>YOUR EVENTS</h1>}
+        {this.state.currentView === 'special' && <h1>SPECIAL MOVES</h1>}
 
         <Footer
           playerCity={this.state.playerCity}
           buildResearchStation={this.buildResearchStation}
           drawInfectionCard={this.drawInfectionCard}
           infectionDeck={this.state.infectionDeck}
+          onClick={this.handleViewChange}
         />
       </div>
     )
