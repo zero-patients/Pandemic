@@ -5,7 +5,8 @@ const infectionDiscard = require('../client/data/infectionDiscard')
 const infectionStatus = require('../client/data/infectionStatus')
 const researchStations = require('../client/data/researchStations')
 const roles = require('../client/data/roles')
-const playerCards = require('../client/data/playerCards')
+const playerDeck = require('../client/data/playerDeck')
+const playerDiscard = require('../client/data/playerDiscard')
 const {
   player1Info,
   player2Info,
@@ -30,7 +31,8 @@ const seedFirestore = async () => {
       player2Info,
       player3Info,
       player4Info,
-      playerCards,
+      playerDeck,
+      playerDiscard,
       infectionIdx,
       infectionRate,
       infectionStatus,

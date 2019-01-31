@@ -6,10 +6,8 @@ import mapDetails from '../data/mapDetails'
 import PlayerPawn from './PlayerPawn'
 import cities from '../data/cities'
 import CityMarker from './CityMarker'
-import CardBox from './CardBox'
-import InfectionDeck from './InfectionDeck'
-import InfectionDiscardDeck from './InfectionDiscardDeck'
 import InfectionCardsContainer from './InfectionCardsContainer'
+import PlayerCardContainer from './PlayerCardContainer'
 import InfectionRate from './InfectionRate'
 import OutbreakTracker from './OutbreakTracker'
 import StatusBar from './StatusBar'
@@ -281,6 +279,7 @@ class Board extends React.Component {
         })}
 
         <InfectionCardsContainer top={50} left={1200} />
+        <PlayerCardContainer top={850} left={1000} />
 
         <PlayerPawn player={1} />
         <PlayerPawn player={2} />

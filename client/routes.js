@@ -22,8 +22,8 @@ class Routes extends Component {
     return (
       <Switch>
         <Route path="/board" component={Board} />
-        <Route path="/card" component={InfectionCardsContainer} />
-        <Route path="/controller/:userId" component={Controller} />
+        <Route path="/card" component={InfectionCard} />
+        <Route path="/controller/:userId" component={MainView} />
         <Route path="/" component={HomePage} />
       </Switch>
     )

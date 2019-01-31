@@ -27,9 +27,6 @@ class InfectionDeck extends React.Component {
       position: 'absolute',
       top: `${this.state.top}px`,
       left: `${this.state.left}px`,
-      // background: 'red',
-      // border: '2px solid purple',
-      // textAlign: 'center',
       width: '250px',
       height: '200px'
     }
