@@ -1,4 +1,4 @@
-const playerCards = {
+const playerDeck = {
   Algiers: {
     type: 'city',
     color: 'black',
@@ -271,4 +271,4 @@ const playerCards = {
   }
 }
 
-module.exports = playerCards
+module.exports = playerDeck

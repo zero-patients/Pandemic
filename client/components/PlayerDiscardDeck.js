@@ -1,7 +1,7 @@
 import React from 'react'
 import db from '../../server/db'
 
-class InfectionDiscardDeck extends React.Component {
+class PlayerDiscardDeck extends React.Component {
   constructor(props) {
     super(props)
 
@@ -18,7 +18,7 @@ class InfectionDiscardDeck extends React.Component {
       .doc('YzQ0qR6LZ7gxd8E03k1l')
       .onSnapshot(async doc => {
         const data = await doc.data()
-        this.setState({cards: data.infectionDiscard})
+        this.setState({cards: data.playerDiscard})
       })
   }
 
@@ -41,4 +41,4 @@ class InfectionDiscardDeck extends React.Component {
   }
 }
 
-export default InfectionDiscardDeck
+export default PlayerDiscardDeck

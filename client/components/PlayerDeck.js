@@ -1,7 +1,7 @@
 import React from 'react'
 import db from '../../server/db'
 
-class InfectionDiscardDeck extends React.Component {
+class PlayerDeck extends React.Component {
   constructor(props) {
     super(props)
 
@@ -18,7 +18,7 @@ class InfectionDiscardDeck extends React.Component {
       .doc('YzQ0qR6LZ7gxd8E03k1l')
       .onSnapshot(async doc => {
         const data = await doc.data()
-        this.setState({cards: data.infectionDiscard})
+        this.setState({cards: data.playerDeck})
       })
   }
 
@@ -31,14 +31,9 @@ class InfectionDiscardDeck extends React.Component {
       height: '200px'
     }
     return this.state.cards.length === 0 ? null : (
-      <img
-        src={`/images/cities/${
-          this.state.cards[this.state.cards.length - 1]
-        }.jpg`}
-        style={styles}
-      />
+      <img src="/playingCardBlue.png" style={styles} />
     )
   }
 }
 
-export default InfectionDiscardDeck
+export default PlayerDeck
