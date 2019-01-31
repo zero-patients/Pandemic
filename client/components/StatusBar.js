@@ -65,7 +65,14 @@ class StatusBar extends Component {
           )
         })}
         <div>
-          <i style={{color: 'white'}} className="fas fa-home" />
+          <i
+            style={{
+              color: 'white',
+              textShadow:
+                '-1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000'
+            }}
+            className="fas fa-home"
+          />
           <span style={text}> {this.state.researchStations}</span>
         </div>
       </div>
