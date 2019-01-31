@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import db from '../../../server/db'
 import {Header} from './Header'
-import Footer from './Footer'
+import {Footer} from './Footer'
 
 const CURRENT_GAME = 'YzQ0qR6LZ7gxd8E03k1l'
 
@@ -167,54 +167,12 @@ class MainView extends Component {
           <div className="cardContainer" />
         </div>
 
-        <div className="controllerBookend">
-          <button
-            className="controllerPanel"
-            onClick={() => {
-              this.goToParis()
-            }}
-          >
-            {' '}
-            MOVE/ go to Paris
-          </button>
-          <button
-            className="controllerPanel"
-            onClick={() => {
-              this.goToShanghai()
-            }}
-          >
-            {' '}
-            HAND/ go to Shanghai
-          </button>
-          <button
-            className="controllerPanel"
-            onClick={() => {
-              // this.goToAtlanta()
-              this.buildResearchStation(this.state.playerCity)
-            }}
-          >
-            {' '}
-            BUILD
-          </button>
-          <button
-            className="controllerPanel"
-            onClick={() => {
-              this.goToBogota()
-            }}
-          >
-            {' '}
-            CURE/ go to Bogota
-          </button>
-          <button className="controllerPanel"> EVENT</button>
-          <button className="controllerPanel"> SPECIALS</button>
-          <button
-            className="controllerPanel"
-            onClick={this.drawInfectionCard}
-            disabled={this.state.infectionDeck.length === 0}
-          >
-            Draw Card
-          </button>
-        </div>
+        <Footer
+          playerCity={this.state.playerCity}
+          buildResearchStation={this.buildResearchStation}
+          drawInfectionCard={this.drawInfectionCard}
+          infectionDeck={this.state.infectionDeck}
+        />
       </div>
     )
   }
