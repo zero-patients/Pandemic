@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, Board, HomePage} from './components'
 import MainView from './components/Controller/MainView'
 import InfectionCard from './components/InfectionCard'
+import InfectionCardsContainer from './components/InfectionCardsContainer'
 import {me} from './store'
 
 /**
