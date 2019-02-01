@@ -24,29 +24,29 @@ const generateGroups = (arr, size) => {
 const shufflePlayerDeck = () => {
   // NEEDS REFACTOR!!!
 
-  let playerDeckNoEpidemics = infectionDeck.concat([
-    'Sup',
-    'We',
-    'Are',
-    'Event',
-    'Placeholders'
-  ]) // add placeholders to playerdeck
-  let shuffledPDNE = shuffle(playerDeckNoEpidemics) //shuffle events in
-  let cardsDealtToPlayers = [[], [], [], []] //deal 2 cards to each player
-  for (let i = 0; i < 8; i++) {
-    cardsDealtToPlayers[i % 4].push(shuffledPDNE.pop())
+  let playerDeckNoEpidemics = shuffle()
+  const epidemic = {
+    name: 'Epidemic',
+    type: 'epidemic',
+    description:
+      '1-INCREASE\nMove the infection rate marker forward 1 space.\n2-INFECT\nDraw the bottom card from the infection deck and put 3 infection cubes on that city. Discard that card.\n3-INTENSIFY\nShuffle the cards in the infection discard pile and put them on top of the infection discard deck.'
   }
 
-  let pileLength = Math.ceil(shuffledPDNE.length / 4)
-  let smallPiles = generateGroups(shuffledPDNE, pileLength)
+  let cardsDealtToPlayers = [[], [], [], []] //deal 2 cards to each player
+  for (let i = 0; i < 8; i++) {
+    cardsDealtToPlayers[i % 4].push(playerDeckNoEpidemics.pop())
+  }
+
+  let pileLength = Math.ceil(playerDeckNoEpidemics.length / 4)
+  let smallPiles = generateGroups(playerDeckNoEpidemics, pileLength)
   let finalShuffle = []
 
   smallPiles.map(pile => {
-    pile.push('EPIDEMIC SUCKA!!')
+    pile.push(epidemic)
     finalShuffle = finalShuffle.concat(shuffle(pile))
   })
 
-  return finalShuffle
+  return {finalShuffle, cardsDealtToPlayers}
 }
 
 const epidemicShuffle = (drawPile, discardPile) => {

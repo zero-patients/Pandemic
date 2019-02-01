@@ -131,6 +131,7 @@ class MainView extends Component {
           className="controllerBookend"
           isTurn={this.isTurn}
           remainingMoves={this.remainingMoves}
+          playerId={this.playerId}
         />
 
         {this.state.currentView === 'move' && (

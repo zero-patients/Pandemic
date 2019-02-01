@@ -4,7 +4,8 @@ const player1Info = {
   hand: [],
   location: 'Atlanta',
   role: {description: '', name: ''},
-  offset: [0, -10]
+  offset: [0, -10],
+  actions: 0
 }
 const player2Info = {
   fillStyle: 'gold',
@@ -12,7 +13,8 @@ const player2Info = {
   hand: [],
   location: 'Atlanta',
   role: {description: '', name: ''},
-  offset: [10, 0]
+  offset: [10, 0],
+  actions: 0
 }
 const player3Info = {
   fillStyle: 'crimson',
@@ -21,7 +23,8 @@ const player3Info = {
   location: 'Atlanta',
 
   role: {description: '', name: ''},
-  offset: [0, 10]
+  offset: [0, 10],
+  actions: 0
 }
 const player4Info = {
   fillStyle: 'green',
@@ -30,7 +33,8 @@ const player4Info = {
   location: 'Atlanta',
 
   role: {description: '', name: ''},
-  offset: [-10, 0]
+  offset: [-10, 0],
+  actions: 0
 }
 
 module.exports = {player1Info, player2Info, player3Info, player4Info}
