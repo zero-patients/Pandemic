@@ -2,7 +2,10 @@ import React, {Component} from 'react'
 import {Infection} from './Infection'
 
 const InfectionGroup = props => {
-  const {color, count, speed} = props
+  let {color, count, speed} = props
+  if (color === 'blue') {
+    color = '#2196F3'
+  }
   return (
     <div>
       {count === 1 ? (

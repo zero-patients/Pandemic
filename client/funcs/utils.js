@@ -71,8 +71,6 @@ const addInfection = (city, color, count) => {
   const newCount = count
   newCount[infectionColors[color]]++
 
-  console.log(city, color, count)
-
   game.set({cities: {[city]: {diseases: newCount}}}, {merge: true})
 }
 const treatInfection = (city, color, count, isCured) => {
@@ -87,13 +85,10 @@ const treatInfection = (city, color, count, isCured) => {
 
   if (newCount[infectionColors[color]] > 0 && !isCured) {
     newCount[infectionColors[color]]--
-    console.log('isCured', isCured)
   }
   if (newCount[infectionColors[color]] > 0 && isCured) {
     newCount[infectionColors[color]] = 0
-    console.log('isCured', isCured)
   }
-  console.log(city, color, count)
 
   game.set({cities: {[city]: {diseases: newCount}}}, {merge: true})
 }
