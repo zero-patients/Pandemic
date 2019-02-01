@@ -11,6 +11,8 @@ import PlayerCardContainer from './PlayerCardContainer'
 import InfectionRate from './InfectionRate'
 import OutbreakTracker from './OutbreakTracker'
 import StatusBar from './StatusBar'
+import {Button, Header, Image, Modal} from 'semantic-ui-react'
+import db from '../../server/db'
 
 const locations = Object.keys(cities)
 
@@ -18,9 +20,36 @@ class Board extends React.Component {
   constructor(props) {
     super(props)
     this.canvasRef = React.createRef()
+    this.state = {showRules: false}
   }
 
+  handleOpen = () => {
+    this.setState({showRules: true})
+  }
+
+  handleClose = () => {
+    this.setState({showRules: false})
+  }
+
+  componentDidUpdate() {
+    console.log('The board was updated')
+    console.log(this.state.showRules)
+  }
+
+  show = dimmer => () => this.setState({dimmer, showRules: true})
+  close = () => this.setState({showRules: false})
+
   componentDidMount() {
+    const game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
+    game.onSnapshot(async doc => {
+      const data = await doc.data()
+      this.setState({
+        showRules: data.showRules
+      })
+    })
+    console.log('Show Rules is set to: ')
+    console.log(this.state.showRules)
+
     const canvas = this.canvasRef.current
 
     canvas.style.backgroundColor = '#87cefa'
@@ -263,6 +292,42 @@ class Board extends React.Component {
   render() {
     return (
       <div>
+        {this.state.showRules ? (
+          <div>
+            <Button onClick={this.show(true)}>Default</Button>
+            <Button onClick={this.show('inverted')}>Inverted</Button>
+            <Button onClick={this.show('blurring')}>Blurring</Button>
+
+            <Modal
+              dimmer="blurring"
+              open={this.state.showRules}
+              onClose={this.close}
+            >
+              <Modal.Header>Game Rules</Modal.Header>
+              <Modal.Content>
+                <Modal.Description>
+                  <Header>
+                    Pandemic is a cooperative game. The players all win or lose
+                    together
+                  </Header>
+                  <p>The goal is to discover cures for all 4 disieases</p>
+                  <p>The Players lose if:</p>
+                  <ul>
+                    <li>8 outbreaks occur (a worldwide panic happens)</li>
+                    <li>
+                      not enough disease cubes are available when needed (a
+                      disease spreads too much)
+                    </li>
+                    <li>
+                      not enough player cards are left when needed (your team
+                      runs out of time)
+                    </li>
+                  </ul>
+                </Modal.Description>
+              </Modal.Content>
+            </Modal>
+          </div>
+        ) : null}
         <canvas
           id="board"
           className="board"
