@@ -61,19 +61,39 @@ const epidemicShuffle = (drawPile, discardPile) => {
   return [newPile, bottomCard]
 }
 
-const addInfection = (city, color, count) => {
+const addInfection = (city, color, count, infectionStatus) => {
   const infectionColors = {
     blue: 0,
     darkgoldenrod: 1,
     black: 2,
     red: 3
   }
-  const newCount = count
-  newCount[infectionColors[color]]++
 
-  game.set({cities: {[city]: {diseases: newCount}}}, {merge: true})
+  let cureColor = ''
+  if (color === 'darkgoldenrod') {
+    cureColor = 'yellow'
+  } else {
+    cureColor = color
+  }
+  const isCured = infectionStatus[cureColor].isCured
+
+  const newCount = count
+  if (isCured && infectionStatus[cureColor].count === 0) {
+    console.log('This disease has been eradicated')
+  } else {
+    newCount[infectionColors[color]]++
+    infectionStatus[cureColor].count++
+
+    game.set(
+      {
+        cities: {[city]: {diseases: newCount}},
+        infectionStatus
+      },
+      {merge: true}
+    )
+  }
 }
-const treatInfection = (city, color, count, isCured) => {
+const treatInfection = (city, color, count, infectionStatus) => {
   const infectionColors = {
     blue: 0,
     darkgoldenrod: 1,
@@ -81,7 +101,15 @@ const treatInfection = (city, color, count, isCured) => {
     red: 3
   }
 
+  let cureColor = ''
+  if (color === 'darkgoldenrod') {
+    cureColor = 'yellow'
+  } else {
+    cureColor = color
+  }
+
   const newCount = count
+  const isCured = infectionStatus[cureColor].isCured
 
   if (newCount[infectionColors[color]] > 0 && !isCured) {
     newCount[infectionColors[color]]--
