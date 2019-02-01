@@ -23,8 +23,16 @@ class Infection extends Component {
     const orbit = () => {
       this.setState(
         {
-          left: getX(0 + xShift, this.state.angle, radius),
-          top: getY(0 + yShift, this.state.angle, radius),
+          left: getX(
+            0 + xShift,
+            this.state.angle,
+            radius + (this.props.addRadius || 0)
+          ),
+          top: getY(
+            0 + yShift,
+            this.state.angle,
+            radius + (this.props.addRadius || 0)
+          ),
           angle: (this.state.angle + speed + this.props.addSpeed) % 360
         },
         () => {
