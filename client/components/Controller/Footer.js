@@ -4,8 +4,6 @@ import db from '../../../server/db'
 import {addInfection, treatInfection} from '../../funcs/utils'
 
 export const Footer = props => {
-  console.log(props)
-
   return (
     <div className="controllerBookend">
       <button className="controllerPanel" onClick={() => props.onClick('move')}>
