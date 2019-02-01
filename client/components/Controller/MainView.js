@@ -4,6 +4,7 @@ import db from '../../../server/db'
 import {Header} from './Header'
 import {Footer} from './Footer'
 import {MoveView} from './MoveView'
+import {PlayerHand} from './PlayerHand'
 
 const CURRENT_GAME = 'YzQ0qR6LZ7gxd8E03k1l'
 
@@ -15,7 +16,8 @@ class MainView extends Component {
       playerCity: '',
       playerCityInfo: {},
       playerCityNeighbors: [],
-      playerCards: [],
+      playerHand: [],
+      playerDeck: [],
       researchStations: [],
       infectionDeck: [],
       infectionDiscard: [],
@@ -34,6 +36,7 @@ class MainView extends Component {
     this.drawInfectionCard = this.drawInfectionCard.bind(this)
     this.goToCity = this.goToCity.bind(this)
     this.handleViewChange = this.handleViewChange.bind(this)
+    this.drawPlayerCard = this.drawPlayerCard.bind(this)
   }
 
   goToCity = city => {
@@ -60,11 +63,21 @@ class MainView extends Component {
     }
   }
 
+  drawPlayerCard = async () => {
+    const [card] = this.state.playerDeck.slice(-1)
+
+    await this.game.set(
+      {
+        [`${this.playerId}Info`]: {hand: [...this.state.playerHand, card]},
+        playerDeck: [...this.state.playerDeck.slice(0, -1)]
+      },
+      {merge: true}
+    )
+  }
+
   drawInfectionCard = async () => {
-    // console.log('Draw a card')
     const [card] = this.state.infectionDeck.slice(-1)
-    // console.log(card)
-    // console.log('Discards : ', ...this.state.infectionDiscard)
+
     await this.game.set(
       {
         infectionDiscard: [...this.state.infectionDiscard, card],
@@ -73,14 +86,20 @@ class MainView extends Component {
       {merge: true}
     )
   }
+
   componentDidMount() {
     this.game.onSnapshot(async doc => {
       const data = await doc.data()
-      // console.log(data)
       const citiesData = data.cities
       let playerInfo = data[`${this.playerId}Info`]
+      let playerHand = playerInfo.hand
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
+      console.log(playerCityInfo)
+      let playerDeck = data.playerDeck
+      console.log(playerDeck)
+      console.log(playerHand)
+      let playerDiscard = data.playerDiscard
       let playerCityNeighbors = playerCityInfo.neighbors
       let researchStations = data.researchStations
       let neighborCardColors = playerCityNeighbors.map(elem => {
@@ -107,6 +126,8 @@ class MainView extends Component {
         ...playerInfo,
         playerCity: playerCity,
         playerCityInfo: playerCityInfo,
+        playerHand: playerHand,
+        playerDeck: playerDeck,
         playerCityNeighbors: playerCityNeighbors,
         researchStations: researchStations,
         neighborCardColors: neighborCardColors,
@@ -138,7 +159,10 @@ class MainView extends Component {
           <MoveView state={this.state} goToCity={this.goToCity} />
         )}
 
-        {this.state.currentView === 'hand' && <h1>VIEW IS HAND</h1>}
+        {this.state.currentView === 'hand' && (
+          <PlayerHand playerHand={this.state.playerHand} />
+        )}
+
         {this.state.currentView === 'event' && <h1>YOUR EVENTS</h1>}
         {this.state.currentView === 'special' && <h1>SPECIAL MOVES</h1>}
 
@@ -148,6 +172,7 @@ class MainView extends Component {
           drawInfectionCard={this.drawInfectionCard}
           infectionDeck={this.state.infectionDeck}
           onClick={this.handleViewChange}
+          drawPlayerCard={this.drawPlayerCard}
           //temporary
           color={this.state.playerCityInfo.color}
           count={this.state.playerCityInfo.diseases}

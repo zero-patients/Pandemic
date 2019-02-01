@@ -29,6 +29,12 @@ export const Footer = props => {
       </button>
       <button
         className="controllerPanel"
+        onClick={() => props.drawPlayerCard()}
+      >
+        DRAW PLAYER CARD
+      </button>
+      <button
+        className="controllerPanel"
         onClick={() =>
           treatInfection(
             props.playerCity,
