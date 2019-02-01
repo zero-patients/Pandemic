@@ -1,5 +1,7 @@
+/* eslint-disable react/button-has-type */
 import React, {Component} from 'react'
 import db from '../../../server/db'
+import {addInfection, treatInfection} from '../../funcs/utils'
 
 export const Footer = props => {
   return (
@@ -14,14 +16,69 @@ export const Footer = props => {
 
       <button
         className="controllerPanel"
-        onClick={() => {
-          props.buildResearchStation(props.playerCity)
-        }}
+        onClick={() => props.buildResearchStation(props.playerCity)}
       >
         BUILD
       </button>
 
-      <button className="controllerPanel"> CURE</button>
+      <button
+        className="controllerPanel"
+        onClick={() => addInfection(props.playerCity, props.color, props.count)}
+      >
+        INFECT
+      </button>
+      <button
+        className="controllerPanel"
+        onClick={() =>
+          treatInfection(
+            props.playerCity,
+            'blue',
+            props.count,
+            props.infectionStatus.blue.isCured
+          )
+        }
+      >
+        TREAT BLUE
+      </button>
+      <button
+        className="controllerPanel"
+        onClick={() =>
+          treatInfection(
+            props.playerCity,
+            'darkgoldenrod',
+            props.count,
+            props.infectionStatus.yellow.isCured
+          )
+        }
+      >
+        TREAT YELLOW
+      </button>
+      <button
+        className="controllerPanel"
+        onClick={() =>
+          treatInfection(
+            props.playerCity,
+            'black',
+            props.count,
+            props.infectionStatus.black.isCured
+          )
+        }
+      >
+        TREAT BLACK
+      </button>
+      <button
+        className="controllerPanel"
+        onClick={() =>
+          treatInfection(
+            props.playerCity,
+            'blue',
+            props.count,
+            props.infectionStatus.red.isCured
+          )
+        }
+      >
+        TREAT RED
+      </button>
 
       <button
         className="controllerPanel"

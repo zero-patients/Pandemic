@@ -13,12 +13,14 @@ class MainView extends Component {
 
     this.state = {
       playerCity: '',
+      playerCityInfo: {},
       playerCityNeighbors: [],
       playerCards: [],
       researchStations: [],
       infectionDeck: [],
       infectionDiscard: [],
-      currentView: 'move'
+      currentView: 'move',
+      infectionStatus: {}
     }
 
     this.game = db.collection('rooms').doc(CURRENT_GAME)
@@ -75,6 +77,7 @@ class MainView extends Component {
     this.game.onSnapshot(async doc => {
       const data = await doc.data()
       // console.log(data)
+      const citiesData = data.cities
       let playerInfo = data[`${this.playerId}Info`]
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
@@ -98,16 +101,19 @@ class MainView extends Component {
           return data.cities[elem].color
         }
       })
+      let infectionStatus = data.infectionStatus
 
       this.setState({
         ...playerInfo,
         playerCity: playerCity,
+        playerCityInfo: playerCityInfo,
         playerCityNeighbors: playerCityNeighbors,
         researchStations: researchStations,
         neighborCardColors: neighborCardColors,
         researchStationCardColors: researchStationCardColors,
         infectionDeck: data.infectionDeck,
-        infectionDiscard: data.infectionDiscard
+        infectionDiscard: data.infectionDiscard,
+        infectionStatus: infectionStatus
       })
     })
   }
@@ -142,6 +148,10 @@ class MainView extends Component {
           drawInfectionCard={this.drawInfectionCard}
           infectionDeck={this.state.infectionDeck}
           onClick={this.handleViewChange}
+          //temporary
+          color={this.state.playerCityInfo.color}
+          count={this.state.playerCityInfo.diseases}
+          infectionStatus={this.state.infectionStatus}
         />
       </div>
     )
