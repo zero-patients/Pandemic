@@ -22,6 +22,7 @@ const gameSession = 'YzQ0qR6LZ7gxd8E03k1l'
 
 const seedFirestore = async () => {
   const game = db.collection('rooms').doc(gameSession)
+  const showRules = false
   await game.set(
     {
       cities,
@@ -38,7 +39,8 @@ const seedFirestore = async () => {
       infectionStatus,
       outbreakTracker,
       researchStations,
-      roles
+      roles,
+      showRules
     },
     {merge: true}
   )

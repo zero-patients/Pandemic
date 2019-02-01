@@ -307,7 +307,7 @@ class Board extends React.Component {
               <Modal.Content>
                 <Modal.Description>
                   <Header>
-                    Pandemic is a cooperative game. THe players all win or lose
+                    Pandemic is a cooperative game. The players all win or lose
                     together
                   </Header>
                   <p>The goal is to discover cures for all 4 disieases</p>
