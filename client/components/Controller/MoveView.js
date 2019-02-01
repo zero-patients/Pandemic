@@ -6,12 +6,15 @@ export const MoveView = props => {
     <div className="controllerMiddle">
       <div className="cardContainer">
         {/* <div style={{display: 'flex', flexDirection: 'column'}}> */}
-        <h4>Spend one action to go to neighboring city</h4>
-        <div style={{display: 'flex', flexDirection: 'row', flex: 'wrap'}}>
+        <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+          <p className="playerCard">
+            Spend one action to go to neighboring city
+          </p>
           {props.state.playerCityNeighbors.map((elem, idx) => {
             const color = props.state.neighborCardColors[idx]
             return (
               <Moves
+                className="cardContainer"
                 key={idx}
                 move={props.goToCity}
                 color={color}
