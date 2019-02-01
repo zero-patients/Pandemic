@@ -18,7 +18,7 @@ export const Header = props => {
     player4: 'green'
   }
   return (
-    <div className="controllerBookend">
+    <div className="controllerHeader">
       {props.isTurn && props.remainingMoves > 0 ? (
         <p className="controllerPanel">
           Its your turn, the world is counting on you. You have{' '}
