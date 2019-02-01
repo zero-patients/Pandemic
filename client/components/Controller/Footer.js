@@ -23,7 +23,14 @@ export const Footer = props => {
 
       <button
         className="controllerPanel"
-        onClick={() => addInfection(props.playerCity, props.color, props.count)}
+        onClick={() =>
+          addInfection(
+            props.playerCity,
+            props.color,
+            props.count,
+            props.infectionStatus
+          )
+        }
       >
         INFECT
       </button>
@@ -34,7 +41,7 @@ export const Footer = props => {
             props.playerCity,
             'blue',
             props.count,
-            props.infectionStatus.blue.isCured
+            props.infectionStatus
           )
         }
       >
@@ -47,7 +54,7 @@ export const Footer = props => {
             props.playerCity,
             'darkgoldenrod',
             props.count,
-            props.infectionStatus.yellow.isCured
+            props.infectionStatus
           )
         }
       >
@@ -60,7 +67,7 @@ export const Footer = props => {
             props.playerCity,
             'black',
             props.count,
-            props.infectionStatus.black.isCured
+            props.infectionStatus
           )
         }
       >
@@ -73,7 +80,7 @@ export const Footer = props => {
             props.playerCity,
             'blue',
             props.count,
-            props.infectionStatus.red.isCured
+            props.infectionStatus
           )
         }
       >
