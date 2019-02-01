@@ -1,4 +1,6 @@
 const infectionDeck = require('../data/infectionDeck')
+import db from '../../server/db'
+let game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
 
 const shuffle = arr => {
   let newArr = arr
@@ -59,4 +61,48 @@ const epidemicShuffle = (drawPile, discardPile) => {
   return [newPile, bottomCard]
 }
 
-export default {shuffle}
+const addInfection = (city, color, count) => {
+  const infectionColors = {
+    blue: 0,
+    darkgoldenrod: 1,
+    black: 2,
+    red: 3
+  }
+  const newCount = count
+  newCount[infectionColors[color]]++
+
+  console.log(city, color, count)
+
+  game.set({cities: {[city]: {diseases: newCount}}}, {merge: true})
+}
+const treatInfection = (city, color, count, isCured) => {
+  const infectionColors = {
+    blue: 0,
+    darkgoldenrod: 1,
+    black: 2,
+    red: 3
+  }
+
+  const newCount = count
+
+  if (newCount[infectionColors[color]] > 0 && !isCured) {
+    newCount[infectionColors[color]]--
+    console.log('isCured', isCured)
+  }
+  if (newCount[infectionColors[color]] > 0 && isCured) {
+    newCount[infectionColors[color]] = 0
+    console.log('isCured', isCured)
+  }
+  console.log(city, color, count)
+
+  game.set({cities: {[city]: {diseases: newCount}}}, {merge: true})
+}
+
+module.exports = {
+  shuffle,
+  generateGroups,
+  shufflePlayerDeck,
+  epidemicShuffle,
+  addInfection,
+  treatInfection
+}

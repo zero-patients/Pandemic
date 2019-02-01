@@ -3,7 +3,6 @@ import {Infection} from './Infection'
 
 const InfectionGroup = props => {
   const {color, count, speed} = props
-
   return (
     <div>
       {count === 1 ? (
@@ -17,11 +16,30 @@ const InfectionGroup = props => {
         </div>
       ) : null}
 
-      {count === 3 ? (
+      {count > 2 ? (
         <div>
           <Infection color={color} rotation={0} addSpeed={speed} />
           <Infection color={color} rotation={1} addSpeed={speed} />
           <Infection color={color} rotation={2} addSpeed={speed} />
+        </div>
+      ) : null}
+
+      {/* temporary until outbreaks are implemented */}
+      {count > 3 ? (
+        <div
+          style={{
+            position: 'absolute',
+            left: '13px',
+            top: '28px',
+            fontSize: '10px',
+            background: color,
+            border: '1px solid #000',
+            borderRadius: '50%',
+            width: '5px',
+            height: '5px'
+          }}
+        >
+          {count}
         </div>
       ) : null}
     </div>
