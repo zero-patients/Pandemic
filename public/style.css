@@ -125,11 +125,19 @@ form div {
   flex-grow: 1;
 }
 
-.controllerBookend {
+.controllerHeader {
   display: flex;
   width: 100vw;
   height: 15vh;
   flex-direction: row;
+}
+
+.controllerFooter {
+  display: flex;
+  width: 100vw;
+  height: 15vh;
+  flex-direction: row;
+  align-self: flex-end;
 }
 
 .controllerMiddle {

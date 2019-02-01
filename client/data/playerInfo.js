@@ -5,7 +5,8 @@ const player1Info = {
   location: 'Atlanta',
   role: {description: '', name: ''},
   offset: [0, -10],
-  actions: 0
+  actions: 0,
+  isTurn: true
 }
 const player2Info = {
   fillStyle: 'gold',
@@ -14,7 +15,8 @@ const player2Info = {
   location: 'Atlanta',
   role: {description: '', name: ''},
   offset: [10, 0],
-  actions: 0
+  actions: 0,
+  isTurn: false
 }
 const player3Info = {
   fillStyle: 'crimson',
@@ -24,7 +26,8 @@ const player3Info = {
 
   role: {description: '', name: ''},
   offset: [0, 10],
-  actions: 0
+  actions: 0,
+  isTurn: false
 }
 const player4Info = {
   fillStyle: 'green',
@@ -34,7 +37,8 @@ const player4Info = {
 
   role: {description: '', name: ''},
   offset: [-10, 0],
-  actions: 0
+  actions: 0,
+  isTurn: false
 }
 
 module.exports = {player1Info, player2Info, player3Info, player4Info}
