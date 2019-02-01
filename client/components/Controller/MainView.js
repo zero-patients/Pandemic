@@ -64,15 +64,22 @@ class MainView extends Component {
   drawInfectionCard = async () => {
     // blue yellow, black red
     const [card] = this.state.infectionDeck.slice(-1)
-    const city = card.replace(' ', '-')
+    const city = card.replace(/ /g, '-')
     const docRef = await this.game.get()
-    const {cities: {[city]: {diseases, color}}} = await docRef.data()
+    let {
+      cities: {[city]: {diseases, color}},
+      infectionStatus
+    } = await docRef.data()
+    color = color === 'darkgoldenrod' ? 'yellow' : color
+    infectionStatus[color].count++
+
     addInfection(city, color, diseases)
 
     await this.game.set(
       {
         infectionDiscard: [...this.state.infectionDiscard, card],
-        infectionDeck: [...this.state.infectionDeck.slice(0, -1)]
+        infectionDeck: [...this.state.infectionDeck.slice(0, -1)],
+        infectionStatus
       },
       {merge: true}
     )
