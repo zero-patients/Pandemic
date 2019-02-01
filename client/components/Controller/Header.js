@@ -1,7 +1,16 @@
 import React, {Component} from 'react'
-import db from '../../../server/db'
+import {Button} from 'semantic-ui-react'
 
 export const Header = props => {
+  console.log('Header:')
+  console.log(props)
+  console.log(typeof props.playerId)
+  const playerColors = {
+    player1: 'blue',
+    player2: 'yellow',
+    player3: 'red',
+    player4: 'green'
+  }
   return (
     <div className="controllerBookend">
       {props.isTurn && props.remainingMoves > 0 ? (
@@ -12,6 +21,7 @@ export const Header = props => {
       ) : (
         <p className="controllerPanel">Its not your turn, be a good teammate</p>
       )}
+      <Button color={playerColors[props.playerId]} icon="help" />
     </div>
   )
 }
