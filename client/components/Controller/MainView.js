@@ -4,6 +4,7 @@ import db from '../../../server/db'
 import {Header} from './Header'
 import {Footer} from './Footer'
 import {MoveView} from './MoveView'
+import {addInfection} from '../../funcs/utils'
 
 const CURRENT_GAME = 'YzQ0qR6LZ7gxd8E03k1l'
 
@@ -61,10 +62,13 @@ class MainView extends Component {
   }
 
   drawInfectionCard = async () => {
-    // console.log('Draw a card')
+    // blue yellow, black red
     const [card] = this.state.infectionDeck.slice(-1)
-    // console.log(card)
-    // console.log('Discards : ', ...this.state.infectionDiscard)
+    const city = card.replace(' ', '-')
+    const docRef = await this.game.get()
+    const {cities: {[city]: {diseases, color}}} = await docRef.data()
+    addInfection(city, color, diseases)
+
     await this.game.set(
       {
         infectionDiscard: [...this.state.infectionDiscard, card],
@@ -73,6 +77,7 @@ class MainView extends Component {
       {merge: true}
     )
   }
+
   componentDidMount() {
     this.game.onSnapshot(async doc => {
       const data = await doc.data()
