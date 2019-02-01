@@ -82,10 +82,12 @@ const addInfection = (city, color, count, infectionStatus) => {
     console.log('This disease has been eradicated')
   } else {
     newCount[infectionColors[color]]++
+    infectionStatus[cureColor].count++
+
     game.set(
       {
         cities: {[city]: {diseases: newCount}},
-        infectionStatus: infectionStatus[cureColor].count++
+        infectionStatus
       },
       {merge: true}
     )
