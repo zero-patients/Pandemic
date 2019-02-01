@@ -99,7 +99,7 @@ export const Footer = props => {
         onClick={() => props.drawInfectionCard()}
         disabled={props.infectionDeck.length === 0}
       >
-        Draw Card
+        Draw Infection Card
       </button>
     </div>
   )
