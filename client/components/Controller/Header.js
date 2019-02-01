@@ -2,11 +2,12 @@ import React, {Component} from 'react'
 import {Button} from 'semantic-ui-react'
 import db from '../../../server/db'
 
-let displayTheRules = false
-const toggle = () => {
-  displayTheRules = !displayTheRules
+const toggle = async () => {
   const game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
-  game.set({showRules: displayTheRules}, {merge: true})
+  const docRef = await game.get()
+  const {showRules} = docRef.data()
+
+  game.set({showRules: !showRules}, {merge: true})
 }
 
 export const Header = props => {
@@ -17,7 +18,7 @@ export const Header = props => {
     player4: 'green'
   }
   return (
-    <div className="controllerBookend">
+    <div className="controllerHeader">
       {props.isTurn && props.remainingMoves > 0 ? (
         <p className="controllerPanel">
           Its your turn, the world is counting on you. You have{' '}
