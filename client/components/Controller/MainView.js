@@ -20,7 +20,7 @@ class MainView extends Component {
       researchStations: [],
       infectionDeck: [],
       infectionDiscard: [],
-      currentView: 'move',
+      currentView: 'hand',
       infectionStatus: {}
     }
 
@@ -143,9 +143,15 @@ class MainView extends Component {
           <MoveView state={this.state} goToCity={this.goToCity} />
         )}
 
-        {this.state.currentView === 'hand' && <h1>VIEW IS HAND</h1>}
-        {this.state.currentView === 'event' && <h1>YOUR EVENTS</h1>}
-        {this.state.currentView === 'special' && <h1>SPECIAL MOVES</h1>}
+        {this.state.currentView === 'hand' && (
+          <div className="controllerMiddle">VIEW IS HAND</div>
+        )}
+        {this.state.currentView === 'event' && (
+          <div className="controllerMiddle">YOUR EVENTS</div>
+        )}
+        {this.state.currentView === 'special' && (
+          <div className="controllerMiddle">SPECIAL MOVES</div>
+        )}
 
         <Footer
           playerCity={this.state.playerCity}
