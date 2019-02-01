@@ -5,15 +5,11 @@ import db from '../../../server/db'
 let displayTheRules = false
 const toggle = () => {
   displayTheRules = !displayTheRules
-  console.log('Setting show rules to ', displayTheRules)
   const game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
   game.set({showRules: displayTheRules}, {merge: true})
 }
 
 export const Header = props => {
-  console.log('Header:')
-  console.log(props)
-  console.log(typeof props.playerId)
   const playerColors = {
     player1: 'blue',
     player2: 'yellow',
