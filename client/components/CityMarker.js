@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import db from '../../server/db'
 import InfectionGroup from './InfectionGroup'
 import ResearchStation from './ResearchStation'
+import CURRENT_GAME from '../../secrets'
 
 class CityMarker extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class CityMarker extends Component {
   }
 
   componentDidMount() {
-    const game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
+    const game = db.collection('rooms').doc(CURRENT_GAME)
     game.onSnapshot(async doc => {
       const data = await doc.data()
       let cityInfo = data.cities[this.props.name]

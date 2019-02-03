@@ -13,6 +13,7 @@ import OutbreakTracker from './OutbreakTracker'
 import StatusBar from './StatusBar'
 import {Button, Header, Image, Modal} from 'semantic-ui-react'
 import db from '../../server/db'
+import CURRENT_GAME from '../../secrets'
 
 const locations = Object.keys(cities)
 
@@ -40,7 +41,7 @@ class Board extends React.Component {
   close = () => this.setState({showRules: false})
 
   componentDidMount() {
-    const game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
+    const game = db.collection('rooms').doc(CURRENT_GAME)
     game.onSnapshot(async doc => {
       const data = await doc.data()
       this.setState({

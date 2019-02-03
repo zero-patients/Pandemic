@@ -1,5 +1,6 @@
 import React from 'react'
 import db from '../../server/db'
+import CURRENT_GAME from '../../secrets'
 
 class InfectionDiscardDeck extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class InfectionDiscardDeck extends React.Component {
   async componentDidMount() {
     await db
       .collection('rooms')
-      .doc('YzQ0qR6LZ7gxd8E03k1l')
+      .doc(CURRENT_GAME)
       .onSnapshot(async doc => {
         const data = await doc.data()
         this.setState({cards: data.infectionDiscard})

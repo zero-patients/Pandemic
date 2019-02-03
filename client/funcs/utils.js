@@ -1,6 +1,8 @@
 const infectionDeck = require('../data/infectionDeck')
 import db from '../../server/db'
-let game = db.collection('rooms').doc('YzQ0qR6LZ7gxd8E03k1l')
+import CURRENT_GAME from '../../secrets'
+
+let game = db.collection('rooms').doc(CURRENT_GAME)
 
 const shuffle = arr => {
   let newArr = arr

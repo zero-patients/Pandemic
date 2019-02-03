@@ -7,10 +7,6 @@ import {MoveView} from './MoveView'
 import {addInfection} from '../../funcs/utils'
 import CURRENT_GAME from '../../../secrets'
 
-console.log('current game', CURRENT_GAME)
-
-// const CURRENT_GAME = 'YzQ0qR6LZ7gxd8E03k1l'
-
 class MainView extends Component {
   constructor(props) {
     super(props)
