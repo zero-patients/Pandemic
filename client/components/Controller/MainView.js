@@ -70,15 +70,15 @@ class MainView extends Component {
       infectionStatus
     } = await docRef.data()
     color = color === 'darkgoldenrod' ? 'yellow' : color
-    infectionStatus[color].count++
+    // infectionStatus[color].count++
 
-    addInfection(city, color, diseases)
+    addInfection(city, color, diseases, infectionStatus)
 
     await this.game.set(
       {
         infectionDiscard: [...this.state.infectionDiscard, card],
-        infectionDeck: [...this.state.infectionDeck.slice(0, -1)],
-        infectionStatus
+        infectionDeck: [...this.state.infectionDeck.slice(0, -1)]
+        // infectionStatus
       },
       {merge: true}
     )
