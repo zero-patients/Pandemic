@@ -26,6 +26,7 @@ export const Header = props => {
       ) : (
         <p className="controllerPanel">Its not your turn, be a good teammate</p>
       )}
+      {props.discard ? <p>Choose a card to discard</p> : null}
       <Button
         color={playerColors[props.playerId]}
         icon="help"

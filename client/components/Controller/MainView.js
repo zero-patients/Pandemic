@@ -37,6 +37,7 @@ class MainView extends Component {
     this.goToCity = this.goToCity.bind(this)
     this.handleViewChange = this.handleViewChange.bind(this)
     this.drawPlayerCard = this.drawPlayerCard.bind(this)
+    this.discardToSeven = this.discardToSeven.bind(this)
   }
 
   goToCity = city => {
@@ -75,6 +76,17 @@ class MainView extends Component {
     )
   }
 
+  discardToSeven = async card => {
+    const newHand = this.state.playerHand.filter(ele => card !== ele)
+    await this.game.set(
+      {
+        [`${this.playerId}Info`]: {hand: [...newHand]},
+        playerDiscard: [...this.state.playerDiscard, card]
+      },
+      {merge: true}
+    )
+  }
+
   drawInfectionCard = async () => {
     const [card] = this.state.infectionDeck.slice(-1)
 
@@ -95,10 +107,7 @@ class MainView extends Component {
       let playerHand = playerInfo.hand
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
-      console.log(playerCityInfo)
       let playerDeck = data.playerDeck
-      console.log(playerDeck)
-      console.log(playerHand)
       let playerDiscard = data.playerDiscard
       let playerCityNeighbors = playerCityInfo.neighbors
       let researchStations = data.researchStations
@@ -148,11 +157,13 @@ class MainView extends Component {
   render() {
     return (
       <div id="controller" className={this.playerId}>
+        {console.log(this.state.playerHand)}
         <Header
           className="controllerBookend"
           isTurn={this.isTurn}
           remainingMoves={this.remainingMoves}
           playerId={this.playerId}
+          discard={this.state.playerHand.length > 7}
         />
 
         {this.state.currentView === 'move' && (
@@ -160,7 +171,10 @@ class MainView extends Component {
         )}
 
         {this.state.currentView === 'hand' && (
-          <PlayerHand playerHand={this.state.playerHand} />
+          <PlayerHand
+            playerHand={this.state.playerHand}
+            discard={this.discardToSeven}
+          />
         )}
 
         {this.state.currentView === 'event' && <h1>YOUR EVENTS</h1>}
