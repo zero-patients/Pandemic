@@ -21,7 +21,7 @@ export const Footer = props => {
         BUILD
       </button>
 
-      <button
+      {/* <button
         className="controllerPanel"
         onClick={() =>
           addInfection(
@@ -33,6 +33,12 @@ export const Footer = props => {
         }
       >
         INFECT
+      </button>
+      <button
+        className="controllerPanel"
+        onClick={() => props.drawPlayerCard()}
+      >
+        DRAW PLAYER CARD
       </button>
       <button
         className="controllerPanel"
@@ -78,7 +84,7 @@ export const Footer = props => {
         onClick={() =>
           treatInfection(
             props.playerCity,
-            'blue',
+            'red',
             props.count,
             props.infectionStatus
           )
@@ -99,7 +105,7 @@ export const Footer = props => {
         onClick={() => props.onClick('special')}
       >
         SPECIALS
-      </button>
+      </button> */}
 
       <button
         className="controllerPanel"

@@ -1,14 +1,13 @@
 import React from 'react'
 import db from '../../server/db'
 import CURRENT_GAME from '../../secrets'
+import InfectionCard from './InfectionCard'
 
 class InfectionDiscardDeck extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      top: props.top,
-      left: props.left,
       cards: []
     }
   }
@@ -24,19 +23,15 @@ class InfectionDiscardDeck extends React.Component {
   }
 
   render() {
-    const styles = {
-      position: 'absolute',
-      top: `${this.state.top}px`,
-      left: `${this.state.left}px`,
+    const positioning = {
       width: '250px',
       height: '200px'
     }
+
     return this.state.cards.length === 0 ? null : (
-      <img
-        src={`/images/cities/${
-          this.state.cards[this.state.cards.length - 1]
-        }.jpg`}
-        style={styles}
+      <InfectionCard
+        city={this.state.cards[this.state.cards.length - 1]}
+        cityColor=""
       />
     )
   }

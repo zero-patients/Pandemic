@@ -4,6 +4,7 @@ import db from '../../../server/db'
 import {Header} from './Header'
 import {Footer} from './Footer'
 import {MoveView} from './MoveView'
+import {PlayerHand} from './PlayerHand'
 import {addInfection} from '../../funcs/utils'
 import {Rules} from './Rules'
 import CURRENT_GAME from '../../../secrets'
@@ -13,10 +14,14 @@ class MainView extends Component {
     super(props)
 
     this.state = {
+      playerInfo: {},
+      playerId: 0,
       playerCity: '',
       playerCityInfo: {},
       playerCityNeighbors: [],
-      playerCards: [],
+      playerHand: [],
+      playerDeck: [],
+      playerDiscard: [],
       researchStations: [],
       infectionDeck: [],
       infectionDiscard: [],
@@ -28,9 +33,12 @@ class MainView extends Component {
     this.game = db.collection('rooms').doc(CURRENT_GAME)
     this.userId = props.match.params.userId
     this.playerId = `player${this.userId}`
+    this.specificPlayer = `player${this.userId}Info`
 
-    this.isTurn = true
-    this.remainingMoves = 4
+    // this.isTurn = true
+    // this.remainingMoves = 4
+    // this.currentView = 'move'
+    this.turnShouldChange = this.turnShouldChange.bind(this)
     this.buildResearchStation = this.buildResearchStation.bind(this)
     this.drawInfectionCard = this.drawInfectionCard.bind(this)
     this.goToCity = this.goToCity.bind(this)
@@ -38,6 +46,7 @@ class MainView extends Component {
     this.show = this.show.bind(this)
     this.close = this.close.bind(this)
     this.toggleRules = this.toggleRules.bind(this)
+    this.drawPlayerCard = this.drawPlayerCard.bind(this)
   }
 
   handleOpen = () => {
@@ -57,7 +66,17 @@ class MainView extends Component {
   close = () => this.setState({showRules: false})
 
   goToCity = city => {
-    this.game.set({[`${this.playerId}Info`]: {location: city}}, {merge: true})
+    console.log(typeof this.state.playerInfo, 'player on gotocity')
+
+    this.game.set(
+      {
+        [`${this.playerId}Info`]: {
+          location: city,
+          actions: this.state.playerInfo.actions - 1
+        }
+      },
+      {merge: true}
+    )
   }
 
   buildResearchStation = city => {
@@ -78,6 +97,18 @@ class MainView extends Component {
       temp.shift()
       this.game.set({researchStations: [...temp, city]}, {merge: true})
     }
+  }
+
+  drawPlayerCard = async () => {
+    const [card] = this.state.playerDeck.slice(-1)
+
+    await this.game.set(
+      {
+        [`${this.playerId}Info`]: {hand: [...this.state.playerHand, card]},
+        playerDeck: [...this.state.playerDeck.slice(0, -1)]
+      },
+      {merge: true}
+    )
   }
 
   drawInfectionCard = async () => {
@@ -103,15 +134,43 @@ class MainView extends Component {
       {merge: true}
     )
   }
+  turnShouldChange = async (playerObj, playerName) => {
+    console.log('got to turnShouldChange,')
+    //assume currPlayer is the db object player1Info{}
+    let remainingActions = playerObj.actions
+    let turn = playerObj.isTurn
+    console.log(remainingActions, turn, 'remaining actions and turn ')
+
+    if (remainingActions === 0 && turn) {
+      await this.drawInfectionCard()
+      await this.drawInfectionCard()
+      await this.drawPlayerCard()
+      await this.drawPlayerCard()
+      await this.game.set(
+        {
+          [playerName]: {
+            isTurn: false,
+            actions: 4
+          }
+        },
+        {merge: true}
+      )
+    }
+  }
 
   componentDidMount() {
     this.game.onSnapshot(async doc => {
       const data = await doc.data()
-      // console.log(data)
       const citiesData = data.cities
       let playerInfo = data[`${this.playerId}Info`]
+      console.log(playerInfo, 'playerInfo')
+      let playerHand = playerInfo.hand
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
+
+      let playerDeck = data.playerDeck
+
+      let playerDiscard = data.playerDiscard
       let playerCityNeighbors = playerCityInfo.neighbors
       let researchStations = data.researchStations
       let neighborCardColors = playerCityNeighbors.map(elem => {
@@ -135,9 +194,13 @@ class MainView extends Component {
       let infectionStatus = data.infectionStatus
 
       this.setState({
-        ...playerInfo,
+        playerInfo,
+        playerId: `${this.playerId}Info`,
         playerCity: playerCity,
         playerCityInfo: playerCityInfo,
+        playerHand: playerHand,
+        playerDeck: playerDeck,
+        playerDiscard: playerDiscard,
         playerCityNeighbors: playerCityNeighbors,
         researchStations: researchStations,
         neighborCardColors: neighborCardColors,
@@ -148,6 +211,19 @@ class MainView extends Component {
       })
     })
   }
+  // componentDidUpdate(prevProps,prevState) {
+  //   console.log('got to component did update, but like, actually')
+  //   this.game.onSnapshot(async doc => {
+  //     const data = await doc.data()
+  //     let playerName = `player${this.userId}Info`
+  //     let currentPlayer = data[`player${this.userId}Info`]
+  //     if (currentPlayer.actions === 0 && currentPlayer.isTurn) {
+
+  //       this.turnShouldChange(currentPlayer, playerName)
+  //     }
+
+  //   })
+  // }
 
   handleViewChange = newView => {
     this.setState({
