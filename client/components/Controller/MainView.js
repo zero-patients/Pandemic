@@ -31,7 +31,6 @@ class MainView extends Component {
 
     this.isTurn = true
     this.remainingMoves = 4
-    // this.currentView = 'move'
     this.buildResearchStation = this.buildResearchStation.bind(this)
     this.drawInfectionCard = this.drawInfectionCard.bind(this)
     this.goToCity = this.goToCity.bind(this)
@@ -52,10 +51,6 @@ class MainView extends Component {
   toggleRules = () => {
     const toggle = this.state.showRules
     this.setState({showRules: !toggle})
-  }
-  componentDidUpdate() {
-    console.log('The board was updated')
-    console.log(this.state.showRules)
   }
 
   show = dimmer => () => this.setState({dimmer, showRules: true})
