@@ -2,7 +2,7 @@ const infectionDeck = require('../data/infectionDeck')
 import db from '../../server/db'
 import CURRENT_GAME from '../../secrets'
 
-let game = db.collection('rooms').doc(CURRENT_GAME)
+const game = db.collection('rooms').doc(CURRENT_GAME)
 
 const shuffle = arr => {
   let newArr = arr
@@ -90,14 +90,6 @@ const addInfection = (city, color, count, infectionStatus) => {
       {
         cities: {[city]: {diseases: newCount}},
         infectionStatus
-      },
-      {merge: true}
-    )
-    this.game.set(
-      {
-        [`${this.playerId}Info`]: {
-          actions: this.state.playerInfo.actions - 1
-        }
       },
       {merge: true}
     )

@@ -85,6 +85,10 @@ class MainView extends Component {
       },
       {merge: true}
     )
+    this.turnShouldChange(
+      this.state.playerInfo,
+      `player${this.state.playerId}Info`
+    )
   }
 
   drawPlayerCard = async () => {
