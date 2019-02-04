@@ -1,4 +1,6 @@
 import React from 'react'
+import {Card, Image} from 'semantic-ui-react'
+import cities from '../data/cities'
 
 const InfectionCard = props => {
   let styles = {
@@ -22,13 +24,23 @@ const InfectionCard = props => {
     backgroundColor: 'whitesmoke',
     padding: '10px'
   }
+  const colorTranslations = {
+    blue: 'royalblue',
+    red: 'crimson',
+    black: 'lightgrey',
+    darkgoldenrod: 'gold'
+  }
+  const backgroundColor =
+    colorTranslations[cities[props.city.replace(/\s/g, '-')].color] || 'white'
 
-  return props.left === 1200 ? (
-    <img src="/playingCardRed.jpg" style={styles} />
-  ) : (
-    <div className="polaroid" style={styles}>
-      <img src="/light.jpg" alt="Norway" style={imgWidth} />
-    </div>
+  console.log(props.city)
+  return (
+    <Card fluid color="blue">
+      <Image src={`images/cities/${props.city.replace(/\s/g, '-')}.jpg`} />
+      <Card.Content style={{backgroundColor}}>
+        <Card.Header>{props.city}</Card.Header>
+      </Card.Content>
+    </Card>
   )
 }
 

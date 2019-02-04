@@ -12,7 +12,11 @@ const CardBox = props => {
     height: '202px'
   }
 
-  return <div className={props.outline} style={styles} />
+  return (
+    <div className={props.outline} style={styles}>
+      {props.children}
+    </div>
+  )
 }
 
 export default CardBox
