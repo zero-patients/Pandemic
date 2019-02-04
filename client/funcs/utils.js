@@ -124,11 +124,6 @@ const treatInfection = (city, color, count, infectionStatus) => {
 }
 
 const discardPlayerCard = (playerId, hand, card, playerDiscard) => {
-  console.log('playerId', playerId)
-  console.log('hand', hand)
-  console.log('card', card)
-  console.log('playerDiscard', playerDiscard)
-
   const newHand = hand.filter(elem => elem.name !== card)
 
   game.set(

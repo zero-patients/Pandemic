@@ -5,9 +5,8 @@ export const PlayerCard = props => {
   return (
     <div className="playerCard">
       <h1>{props.cardName}</h1>
-      {/* <img src={props.image} /> */}
-      <div />
-      {/* <button onClick={discardPlayerCard(props.name, props.playerDiscard)}>Play</button> */}
+      <img src={props.image} />
+
       <button
         onClick={() => {
           discardPlayerCard(
