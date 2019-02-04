@@ -5,6 +5,7 @@ import {Header} from './Header'
 import {Footer} from './Footer'
 import {MoveView} from './MoveView'
 import {addInfection} from '../../funcs/utils'
+import {Rules} from './Rules'
 import CURRENT_GAME from '../../../secrets'
 
 class MainView extends Component {
@@ -20,7 +21,8 @@ class MainView extends Component {
       infectionDeck: [],
       infectionDiscard: [],
       currentView: 'hand',
-      infectionStatus: {}
+      infectionStatus: {},
+      showRules: false
     }
 
     this.game = db.collection('rooms').doc(CURRENT_GAME)
@@ -34,7 +36,30 @@ class MainView extends Component {
     this.drawInfectionCard = this.drawInfectionCard.bind(this)
     this.goToCity = this.goToCity.bind(this)
     this.handleViewChange = this.handleViewChange.bind(this)
+    this.show = this.show.bind(this)
+    this.close = this.close.bind(this)
+    this.toggleRules = this.toggleRules.bind(this)
   }
+
+  handleOpen = () => {
+    this.setState({showRules: true})
+  }
+
+  handleClose = () => {
+    this.setState({showRules: false})
+  }
+
+  toggleRules = () => {
+    const toggle = this.state.showRules
+    this.setState({showRules: !toggle})
+  }
+  componentDidUpdate() {
+    console.log('The board was updated')
+    console.log(this.state.showRules)
+  }
+
+  show = dimmer => () => this.setState({dimmer, showRules: true})
+  close = () => this.setState({showRules: false})
 
   goToCity = city => {
     this.game.set({[`${this.playerId}Info`]: {location: city}}, {merge: true})
@@ -137,39 +162,49 @@ class MainView extends Component {
 
   render() {
     return (
-      <div id="controller" className={this.playerId}>
-        <Header
-          className="controllerBookend"
-          isTurn={this.isTurn}
-          remainingMoves={this.remainingMoves}
-          playerId={this.playerId}
-        />
+      <div>
+        {this.state.showRules ? (
+          <Rules
+            show={this.show}
+            open={this.state.showRules}
+            onClose={this.close}
+          />
+        ) : null}
+        <div id="controller" className={this.playerId}>
+          <Header
+            className="controllerBookend"
+            isTurn={this.isTurn}
+            remainingMoves={this.remainingMoves}
+            playerId={this.playerId}
+            toggle={this.toggleRules}
+          />
 
-        {this.state.currentView === 'move' && (
-          <MoveView state={this.state} goToCity={this.goToCity} />
-        )}
+          {this.state.currentView === 'move' && (
+            <MoveView state={this.state} goToCity={this.goToCity} />
+          )}
 
-        {this.state.currentView === 'hand' && (
-          <div className="controllerMiddle">VIEW IS HAND</div>
-        )}
-        {this.state.currentView === 'event' && (
-          <div className="controllerMiddle">YOUR EVENTS</div>
-        )}
-        {this.state.currentView === 'special' && (
-          <div className="controllerMiddle">SPECIAL MOVES</div>
-        )}
+          {this.state.currentView === 'hand' && (
+            <div className="controllerMiddle">VIEW IS HAND</div>
+          )}
+          {this.state.currentView === 'event' && (
+            <div className="controllerMiddle">YOUR EVENTS</div>
+          )}
+          {this.state.currentView === 'special' && (
+            <div className="controllerMiddle">SPECIAL MOVES</div>
+          )}
 
-        <Footer
-          playerCity={this.state.playerCity}
-          buildResearchStation={this.buildResearchStation}
-          drawInfectionCard={this.drawInfectionCard}
-          infectionDeck={this.state.infectionDeck}
-          onClick={this.handleViewChange}
-          //temporary
-          color={this.state.playerCityInfo.color}
-          count={this.state.playerCityInfo.diseases}
-          infectionStatus={this.state.infectionStatus}
-        />
+          <Footer
+            playerCity={this.state.playerCity}
+            buildResearchStation={this.buildResearchStation}
+            drawInfectionCard={this.drawInfectionCard}
+            infectionDeck={this.state.infectionDeck}
+            onClick={this.handleViewChange}
+            //temporary
+            color={this.state.playerCityInfo.color}
+            count={this.state.playerCityInfo.diseases}
+            infectionStatus={this.state.infectionStatus}
+          />
+        </div>
       </div>
     )
   }
