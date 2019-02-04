@@ -24,18 +24,26 @@ const InfectionCard = props => {
     backgroundColor: 'whitesmoke',
     padding: '10px'
   }
+
   const colorTranslations = {
     blue: 'royalblue',
     red: 'crimson',
     black: 'lightgrey',
     darkgoldenrod: 'gold'
   }
+
+  const cardColor = {
+    blue: 'blue',
+    red: 'red',
+    black: 'grey',
+    darkgoldenrod: 'yellow'
+  }
+
   const backgroundColor =
     colorTranslations[cities[props.city.replace(/\s/g, '-')].color] || 'white'
 
-  console.log(props.city)
   return (
-    <Card fluid color="blue">
+    <Card fluid color={cardColor[cities[props.city.replace(/\s/g, '-')].color]}>
       <Image src={`images/cities/${props.city.replace(/\s/g, '-')}.jpg`} />
       <Card.Content style={{backgroundColor}}>
         <Card.Header>{props.city}</Card.Header>
