@@ -78,7 +78,7 @@ export const Footer = props => {
         onClick={() =>
           treatInfection(
             props.playerCity,
-            'blue',
+            'red',
             props.count,
             props.infectionStatus
           )
