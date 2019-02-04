@@ -14,11 +14,13 @@ class MainView extends Component {
 
     this.state = {
       playerInfo: {},
+      playerId: 0,
       playerCity: '',
       playerCityInfo: {},
       playerCityNeighbors: [],
       playerHand: [],
       playerDeck: [],
+      playerDiscard: [],
       researchStations: [],
       infectionDeck: [],
       infectionDiscard: [],
@@ -43,7 +45,6 @@ class MainView extends Component {
   }
 
   goToCity = city => {
-    
     console.log(typeof this.state.playerInfo, 'player on gotocity')
 
     this.game.set(
@@ -173,10 +174,12 @@ class MainView extends Component {
 
       this.setState({
         playerInfo,
+        playerId: `${this.playerId}Info`,
         playerCity: playerCity,
         playerCityInfo: playerCityInfo,
         playerHand: playerHand,
         playerDeck: playerDeck,
+        playerDiscard: playerDiscard,
         playerCityNeighbors: playerCityNeighbors,
         researchStations: researchStations,
         neighborCardColors: neighborCardColors,
@@ -222,7 +225,11 @@ class MainView extends Component {
         )}
 
         {this.state.currentView === 'hand' && (
-          <PlayerHand playerHand={this.state.playerHand} />
+          <PlayerHand
+            playerId={this.state.playerId}
+            playerHand={this.state.playerHand}
+            playerDiscard={this.state.playerDiscard}
+          />
         )}
 
         {this.state.currentView === 'event' && <h1>YOUR EVENTS</h1>}
