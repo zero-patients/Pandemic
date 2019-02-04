@@ -8,14 +8,25 @@ export const PlayerHand = props => {
         if (card.type === 'city') {
           return (
             <PlayerCard
-              name={card.name}
+              key={card.name}
+              playerId={props.playerId}
+              playerHand={props.playerHand}
+              cardName={card.name}
               color={card.color}
               image={`/images/cities/${card.name.split(' ').join('-')}.jpg`}
+              playerDiscard={props.playerDiscard}
             />
           )
         } else if (card.type === 'event') {
           return (
-            <PlayerCard name={card.name} image="/images/cities/event.png" />
+            <PlayerCard
+              key={card.name}
+              playerId={props.playerId}
+              playerHand={props.playerHand}
+              cardName={card.name}
+              image="/images/cities/event.png"
+              playerDiscard={props.playerDiscard}
+            />
           )
         }
       })}

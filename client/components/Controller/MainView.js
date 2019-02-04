@@ -14,11 +14,13 @@ class MainView extends Component {
     super(props)
 
     this.state = {
+      playerId: 0,
       playerCity: '',
       playerCityInfo: {},
       playerCityNeighbors: [],
       playerHand: [],
       playerDeck: [],
+      playerDiscard: [],
       researchStations: [],
       infectionDeck: [],
       infectionDiscard: [],
@@ -127,10 +129,10 @@ class MainView extends Component {
       let playerHand = playerInfo.hand
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
-      console.log(playerCityInfo)
+      console.log('playerCityInfop', playerCityInfo)
       let playerDeck = data.playerDeck
-      console.log(playerDeck)
-      console.log(playerHand)
+      console.log('playerDeck', playerDeck)
+      console.log('playerHand', playerHand)
       let playerDiscard = data.playerDiscard
       let playerCityNeighbors = playerCityInfo.neighbors
       let researchStations = data.researchStations
@@ -155,11 +157,13 @@ class MainView extends Component {
       let infectionStatus = data.infectionStatus
 
       this.setState({
+        playerId: `${this.playerId}Info`,
         ...playerInfo,
         playerCity: playerCity,
         playerCityInfo: playerCityInfo,
         playerHand: playerHand,
         playerDeck: playerDeck,
+        playerDiscard: playerDiscard,
         playerCityNeighbors: playerCityNeighbors,
         researchStations: researchStations,
         neighborCardColors: neighborCardColors,
