@@ -21,7 +21,7 @@ export const Footer = props => {
         BUILD
       </button>
 
-      <button
+      {/* <button
         className="controllerPanel"
         onClick={() =>
           addInfection(
@@ -106,7 +106,7 @@ export const Footer = props => {
         onClick={() => props.onClick('special')}
       >
         SPECIALS
-      </button>
+      </button> */}
 
       <button
         className="controllerPanel"
