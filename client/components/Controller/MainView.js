@@ -5,8 +5,7 @@ import {Header} from './Header'
 import {Footer} from './Footer'
 import {MoveView} from './MoveView'
 import {addInfection} from '../../funcs/utils'
-
-const CURRENT_GAME = 'YzQ0qR6LZ7gxd8E03k1l'
+import CURRENT_GAME from '../../../secrets'
 
 class MainView extends Component {
   constructor(props) {

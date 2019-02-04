@@ -13,12 +13,13 @@ const {
   player3Info,
   player4Info
 } = require('../client/data/playerInfo')
+const CURRENT_GAME = require('../secrets')
 
 const infectionIdx = 0
 const infectionRate = [2, 2, 2, 3, 3, 4, 4]
 const outbreakTracker = 0
 
-const gameSession = 'YzQ0qR6LZ7gxd8E03k1l'
+const gameSession = CURRENT_GAME
 
 const seedFirestore = async () => {
   const game = db.collection('rooms').doc(gameSession)

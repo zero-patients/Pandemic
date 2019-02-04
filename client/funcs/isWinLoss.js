@@ -1,10 +1,11 @@
 const db = require('../../server/db')
+const CURRENT_GAME = require('../../secrets')
 
 const checkInfection = async () => {
   try {
     await db
       .collection('rooms')
-      .doc('YzQ0qR6LZ7gxd8E03k1l')
+      .doc(CURRENT_GAME)
       .onSnapshot(doc => {
         const infectionCounter = doc.data().infectionCounter
         let dead = infectionCounter.some(elem => elem > 24) // dead true = loss
@@ -18,7 +19,7 @@ const checkOutbreakCount = async () => {
   try {
     await db
       .collection('rooms')
-      .doc('YzQ0qR6LZ7gxd8E03k1l')
+      .doc(CURRENT_GAME)
       .onSnapshot(async doc => {
         const outbreakTracker = await doc.data().outbreakTracker
         const dead = outbreakTracker >= 8 // dead true = loss
@@ -32,7 +33,7 @@ const checkPlayerDeckCount = async () => {
   try {
     await db
       .collection('rooms')
-      .doc('YzQ0qR6LZ7gxd8E03k1l')
+      .doc(CURRENT_GAME)
       .onSnapshot(async doc => {
         const playerDeck = await doc.data().playerDeck
         const dead = playerDeck <= 0 // dead true = loss
@@ -46,7 +47,7 @@ const checkCured = async () => {
   try {
     await db
       .collection('rooms')
-      .doc('YzQ0qR6LZ7gxd8E03k1l')
+      .doc(CURRENT_GAME)
       .onSnapshot(async doc => {
         const data = await doc.data().infectionStatus
         let curedCount = 0
