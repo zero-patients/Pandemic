@@ -123,11 +123,24 @@ const treatInfection = (city, color, count, infectionStatus) => {
   game.set({cities: {[city]: {diseases: newCount}}}, {merge: true})
 }
 
+const discardPlayerCard = (playerId, hand, card, playerDiscard) => {
+  const newHand = hand.filter(elem => elem.name !== card)
+
+  game.set(
+    {
+      playerDiscard: [...playerDiscard, card],
+      [playerId]: {hand: newHand}
+    },
+    {merge: true}
+  )
+}
+
 module.exports = {
   shuffle,
   generateGroups,
   shufflePlayerDeck,
   epidemicShuffle,
   addInfection,
-  treatInfection
+  treatInfection,
+  discardPlayerCard
 }
