@@ -5,7 +5,7 @@ import {addInfection, treatInfection} from '../../funcs/utils'
 
 export const Footer = props => {
   return (
-    <div className="controllerBookend">
+    <div className="controllerFooter">
       <button className="controllerPanel" onClick={() => props.onClick('move')}>
         MOVE
       </button>
@@ -105,7 +105,7 @@ export const Footer = props => {
         onClick={() => props.drawInfectionCard()}
         disabled={props.infectionDeck.length === 0}
       >
-        Draw Card
+        Draw Infection Card
       </button>
     </div>
   )

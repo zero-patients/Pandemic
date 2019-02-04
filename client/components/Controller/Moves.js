@@ -9,11 +9,10 @@ export const Moves = props => {
         props.move(props.elem)
       }}
     >
-      <a>{props.elem}</a>
-      <a>Card Image</a>
       <a>
-        <b>Move one Space to this City</b>
+        <b>{props.elem}</b>
       </a>
+      <img src="/car.png" />
     </button>
   )
 }
