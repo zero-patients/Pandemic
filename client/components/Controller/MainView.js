@@ -59,6 +59,7 @@ class MainView extends Component {
   }
 
   buildResearchStation = city => {
+    console.log('updated build')
     if (
       !this.state.researchStations.includes(city) &&
       this.state.researchStations.length < 6
@@ -76,6 +77,14 @@ class MainView extends Component {
       temp.shift()
       this.game.set({researchStations: [...temp, city]}, {merge: true})
     }
+    this.game.set(
+      {
+        [`${this.playerId}Info`]: {
+          actions: this.state.playerInfo.actions - 1
+        }
+      },
+      {merge: true}
+    )
   }
 
   drawPlayerCard = async () => {

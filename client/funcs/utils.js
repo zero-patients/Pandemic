@@ -93,6 +93,14 @@ const addInfection = (city, color, count, infectionStatus) => {
       },
       {merge: true}
     )
+    this.game.set(
+      {
+        [`${this.playerId}Info`]: {
+          actions: this.state.playerInfo.actions - 1
+        }
+      },
+      {merge: true}
+    )
   }
 }
 const treatInfection = (city, color, count, infectionStatus) => {
