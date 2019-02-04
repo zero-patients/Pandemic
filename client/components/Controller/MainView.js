@@ -29,9 +29,10 @@ class MainView extends Component {
     this.userId = props.match.params.userId
     this.playerId = `player${this.userId}`
 
-    this.isTurn = true
-    this.remainingMoves = 4
+    // this.isTurn = true
+    // this.remainingMoves = 4
     // this.currentView = 'move'
+    this.turnShouldChange = this.turnShouldChange.bind(this)
     this.buildResearchStation = this.buildResearchStation.bind(this)
     this.drawInfectionCard = this.drawInfectionCard.bind(this)
     this.goToCity = this.goToCity.bind(this)
@@ -40,7 +41,15 @@ class MainView extends Component {
   }
 
   goToCity = city => {
-    this.game.set({[`${this.playerId}Info`]: {location: city}}, {merge: true})
+    this.game.set(
+      {
+        [`${this.playerId}Info`]: {
+          location: city,
+          actions: this.state.playerInfo.actions - 1
+        }
+      },
+      {merge: true}
+    )
   }
 
   buildResearchStation = city => {
@@ -98,6 +107,23 @@ class MainView extends Component {
       {merge: true}
     )
   }
+  turnShouldChange = async currPlayer => {
+    //assume currPlayer is the db object player1Info{}
+    let activePlayer = await this.game.currPlayer.get()
+    if (activePlayer.actions === 0 && activePlayer.isTurn) {
+      this.drawInfectionCard()
+      this.drawInfectionCard()
+      this.drawPlayerCard()
+      this.drawPlayerCard()
+      await this.game.currPlayer.set(
+        {
+          isTurn: false,
+          actions: 4
+        },
+        {merge: true}
+      )
+    }
+  }
 
   componentDidMount() {
     this.game.onSnapshot(async doc => {
@@ -149,6 +175,10 @@ class MainView extends Component {
         infectionStatus: infectionStatus
       })
     })
+  }
+  componentDidUpdate() {
+    const player = this.state.playerInfo
+    this.turnShouldChange(player)
   }
 
   handleViewChange = newView => {
