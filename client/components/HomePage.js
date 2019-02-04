@@ -15,11 +15,28 @@ const HomePage = () => {
   return (
     <div style={styles}>
       <h1>PANDEMIC</h1>
+      <hr />
       <Link to="/board">View the Board</Link>
-      <Link to="/controller/1">Join as Player 1</Link>
-      <Link to="/controller/2">Join as Player 2</Link>
-      <Link to="/controller/3">Join as Player 3</Link>
-      <Link to="/controller/4">Join as Player 4</Link>
+      <br />
+      <br />
+      <Link to="/controller/1" style={{color: 'royalblue'}}>
+        Join as Player 1
+      </Link>
+      <br />
+      <br />
+      <Link to="/controller/2" style={{color: 'gold'}}>
+        Join as Player 2
+      </Link>
+      <br />
+      <br />
+      <Link to="/controller/3" style={{color: 'crimson'}}>
+        Join as Player 3
+      </Link>
+      <br />
+      <br />
+      <Link to="/controller/4" style={{color: 'green'}}>
+        Join as Player 4
+      </Link>
     </div>
   )
 }
