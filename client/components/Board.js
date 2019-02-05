@@ -36,8 +36,8 @@ class Board extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('The board was updated')
-    console.log(this.state.showRules)
+    // console.log('The board was updated')
+    // console.log(this.state.showRules)
   }
 
   show = dimmer => () => this.setState({dimmer, showRules: true})
@@ -52,8 +52,6 @@ class Board extends React.Component {
         gameStatus: data.gameStatus
       })
     })
-    console.log('Show Rules is set to: ')
-    console.log(this.state.showRules)
 
     const canvas = this.canvasRef.current
 
