@@ -168,6 +168,18 @@ form div {
   align-items: center;
   justify-content: space-around;
 }
+.treatContainer {
+  display: flex;
+  flex-wrap: wrap;
+  border-width: 4px;
+  border-style: solid;
+  width: 45vw;
+  height: 30vw;
+  border-color: black;
+
+  align-items: center;
+  justify-content: space-around;
+}
 
 .playerHand {
   display: 'flex';

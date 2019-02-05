@@ -128,6 +128,7 @@ const treatInfection = (city, color, count, infectionStatus) => {
   const infectionColors = {
     blue: 0,
     darkgoldenrod: 1,
+    yellow: 1,
     black: 2,
     red: 3
   }
