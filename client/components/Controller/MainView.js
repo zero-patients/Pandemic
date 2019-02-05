@@ -154,7 +154,6 @@ class MainView extends Component {
       const data = await doc.data()
       const citiesData = data.cities
       let playerInfo = data[`${this.playerId}Info`]
-      console.log(playerInfo, 'playerInfo')
       let playerHand = playerInfo.hand
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
@@ -260,6 +259,9 @@ class MainView extends Component {
           count={this.state.playerCityInfo.diseases}
           infectionStatus={this.state.infectionStatus}
           outbreakTracker={this.state.outbreakTracker}
+          playerId={this.state.playerId}
+          playerHand={this.state.playerHand}
+          playerDiscard={this.state.playerDiscard}
         />
       </div>
     )
