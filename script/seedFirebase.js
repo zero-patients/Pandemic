@@ -18,6 +18,7 @@ const CURRENT_GAME = require('../secrets')
 const infectionIdx = 0
 const infectionRate = [2, 2, 2, 3, 3, 4, 4]
 const outbreakTracker = 0
+const gameStatus = 'inPlay'
 
 const gameSession = CURRENT_GAME
 
@@ -41,7 +42,8 @@ const seedFirestore = async () => {
       outbreakTracker,
       researchStations,
       roles,
-      showRules
+      showRules,
+      gameStatus
     },
     {merge: true}
   )

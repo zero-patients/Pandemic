@@ -63,7 +63,7 @@ const epidemicShuffle = (drawPile, discardPile) => {
   return [newPile, bottomCard]
 }
 
-const addInfection = (city, color, count, infectionStatus) => {
+const addInfection = (city, color, count, infectionStatus, outbreakTracker) => {
   const infectionColors = {
     blue: 0,
     darkgoldenrod: 1,
@@ -82,6 +82,16 @@ const addInfection = (city, color, count, infectionStatus) => {
   const newCount = count
   if (isCured && infectionStatus[cureColor].count === 0) {
     console.log('This disease has been eradicated')
+  }
+
+  if (newCount[infectionColors[color]] >= 3) {
+    let newOutbreak = outbreakTracker + 1
+    game.set(
+      {
+        outbreakTracker: newOutbreak
+      },
+      {merge: true}
+    )
   } else {
     newCount[infectionColors[color]]++
     infectionStatus[cureColor].count++
@@ -94,7 +104,26 @@ const addInfection = (city, color, count, infectionStatus) => {
       {merge: true}
     )
   }
+
+  if (outbreakTracker >= 7) {
+    game.set(
+      {
+        gameStatus: 'lost'
+      },
+      {merge: true}
+    )
+  }
+
+  if (infectionStatus[cureColor].count > 24) {
+    game.set(
+      {
+        gameStatus: 'lost'
+      },
+      {merge: true}
+    )
+  }
 }
+
 const treatInfection = (city, color, count, infectionStatus) => {
   const infectionColors = {
     blue: 0,
@@ -112,15 +141,37 @@ const treatInfection = (city, color, count, infectionStatus) => {
 
   const newCount = count
   const isCured = infectionStatus[cureColor].isCured
+  const newStatus = infectionStatus
 
   if (newCount[infectionColors[color]] > 0 && !isCured) {
+    newStatus[cureColor].count--
     newCount[infectionColors[color]]--
   }
   if (newCount[infectionColors[color]] > 0 && isCured) {
+    newStatus[cureColor].count =
+      newStatus[cureColor].count - newCount[infectionColors[color]]
     newCount[infectionColors[color]] = 0
   }
 
-  game.set({cities: {[city]: {diseases: newCount}}}, {merge: true})
+  game.set(
+    {
+      cities: {[city]: {diseases: newCount}},
+      infectionStatus: newStatus
+    },
+    {merge: true}
+  )
+}
+
+const discardPlayerCard = (playerId, hand, card, playerDiscard) => {
+  const newHand = hand.filter(elem => elem.name !== card)
+
+  game.set(
+    {
+      playerDiscard: [...playerDiscard, card],
+      [playerId]: {hand: newHand}
+    },
+    {merge: true}
+  )
 }
 
 module.exports = {
@@ -129,5 +180,6 @@ module.exports = {
   shufflePlayerDeck,
   epidemicShuffle,
   addInfection,
-  treatInfection
+  treatInfection,
+  discardPlayerCard
 }

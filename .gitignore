@@ -65,9 +65,9 @@ node_modules/
 node_modules
 public/bundle.js
 public/bundle.js.map
-secrets.js
 .DS_Store
 npm-debug.log
 yarn-error.log
 
 public/worldmap.js
+secrets.js

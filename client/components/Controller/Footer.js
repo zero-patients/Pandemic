@@ -21,14 +21,15 @@ export const Footer = props => {
         BUILD
       </button>
 
-      <button
+      {/* <button
         className="controllerPanel"
         onClick={() =>
           addInfection(
             props.playerCity,
             props.color,
             props.count,
-            props.infectionStatus
+            props.infectionStatus,
+            props.outbreakTracker
           )
         }
       >
@@ -84,7 +85,7 @@ export const Footer = props => {
         onClick={() =>
           treatInfection(
             props.playerCity,
-            'blue',
+            'red',
             props.count,
             props.infectionStatus
           )
@@ -105,7 +106,7 @@ export const Footer = props => {
         onClick={() => props.onClick('special')}
       >
         SPECIALS
-      </button>
+      </button> */}
 
       <button
         className="controllerPanel"
