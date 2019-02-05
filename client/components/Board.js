@@ -21,7 +21,10 @@ class Board extends React.Component {
   constructor(props) {
     super(props)
     this.canvasRef = React.createRef()
-    this.state = {showRules: false}
+    this.state = {
+      showRules: false,
+      gameStatus: 'inPlay'
+    }
   }
 
   handleOpen = () => {
@@ -33,8 +36,8 @@ class Board extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('The board was updated')
-    console.log(this.state.showRules)
+    // console.log('The board was updated')
+    // console.log(this.state.showRules)
   }
 
   show = dimmer => () => this.setState({dimmer, showRules: true})
@@ -45,7 +48,8 @@ class Board extends React.Component {
     game.onSnapshot(async doc => {
       const data = await doc.data()
       this.setState({
-        showRules: data.showRules
+        showRules: data.showRules,
+        gameStatus: data.gameStatus
       })
     })
 
@@ -324,6 +328,70 @@ class Board extends React.Component {
                   </ul>
                 </Modal.Description>
               </Modal.Content>
+            </Modal>
+          </div>
+        ) : null}
+        {this.state.gameStatus === 'lost' ? (
+          <div>
+            <Button onClick={this.show(true)}>Default</Button>
+            <Button onClick={this.show('inverted')}>Inverted</Button>
+            <Button onClick={this.show('blurring')}>Blurring</Button>
+
+            <Modal dimmer="blurring" open={this.state.gameStatus}>
+              <Modal.Header>Game Over. You lost.</Modal.Header>
+              <Modal.Content>
+                <Modal.Description>
+                  <Header>
+                    Pandemic is a cooperative game. The players all win or lose
+                    together
+                  </Header>
+                  <p>The goal is to discover cures for all 4 disieases</p>
+                  <p>The Players lose if:</p>
+                  <ul>
+                    <li>8 outbreaks occur (a worldwide panic happens)</li>
+                    <li>
+                      not enough disease cubes are available when needed (a
+                      disease spreads too much)
+                    </li>
+                    <li>
+                      not enough player cards are left when needed (your team
+                      runs out of time)
+                    </li>
+                  </ul>
+                </Modal.Description>
+              </Modal.Content>
+            </Modal>
+          </div>
+        ) : null}
+        {this.state.gameStatus === 'win' ? (
+          <div>
+            <Button onClick={this.show(true)}>Default</Button>
+            <Button onClick={this.show('inverted')}>Inverted</Button>
+            <Button onClick={this.show('blurring')}>Blurring</Button>
+
+            <Modal dimmer="blurring" open={this.state.gameStatus}>
+              <Modal.Header>Congratulations! You Won!</Modal.Header>
+              {/* <Modal.Content>
+                <Modal.Description>
+                  <Header>
+                    Pandemic is a cooperative game. The players all win or lose
+                    together
+                  </Header>
+                  <p>The goal is to discover cures for all 4 disieases</p>
+                  <p>The Players lose if:</p>
+                  <ul>
+                    <li>8 outbreaks occur (a worldwide panic happens)</li>
+                    <li>
+                      not enough disease cubes are available when needed (a
+                      disease spreads too much)
+                    </li>
+                    <li>
+                      not enough player cards are left when needed (your team
+                      runs out of time)
+                    </li>
+                  </ul>
+                </Modal.Description>
+              </Modal.Content> */}
             </Modal>
           </div>
         ) : null}

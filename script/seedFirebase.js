@@ -19,6 +19,7 @@ const infectionIdx = 0
 const infectionRate = [2, 2, 2, 3, 3, 4, 4]
 const outbreakTracker = 0
 const gameStarted = false
+const gameStatus = 'inPlay'
 
 const gameSession = CURRENT_GAME
 
@@ -41,7 +42,9 @@ const seedFirestore = async () => {
       outbreakTracker,
       researchStations,
       roles,
-      gameStarted
+      gameStarted,
+      showRules,
+      gameStatus
     },
     {merge: true}
   )

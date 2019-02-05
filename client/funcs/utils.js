@@ -2,7 +2,7 @@ const infectionDeck = require('../data/infectionDeck')
 const db = require('../../server/db')
 const CURRENT_GAME = require('../../secrets')
 
-let game = db.collection('rooms').doc(CURRENT_GAME)
+const game = db.collection('rooms').doc(CURRENT_GAME)
 
 const shuffle = arr => {
   let newArr = arr
@@ -56,7 +56,7 @@ const epidemicShuffle = (drawPile, discardPile) => {
   return [newPile, bottomCard]
 }
 
-const addInfection = (city, color, count, infectionStatus) => {
+const addInfection = (city, color, count, infectionStatus, outbreakTracker) => {
   const infectionColors = {
     blue: 0,
     darkgoldenrod: 1,
@@ -75,6 +75,16 @@ const addInfection = (city, color, count, infectionStatus) => {
   const newCount = count
   if (isCured && infectionStatus[cureColor].count === 0) {
     console.log('This disease has been eradicated')
+  }
+
+  if (newCount[infectionColors[color]] >= 3) {
+    let newOutbreak = outbreakTracker + 1
+    game.set(
+      {
+        outbreakTracker: newOutbreak
+      },
+      {merge: true}
+    )
   } else {
     newCount[infectionColors[color]]++
     infectionStatus[cureColor].count++
@@ -87,11 +97,31 @@ const addInfection = (city, color, count, infectionStatus) => {
       {merge: true}
     )
   }
+
+  if (outbreakTracker >= 7) {
+    game.set(
+      {
+        gameStatus: 'lost'
+      },
+      {merge: true}
+    )
+  }
+
+  if (infectionStatus[cureColor].count > 24) {
+    game.set(
+      {
+        gameStatus: 'lost'
+      },
+      {merge: true}
+    )
+  }
 }
+
 const treatInfection = (city, color, count, infectionStatus) => {
   const infectionColors = {
     blue: 0,
     darkgoldenrod: 1,
+    yellow: 1,
     black: 2,
     red: 3
   }
@@ -105,15 +135,25 @@ const treatInfection = (city, color, count, infectionStatus) => {
 
   const newCount = count
   const isCured = infectionStatus[cureColor].isCured
+  const newStatus = infectionStatus
 
   if (newCount[infectionColors[color]] > 0 && !isCured) {
+    newStatus[cureColor].count--
     newCount[infectionColors[color]]--
   }
   if (newCount[infectionColors[color]] > 0 && isCured) {
+    newStatus[cureColor].count =
+      newStatus[cureColor].count - newCount[infectionColors[color]]
     newCount[infectionColors[color]] = 0
   }
 
-  game.set({cities: {[city]: {diseases: newCount}}}, {merge: true})
+  game.set(
+    {
+      cities: {[city]: {diseases: newCount}},
+      infectionStatus: newStatus
+    },
+    {merge: true}
+  )
 }
 
 const discardPlayerCard = (playerId, hand, card, playerDiscard) => {
@@ -128,6 +168,53 @@ const discardPlayerCard = (playerId, hand, card, playerDiscard) => {
   )
 }
 
+const researchCure = (playerId, hand, playerDiscard, infectionStatus) => {
+  const colorCounts = {}
+  hand.map(card => {
+    if (card.type === 'city') {
+      if (!colorCounts[card.color]) {
+        colorCounts[card.color] = 1
+      } else if (colorCounts[card.color]) {
+        colorCounts[card.color]++
+      }
+    }
+  })
+  const maxColor = Object.keys(colorCounts).reduce(
+    (acc, curr) => (colorCounts[acc] > colorCounts[curr] ? acc : curr)
+  )
+
+  let discardedCards = []
+  let newInfectionStatus = infectionStatus
+  if (colorCounts[maxColor] >= 5) {
+    discardedCards = hand.filter(card => card.color === maxColor).slice(0, 5)
+    newInfectionStatus[maxColor].isCured = true
+  }
+  let newHand = hand.filter(card => !discardedCards.includes(card))
+
+  game.set(
+    {
+      playerDiscard: [...playerDiscard, ...discardedCards],
+      [playerId]: {hand: newHand},
+      infectionStatus: newInfectionStatus
+    },
+    {merge: true}
+  )
+
+  if (
+    newInfectionStatus.blue.isCured &&
+    newInfectionStatus.yellow.isCured &&
+    newInfectionStatus.black.isCured &&
+    newInfectionStatus.red.isCured
+  ) {
+    game.set(
+      {
+        gameStatus: 'win'
+      },
+      {merge: true}
+    )
+  }
+}
+
 module.exports = {
   shuffle,
   generateGroups,
@@ -135,5 +222,6 @@ module.exports = {
   addInfection,
   treatInfection,
   discardPlayerCard,
-  addEpidemics
+  addEpidemics,
+  researchCure
 }

@@ -1,12 +1,16 @@
 /* eslint-disable react/button-has-type */
 import React, {Component} from 'react'
 import db from '../../../server/db'
-import {addInfection, treatInfection} from '../../funcs/utils'
+import {addInfection, treatInfection, researchCure} from '../../funcs/utils'
 
 export const Footer = props => {
   return (
     <div className="controllerFooter">
-      <button className="controllerPanel" onClick={() => props.onClick('move')}>
+      <button
+        disabled={props.actions < 1 || !props.isTurn}
+        className="controllerPanel"
+        onClick={() => props.onClick('move')}
+      >
         MOVE
       </button>
 
@@ -17,43 +21,38 @@ export const Footer = props => {
       <button
         className="controllerPanel"
         onClick={() => props.buildResearchStation(props.playerCity)}
+        disabled={props.actions < 1 || !props.isTurn}
       >
         BUILD
       </button>
 
-      {/* <button
+      <button
         className="controllerPanel"
         onClick={() =>
           addInfection(
             props.playerCity,
             props.color,
             props.count,
-            props.infectionStatus
+            props.infectionStatus,
+            props.outbreakTracker
           )
         }
       >
         INFECT
       </button>
-      <button
+      {/* <button
         className="controllerPanel"
         onClick={() => props.drawPlayerCard()}
       >
         DRAW PLAYER CARD
-      </button>
+      </button> */}
       <button
         className="controllerPanel"
-        onClick={() =>
-          treatInfection(
-            props.playerCity,
-            'blue',
-            props.count,
-            props.infectionStatus
-          )
-        }
+        onClick={() => props.onClick('treat')}
       >
-        TREAT BLUE
+        TREAT
       </button>
-      <button
+      {/* <button
         className="controllerPanel"
         onClick={() =>
           treatInfection(
@@ -106,6 +105,21 @@ export const Footer = props => {
       >
         SPECIALS
       </button> */}
+
+      <button
+        className="controllerPanel"
+        onClick={() =>
+          researchCure(
+            props.playerId,
+            props.playerHand,
+            props.playerDiscard,
+            props.infectionStatus
+          )
+        }
+        disabled={props.infectionDeck.length === 0}
+      >
+        Research Cure
+      </button>
 
       <button
         className="controllerPanel"
