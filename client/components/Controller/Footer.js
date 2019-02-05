@@ -39,27 +39,20 @@ export const Footer = props => {
         }
       >
         INFECT
-      </button>
-      <button
+      </button> */}
+      {/* <button
         className="controllerPanel"
         onClick={() => props.drawPlayerCard()}
       >
         DRAW PLAYER CARD
-      </button>
+      </button> */}
       <button
         className="controllerPanel"
-        onClick={() =>
-          treatInfection(
-            props.playerCity,
-            'blue',
-            props.count,
-            props.infectionStatus
-          )
-        }
+        onClick={() => props.onClick('treat')}
       >
-        TREAT BLUE
+        TREAT
       </button>
-      <button
+      {/* <button
         className="controllerPanel"
         onClick={() =>
           treatInfection(

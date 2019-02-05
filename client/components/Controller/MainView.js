@@ -9,6 +9,7 @@ import {addInfection} from '../../funcs/utils'
 import {Rules} from './Rules'
 import CURRENT_GAME from '../../../secrets'
 import OutbreakTracker from '../OutbreakTracker'
+import {TreatView} from './TreatView'
 
 class MainView extends Component {
   constructor(props) {
@@ -68,8 +69,6 @@ class MainView extends Component {
   close = () => this.setState({showRules: false})
 
   goToCity = city => {
-    console.log(typeof this.state.playerInfo, 'player on gotocity')
-
     this.game.set(
       {
         [`${this.playerId}Info`]: {
@@ -82,7 +81,6 @@ class MainView extends Component {
   }
 
   buildResearchStation = city => {
-    console.log('updated build')
     if (
       !this.state.researchStations.includes(city) &&
       this.state.researchStations.length < 6
@@ -288,8 +286,15 @@ class MainView extends Component {
           {this.state.currentView === 'hand' && (
             <div className="controllerMiddle">VIEW IS HAND</div>
           )}
-          {this.state.currentView === 'event' && (
-            <div className="controllerMiddle">YOUR EVENTS</div>
+          {this.state.currentView === 'treat' && (
+            <TreatView
+              playerCityInfo={this.state.playerCityInfo}
+              playerCity={this.state.playerCity}
+              count={this.state.playerCityInfo.diseases}
+              infectionStatus={this.state.infectionStatus}
+              playerInfo={this.state.playerInfo}
+              playerId={this.state.playerId}
+            />
           )}
           {this.state.currentView === 'special' && (
             <div className="controllerMiddle">SPECIAL MOVES</div>
