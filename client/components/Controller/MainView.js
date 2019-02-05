@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 /* eslint-disable react/button-has-type */
 import React, {Component} from 'react'
 import db from '../../../server/db'
@@ -29,8 +30,9 @@ class MainView extends Component {
       infectionDiscard: [],
       currentView: 'hand',
       infectionStatus: {},
-      showRules: false,
-      outbreakTracker: 0
+      outbreakTracker: 0,
+      cities: [],
+      showRules: false
     }
 
     this.game = db.collection('rooms').doc(CURRENT_GAME)
@@ -134,29 +136,36 @@ class MainView extends Component {
   }
 
   drawInfectionCard = async () => {
-    // blue yellow, black red
+    // blue, yellow, black red
     const [card] = this.state.infectionDeck.slice(-1)
     const city = card.replace(/ /g, '-')
     const docRef = await this.game.get()
-    let {
-      cities: {[city]: {diseases, color}},
-      infectionStatus,
-      outbreakTracker
-    } = await docRef.data()
-    color = color === 'darkgoldenrod' ? 'yellow' : color
-    // infectionStatus[color].count++
 
-    addInfection(city, color, diseases, infectionStatus, outbreakTracker)
+    if (city.toLowerCase().trim() === 'epidemic') {
+      console.log('Epidemic')
+      const {infectionIdx} = await docRef.data()
+      if (infectionIdx < 6) {
+        await this.game.set({infectionIdx: infectionIdx + 1}, {merge: true})
+      }
+    } else {
+      let {
+        cities: {[city]: {diseases, color}},
+        infectionStatus,
+        outbreakTracker
+      } = await docRef.data()
+      color = color === 'darkgoldenrod' ? 'yellow' : color
+      addInfection(city, color, diseases, infectionStatus, outbreakTracker)
+    }
 
     await this.game.set(
       {
         infectionDiscard: [...this.state.infectionDiscard, card],
         infectionDeck: [...this.state.infectionDeck.slice(0, -1)]
-        // infectionStatus
       },
       {merge: true}
     )
   }
+
   turnShouldChange = async (playerObj, playerName) => {
     console.log('got to turnShouldChange,')
     //assume currPlayer is the db object player1Info{}
@@ -184,9 +193,9 @@ class MainView extends Component {
   componentDidMount() {
     this.game.onSnapshot(async doc => {
       const data = await doc.data()
-      const citiesData = data.cities
+      const {cities} = data.cities
       let playerInfo = data[`${this.playerId}Info`]
-      console.log(playerInfo, 'playerInfo')
+      // console.log(playerInfo, 'playerInfo')
       let playerHand = playerInfo.hand
       console.log(playerHand, 'playerHand')
       let playerCity = playerInfo.location
@@ -231,10 +240,12 @@ class MainView extends Component {
         infectionDeck: data.infectionDeck,
         infectionDiscard: data.infectionDiscard,
         infectionStatus: infectionStatus,
-        outbreakTracker: outbreakTracker
+        outbreakTracker: outbreakTracker,
+        cities
       })
     })
   }
+
   // componentDidUpdate(prevProps,prevState) {
   //   console.log('got to component did update, but like, actually')
   //   this.game.onSnapshot(async doc => {
@@ -310,6 +321,11 @@ class MainView extends Component {
             color={this.state.playerCityInfo.color}
             count={this.state.playerCityInfo.diseases}
             infectionStatus={this.state.infectionStatus}
+            outbreakTracker={this.state.outbreakTracker}
+            playerId={this.state.playerId}
+            playerHand={this.state.playerHand}
+            drawPlayerCard={this.drawPlayerCard}
+            playerDiscard={this.state.playerDiscard}
             actions={this.state.playerInfo.actions}
             isTurn={this.state.playerInfo.isTurn}
           />

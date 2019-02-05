@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 import React, {Component} from 'react'
 import db from '../../../server/db'
-import {addInfection, treatInfection} from '../../funcs/utils'
+import {addInfection, treatInfection, researchCure} from '../../funcs/utils'
 
 export const Footer = props => {
   return (
@@ -26,7 +26,7 @@ export const Footer = props => {
         BUILD
       </button>
 
-      {/* <button
+      <button
         className="controllerPanel"
         onClick={() =>
           addInfection(
@@ -39,7 +39,7 @@ export const Footer = props => {
         }
       >
         INFECT
-      </button> */}
+      </button>
       {/* <button
         className="controllerPanel"
         onClick={() => props.drawPlayerCard()}
@@ -105,6 +105,21 @@ export const Footer = props => {
       >
         SPECIALS
       </button> */}
+
+      <button
+        className="controllerPanel"
+        onClick={() =>
+          researchCure(
+            props.playerId,
+            props.playerHand,
+            props.playerDiscard,
+            props.infectionStatus
+          )
+        }
+        disabled={props.infectionDeck.length === 0}
+      >
+        Research Cure
+      </button>
 
       <button
         className="controllerPanel"
