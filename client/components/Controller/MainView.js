@@ -107,10 +107,15 @@ class MainView extends Component {
     // blue, yellow, black red
     const [card] = this.state.infectionDeck.slice(-1)
     const city = card.replace(/ /g, '-')
+    const docRef = await this.game.get()
+
     if (city.toLowerCase().trim() === 'epidemic') {
       console.log('Epidemic')
+      const {infectionIdx} = await docRef.data()
+      if (infectionIdx < 6) {
+        await this.game.set({infectionIdx: infectionIdx + 1}, {merge: true})
+      }
     } else {
-      const docRef = await this.game.get()
       let {
         cities: {[city]: {diseases, color}},
         infectionStatus,
@@ -128,6 +133,7 @@ class MainView extends Component {
       {merge: true}
     )
   }
+
   turnShouldChange = async (playerObj, playerName) => {
     console.log('got to turnShouldChange,')
     //assume currPlayer is the db object player1Info{}
