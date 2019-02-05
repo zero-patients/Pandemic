@@ -18,12 +18,12 @@ const CURRENT_GAME = require('../secrets')
 const infectionIdx = 0
 const infectionRate = [2, 2, 2, 3, 3, 4, 4]
 const outbreakTracker = 0
+const gameStarted = false
 
 const gameSession = CURRENT_GAME
 
 const seedFirestore = async () => {
   const game = db.collection('rooms').doc(gameSession)
-  const showRules = false
   await game.set(
     {
       cities,
@@ -41,7 +41,7 @@ const seedFirestore = async () => {
       outbreakTracker,
       researchStations,
       roles,
-      showRules
+      gameStarted
     },
     {merge: true}
   )

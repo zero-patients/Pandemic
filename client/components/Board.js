@@ -48,8 +48,6 @@ class Board extends React.Component {
         showRules: data.showRules
       })
     })
-    console.log('Show Rules is set to: ')
-    console.log(this.state.showRules)
 
     const canvas = this.canvasRef.current
 

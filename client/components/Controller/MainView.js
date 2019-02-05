@@ -7,6 +7,7 @@ import {MoveView} from './MoveView'
 import {PlayerHand} from './PlayerHand'
 import {addInfection} from '../../funcs/utils'
 import CURRENT_GAME from '../../../secrets'
+import {shuffle, addEpidemics} from '../../funcs/utils'
 
 class MainView extends Component {
   constructor(props) {
@@ -25,7 +26,8 @@ class MainView extends Component {
       infectionDeck: [],
       infectionDiscard: [],
       currentView: 'hand',
-      infectionStatus: {}
+      infectionStatus: {},
+      gameStarted: false
     }
 
     this.game = db.collection('rooms').doc(CURRENT_GAME)
@@ -42,6 +44,33 @@ class MainView extends Component {
     this.goToCity = this.goToCity.bind(this)
     this.handleViewChange = this.handleViewChange.bind(this)
     this.drawPlayerCard = this.drawPlayerCard.bind(this)
+  }
+
+  initializeGame = () => {
+    console.log('initialized game')
+    const shuffledPlayerDeck = shuffle(this.state.playerDeck)
+    const shuffledInfectionDeck = shuffle(this.state.infectionDeck)
+
+    console.log('shuffledPlayerDeck', shuffledPlayerDeck)
+
+    // for (let i = 0; i < 8; i++) {
+    //   const card = shuffledPlayerDeck.pop()
+    //   this.game.set({
+    //     [`player${(i % 4 + 1)}info`.hand]: [...[`player${i % 4 + 1}info`.hand], card]
+    //   },
+    //   {merge: true}
+    //   )
+    // }
+    const playerDeck = addEpidemics(shuffledPlayerDeck)
+
+    this.game.set(
+      {
+        playerDeck: playerDeck,
+        infectionDeck: shuffledInfectionDeck,
+        gameStarted: true
+      },
+      {merge: true}
+    )
   }
 
   goToCity = city => {
@@ -146,9 +175,8 @@ class MainView extends Component {
       let playerHand = playerInfo.hand
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
-
       let playerDeck = data.playerDeck
-
+      let gameStarted = data.gameStarted
       let playerDiscard = data.playerDiscard
       let playerCityNeighbors = playerCityInfo.neighbors
       let researchStations = data.researchStations
@@ -186,8 +214,10 @@ class MainView extends Component {
         researchStationCardColors: researchStationCardColors,
         infectionDeck: data.infectionDeck,
         infectionDiscard: data.infectionDiscard,
-        infectionStatus: infectionStatus
+        infectionStatus: infectionStatus,
+        gameStarted: gameStarted
       })
+      if (!this.state.gameStarted) this.initializeGame()
     })
   }
   // componentDidUpdate(prevProps,prevState) {
