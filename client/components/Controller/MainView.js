@@ -316,6 +316,11 @@ class MainView extends Component {
             color={this.state.playerCityInfo.color}
             count={this.state.playerCityInfo.diseases}
             infectionStatus={this.state.infectionStatus}
+            outbreakTracker={this.state.outbreakTracker}
+            playerId={this.state.playerId}
+            playerHand={this.state.playerHand}
+            drawPlayerCard={this.drawPlayerCard}
+            playerDiscard={this.state.playerDiscard}
             actions={this.state.playerInfo.actions}
             isTurn={this.state.playerInfo.isTurn}
           />

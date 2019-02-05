@@ -174,6 +174,53 @@ const discardPlayerCard = (playerId, hand, card, playerDiscard) => {
   )
 }
 
+const researchCure = (playerId, hand, playerDiscard, infectionStatus) => {
+  const colorCounts = {}
+  hand.map(card => {
+    if (card.type === 'city') {
+      if (!colorCounts[card.color]) {
+        colorCounts[card.color] = 1
+      } else if (colorCounts[card.color]) {
+        colorCounts[card.color]++
+      }
+    }
+  })
+  const maxColor = Object.keys(colorCounts).reduce(
+    (acc, curr) => (colorCounts[acc] > colorCounts[curr] ? acc : curr)
+  )
+
+  let discardedCards = []
+  let newInfectionStatus = infectionStatus
+  if (colorCounts[maxColor] >= 5) {
+    discardedCards = hand.filter(card => card.color === maxColor).slice(0, 5)
+    newInfectionStatus[maxColor].isCured = true
+  }
+  let newHand = hand.filter(card => !discardedCards.includes(card))
+
+  game.set(
+    {
+      playerDiscard: [...playerDiscard, ...discardedCards],
+      [playerId]: {hand: newHand},
+      infectionStatus: newInfectionStatus
+    },
+    {merge: true}
+  )
+
+  if (
+    newInfectionStatus.blue.isCured &&
+    newInfectionStatus.yellow.isCured &&
+    newInfectionStatus.black.isCured &&
+    newInfectionStatus.red.isCured
+  ) {
+    game.set(
+      {
+        gameStatus: 'win'
+      },
+      {merge: true}
+    )
+  }
+}
+
 module.exports = {
   shuffle,
   generateGroups,
@@ -181,5 +228,6 @@ module.exports = {
   epidemicShuffle,
   addInfection,
   treatInfection,
-  discardPlayerCard
+  discardPlayerCard,
+  researchCure
 }
