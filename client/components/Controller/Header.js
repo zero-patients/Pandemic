@@ -3,14 +3,6 @@ import {Button} from 'semantic-ui-react'
 import db from '../../../server/db'
 import CURRENT_GAME from '../../../secrets'
 
-const toggle = async () => {
-  const game = db.collection('rooms').doc(CURRENT_GAME)
-  const docRef = await game.get()
-  const {showRules} = docRef.data()
-
-  game.set({showRules: !showRules}, {merge: true})
-}
-
 export const Header = props => {
   const playerColors = {
     player1: 'blue',
@@ -31,7 +23,7 @@ export const Header = props => {
       <Button
         color={playerColors[props.playerId]}
         icon="help"
-        onClick={() => toggle()}
+        onClick={() => props.toggle()}
       />
     </div>
   )
