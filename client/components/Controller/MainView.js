@@ -8,6 +8,7 @@ import {PlayerHand} from './PlayerHand'
 import {addInfection} from '../../funcs/utils'
 import CURRENT_GAME from '../../../secrets'
 import OutbreakTracker from '../OutbreakTracker'
+import cities from '../../data/cities'
 
 class MainView extends Component {
   constructor(props) {
@@ -27,7 +28,8 @@ class MainView extends Component {
       infectionDiscard: [],
       currentView: 'hand',
       infectionStatus: {},
-      outbreakTracker: 0
+      outbreakTracker: 0,
+      cities
     }
 
     this.game = db.collection('rooms').doc(CURRENT_GAME)
@@ -198,7 +200,8 @@ class MainView extends Component {
         infectionDeck: data.infectionDeck,
         infectionDiscard: data.infectionDiscard,
         infectionStatus: infectionStatus,
-        outbreakTracker: outbreakTracker
+        outbreakTracker: outbreakTracker,
+        cities
       })
     })
   }
