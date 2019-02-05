@@ -6,7 +6,11 @@ import {addInfection, treatInfection, researchCure} from '../../funcs/utils'
 export const Footer = props => {
   return (
     <div className="controllerFooter">
-      <button className="controllerPanel" onClick={() => props.onClick('move')}>
+      <button
+        disabled={props.actions < 1 || !props.isTurn}
+        className="controllerPanel"
+        onClick={() => props.onClick('move')}
+      >
         MOVE
       </button>
 
@@ -17,6 +21,7 @@ export const Footer = props => {
       <button
         className="controllerPanel"
         onClick={() => props.buildResearchStation(props.playerCity)}
+        disabled={props.actions < 1 || !props.isTurn}
       >
         BUILD
       </button>
@@ -35,26 +40,19 @@ export const Footer = props => {
       >
         INFECT
       </button>
-      <button
+      {/* <button
         className="controllerPanel"
         onClick={() => props.drawPlayerCard()}
       >
         DRAW PLAYER CARD
+      </button> */}
+      <button
+        className="controllerPanel"
+        onClick={() => props.onClick('treat')}
+      >
+        TREAT
       </button>
       {/* <button
-        className="controllerPanel"
-        onClick={() =>
-          treatInfection(
-            props.playerCity,
-            'blue',
-            props.count,
-            props.infectionStatus
-          )
-        }
-      >
-        TREAT BLUE
-      </button>
-      <button
         className="controllerPanel"
         onClick={() =>
           treatInfection(
