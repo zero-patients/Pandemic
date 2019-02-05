@@ -155,6 +155,23 @@ const outbreak = async (city, color) => {
   })
 }
 
+const resetDidOutbreak = async () => {
+  const docRef = await game.get()
+  const data = await docRef.data()
+  const cities = data.cities
+
+  Object.keys(cities).forEach(city => {
+    cities[city].didOutbreak = false
+  })
+
+  await game.set(
+    {
+      cities
+    },
+    {merge: true}
+  )
+}
+
 const treatInfection = async (city, color, count, infectionStatus) => {
   const infectionColors = {
     blue: 0,
@@ -261,5 +278,6 @@ module.exports = {
   addInfection,
   treatInfection,
   discardPlayerCard,
-  researchCure
+  researchCure,
+  resetDidOutbreak
 }
