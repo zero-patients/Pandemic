@@ -34,10 +34,6 @@ class MainView extends Component {
     this.userId = props.match.params.userId
     this.playerId = `player${this.userId}`
     this.specificPlayer = `player${this.userId}Info`
-
-    // this.isTurn = true
-    // this.remainingMoves = 4
-    // this.currentView = 'move'
     this.turnShouldChange = this.turnShouldChange.bind(this)
     this.buildResearchStation = this.buildResearchStation.bind(this)
     this.drawInfectionCard = this.drawInfectionCard.bind(this)
@@ -46,21 +42,28 @@ class MainView extends Component {
     this.drawPlayerCard = this.drawPlayerCard.bind(this)
   }
 
-  initializeGame = () => {
-    console.log('initialized game')
+  initializeGame = async () => {
+    const game = await this.game.get()
+    const gameData = game.data()
+
     const shuffledPlayerDeck = shuffle(this.state.playerDeck)
     const shuffledInfectionDeck = shuffle(this.state.infectionDeck)
 
-    console.log('shuffledPlayerDeck', shuffledPlayerDeck)
+    this.game.set({gameStarted: true}, {merge: true})
 
-    // for (let i = 0; i < 8; i++) {
-    //   const card = shuffledPlayerDeck.pop()
-    //   this.game.set({
-    //     [`player${(i % 4 + 1)}info`.hand]: [...[`player${i % 4 + 1}info`.hand], card]
-    //   },
-    //   {merge: true}
-    //   )
-    // }
+    for (let i = 0; i < 8; i++) {
+      const playerInfo = await gameData[`player${i % 4 + 1}Info`]
+      console.log(playerInfo)
+      const card = shuffledPlayerDeck.pop()
+      const hand = await playerInfo.hand
+      console.log(hand)
+      await this.game.set(
+        {
+          [`player${i % 4 + 1}Info`]: {hand: [...hand, card]}
+        },
+        {merge: true}
+      )
+    }
     const playerDeck = addEpidemics(shuffledPlayerDeck)
 
     this.game.set(
@@ -171,7 +174,7 @@ class MainView extends Component {
       const data = await doc.data()
       const citiesData = data.cities
       let playerInfo = data[`${this.playerId}Info`]
-      console.log(playerInfo, 'playerInfo')
+      // console.log(playerInfo, 'playerInfo')
       let playerHand = playerInfo.hand
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
