@@ -8,6 +8,7 @@ import {PlayerHand} from './PlayerHand'
 import {addInfection} from '../../funcs/utils'
 import {Rules} from './Rules'
 import CURRENT_GAME from '../../../secrets'
+import OutbreakTracker from '../OutbreakTracker'
 
 class MainView extends Component {
   constructor(props) {
@@ -27,7 +28,8 @@ class MainView extends Component {
       infectionDiscard: [],
       currentView: 'hand',
       infectionStatus: {},
-      showRules: false
+      showRules: false,
+      outbreakTracker: 0
     }
 
     this.game = db.collection('rooms').doc(CURRENT_GAME)
@@ -102,13 +104,22 @@ class MainView extends Component {
   drawPlayerCard = async () => {
     const [card] = this.state.playerDeck.slice(-1)
 
-    await this.game.set(
-      {
-        [`${this.playerId}Info`]: {hand: [...this.state.playerHand, card]},
-        playerDeck: [...this.state.playerDeck.slice(0, -1)]
-      },
-      {merge: true}
-    )
+    if (card !== undefined) {
+      await this.game.set(
+        {
+          [`${this.playerId}Info`]: {hand: [...this.state.playerHand, card]},
+          playerDeck: [...this.state.playerDeck.slice(0, -1)]
+        },
+        {merge: true}
+      )
+    } else {
+      await this.game.set(
+        {
+          gameStatus: 'lost'
+        },
+        {merge: true}
+      )
+    }
   }
 
   drawInfectionCard = async () => {
@@ -118,12 +129,13 @@ class MainView extends Component {
     const docRef = await this.game.get()
     let {
       cities: {[city]: {diseases, color}},
-      infectionStatus
+      infectionStatus,
+      outbreakTracker
     } = await docRef.data()
     color = color === 'darkgoldenrod' ? 'yellow' : color
     // infectionStatus[color].count++
 
-    addInfection(city, color, diseases, infectionStatus)
+    addInfection(city, color, diseases, infectionStatus, outbreakTracker)
 
     await this.game.set(
       {
@@ -167,9 +179,7 @@ class MainView extends Component {
       let playerHand = playerInfo.hand
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
-
       let playerDeck = data.playerDeck
-
       let playerDiscard = data.playerDiscard
       let playerCityNeighbors = playerCityInfo.neighbors
       let researchStations = data.researchStations
@@ -192,6 +202,7 @@ class MainView extends Component {
         }
       })
       let infectionStatus = data.infectionStatus
+      let outbreakTracker = data.outbreakTracker
 
       this.setState({
         playerInfo,
@@ -207,7 +218,8 @@ class MainView extends Component {
         researchStationCardColors: researchStationCardColors,
         infectionDeck: data.infectionDeck,
         infectionDiscard: data.infectionDiscard,
-        infectionStatus: infectionStatus
+        infectionStatus: infectionStatus,
+        outbreakTracker: outbreakTracker
       })
     })
   }
