@@ -28,7 +28,8 @@ export const Footer = props => {
             props.playerCity,
             props.color,
             props.count,
-            props.infectionStatus
+            props.infectionStatus,
+            props.outbreakTracker
           )
         }
       >
