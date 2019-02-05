@@ -6,7 +6,11 @@ import {addInfection, treatInfection, researchCure} from '../../funcs/utils'
 export const Footer = props => {
   return (
     <div className="controllerFooter">
-      <button className="controllerPanel" onClick={() => props.onClick('move')}>
+      <button
+        disabled={props.actions < 1 || !props.isTurn}
+        className="controllerPanel"
+        onClick={() => props.onClick('move')}
+      >
         MOVE
       </button>
 
@@ -17,6 +21,7 @@ export const Footer = props => {
       <button
         className="controllerPanel"
         onClick={() => props.buildResearchStation(props.playerCity)}
+        disabled={props.actions < 1 || !props.isTurn}
       >
         BUILD
       </button>
