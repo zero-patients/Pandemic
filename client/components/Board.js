@@ -365,6 +365,38 @@ class Board extends React.Component {
             </Modal>
           </div>
         ) : null}
+        {this.state.gameStatus === 'win' ? (
+          <div>
+            <Button onClick={this.show(true)}>Default</Button>
+            <Button onClick={this.show('inverted')}>Inverted</Button>
+            <Button onClick={this.show('blurring')}>Blurring</Button>
+
+            <Modal dimmer="blurring" open={this.state.gameStatus}>
+              <Modal.Header>Congratulations! You Won!</Modal.Header>
+              {/* <Modal.Content>
+                <Modal.Description>
+                  <Header>
+                    Pandemic is a cooperative game. The players all win or lose
+                    together
+                  </Header>
+                  <p>The goal is to discover cures for all 4 disieases</p>
+                  <p>The Players lose if:</p>
+                  <ul>
+                    <li>8 outbreaks occur (a worldwide panic happens)</li>
+                    <li>
+                      not enough disease cubes are available when needed (a
+                      disease spreads too much)
+                    </li>
+                    <li>
+                      not enough player cards are left when needed (your team
+                      runs out of time)
+                    </li>
+                  </ul>
+                </Modal.Description>
+              </Modal.Content> */}
+            </Modal>
+          </div>
+        ) : null}
         <canvas
           id="board"
           className="board"

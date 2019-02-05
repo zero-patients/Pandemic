@@ -205,6 +205,20 @@ const researchCure = (playerId, hand, playerDiscard, infectionStatus) => {
     },
     {merge: true}
   )
+
+  if (
+    newInfectionStatus.blue.isCured &&
+    newInfectionStatus.yellow.isCured &&
+    newInfectionStatus.black.isCured &&
+    newInfectionStatus.red.isCured
+  ) {
+    game.set(
+      {
+        gameStatus: 'win'
+      },
+      {merge: true}
+    )
+  }
 }
 
 module.exports = {
