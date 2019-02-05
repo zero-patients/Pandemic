@@ -3,6 +3,7 @@ import {Moves} from './Moves'
 import {CDCMoves} from './cdcMoves'
 import {AirplaneMoves} from './airplaneMoves'
 
+console.log('update disable on footer')
 export const MoveView = props => {
   return (
     <div className="controllerMiddle">
@@ -16,6 +17,7 @@ export const MoveView = props => {
             const color = props.state.neighborCardColors[idx]
             return (
               <Moves
+                restrict={!props.isTurn || props.actions < 1}
                 className="cardContainer"
                 key={idx}
                 move={props.goToCity}
@@ -40,6 +42,7 @@ export const MoveView = props => {
                 const color = props.state.researchStationCardColors[idx]
                 return (
                   <CDCMoves
+                    restrict={!props.isTurn || props.actions < 1}
                     key={idx}
                     move={props.goToCity}
                     color={color}
@@ -61,6 +64,7 @@ export const MoveView = props => {
           ? [...props.state.playerHand].map((elem, idx) => {
               return (
                 <AirplaneMoves
+                  restrict={!props.isTurn || props.actions < 1}
                   key={idx}
                   move={props.goToCity}
                   color={elem.color}

@@ -166,7 +166,7 @@ class MainView extends Component {
     let turn = playerObj.isTurn
     console.log(remainingActions, turn, 'remaining actions and turn ')
 
-    if (remainingActions === 0 && turn) {
+    if (remainingActions < 1 && turn === true) {
       await this.drawInfectionCard()
       await this.drawInfectionCard()
       await this.drawPlayerCard()
@@ -277,7 +277,12 @@ class MainView extends Component {
           />
 
           {this.state.currentView === 'move' && (
-            <MoveView state={this.state} goToCity={this.goToCity} />
+            <MoveView
+              isTurn={this.state.playerInfo.isTurn}
+              state={this.state}
+              goToCity={this.goToCity}
+              actions={this.state.playerInfo.actions}
+            />
           )}
 
           {this.state.currentView === 'hand' && (
@@ -300,6 +305,8 @@ class MainView extends Component {
             color={this.state.playerCityInfo.color}
             count={this.state.playerCityInfo.diseases}
             infectionStatus={this.state.infectionStatus}
+            actions={this.state.playerInfo.actions}
+            isTurn={this.state.playerInfo.isTurn}
           />
         </div>
       </div>

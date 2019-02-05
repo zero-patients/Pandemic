@@ -3,6 +3,7 @@ import React from 'react'
 export const CDCMoves = props => {
   return (
     <button
+      disabled={props.restrict}
       style={{backgroundColor: props.color, borderRadius: '5%'}}
       className="playerCard"
       onClick={() => {
