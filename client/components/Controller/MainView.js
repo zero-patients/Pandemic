@@ -107,15 +107,18 @@ class MainView extends Component {
     // blue, yellow, black red
     const [card] = this.state.infectionDeck.slice(-1)
     const city = card.replace(/ /g, '-')
-    const docRef = await this.game.get()
-    let {
-      cities: {[city]: {diseases, color}},
-      infectionStatus,
-      outbreakTracker
-    } = await docRef.data()
-    color = color === 'darkgoldenrod' ? 'yellow' : color
-
-    addInfection(city, color, diseases, infectionStatus, outbreakTracker)
+    if (city.toLowerCase().trim() === 'epidemic') {
+      console.log('Epidemic')
+    } else {
+      const docRef = await this.game.get()
+      let {
+        cities: {[city]: {diseases, color}},
+        infectionStatus,
+        outbreakTracker
+      } = await docRef.data()
+      color = color === 'darkgoldenrod' ? 'yellow' : color
+      addInfection(city, color, diseases, infectionStatus, outbreakTracker)
+    }
 
     await this.game.set(
       {
@@ -154,7 +157,7 @@ class MainView extends Component {
       const data = await doc.data()
       const {cities} = data.cities
       let playerInfo = data[`${this.playerId}Info`]
-      console.log(playerInfo, 'playerInfo')
+      // console.log(playerInfo, 'playerInfo')
       let playerHand = playerInfo.hand
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
