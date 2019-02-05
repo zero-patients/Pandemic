@@ -1,19 +1,19 @@
 import React from 'react'
 
-export const Moves = props => {
+export const AirplaneMoves = props => {
   return (
     <button
       disabled={props.restrict}
       style={{backgroundColor: props.color, borderRadius: '5%'}}
       className="playerCard"
       onClick={() => {
-        props.move(props.elem)
+        props.move(props.name)
       }}
     >
       <a>
-        <b>{props.elem}</b>
+        <b>{props.name}</b>
       </a>
-      <img src="/car.png" />
+      <img src="/airplane.png" />
     </button>
   )
 }

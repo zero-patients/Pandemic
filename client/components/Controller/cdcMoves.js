@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Moves = props => {
+export const CDCMoves = props => {
   return (
     <button
       disabled={props.restrict}
@@ -13,7 +13,7 @@ export const Moves = props => {
       <a>
         <b>{props.elem}</b>
       </a>
-      <img src="/car.png" />
+      <img src="/cdc.png" />
     </button>
   )
 }

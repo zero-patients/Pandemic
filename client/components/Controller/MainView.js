@@ -7,6 +7,7 @@ import {Footer} from './Footer'
 import {MoveView} from './MoveView'
 import {PlayerHand} from './PlayerHand'
 import {addInfection} from '../../funcs/utils'
+import {Rules} from './Rules'
 import CURRENT_GAME from '../../../secrets'
 // import OutbreakTracker from '../OutbreakTracker'
 
@@ -29,7 +30,8 @@ class MainView extends Component {
       currentView: 'hand',
       infectionStatus: {},
       outbreakTracker: 0,
-      cities: []
+      cities: [],
+      showRules: false
     }
 
     this.game = db.collection('rooms').doc(CURRENT_GAME)
@@ -45,8 +47,27 @@ class MainView extends Component {
     this.drawInfectionCard = this.drawInfectionCard.bind(this)
     this.goToCity = this.goToCity.bind(this)
     this.handleViewChange = this.handleViewChange.bind(this)
+    this.show = this.show.bind(this)
+    this.close = this.close.bind(this)
+    this.toggleRules = this.toggleRules.bind(this)
     this.drawPlayerCard = this.drawPlayerCard.bind(this)
   }
+
+  handleOpen = () => {
+    this.setState({showRules: true})
+  }
+
+  handleClose = () => {
+    this.setState({showRules: false})
+  }
+
+  toggleRules = () => {
+    const toggle = this.state.showRules
+    this.setState({showRules: !toggle})
+  }
+
+  show = dimmer => () => this.setState({dimmer, showRules: true})
+  close = () => this.setState({showRules: false})
 
   goToCity = city => {
     console.log(typeof this.state.playerInfo, 'player on gotocity')
@@ -63,6 +84,7 @@ class MainView extends Component {
   }
 
   buildResearchStation = city => {
+    console.log('updated build')
     if (
       !this.state.researchStations.includes(city) &&
       this.state.researchStations.length < 6
@@ -80,6 +102,18 @@ class MainView extends Component {
       temp.shift()
       this.game.set({researchStations: [...temp, city]}, {merge: true})
     }
+    this.game.set(
+      {
+        [`${this.playerId}Info`]: {
+          actions: this.state.playerInfo.actions - 1
+        }
+      },
+      {merge: true}
+    )
+    this.turnShouldChange(
+      this.state.playerInfo,
+      `player${this.state.playerId}Info`
+    )
   }
 
   drawPlayerCard = async () => {
@@ -141,7 +175,7 @@ class MainView extends Component {
     let turn = playerObj.isTurn
     console.log(remainingActions, turn, 'remaining actions and turn ')
 
-    if (remainingActions === 0 && turn) {
+    if (remainingActions < 1 && turn === true) {
       await this.drawInfectionCard()
       await this.drawInfectionCard()
       await this.drawPlayerCard()
@@ -165,6 +199,7 @@ class MainView extends Component {
       let playerInfo = data[`${this.playerId}Info`]
       // console.log(playerInfo, 'playerInfo')
       let playerHand = playerInfo.hand
+      console.log(playerHand, 'playerHand')
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
       let playerDeck = data.playerDeck
@@ -235,43 +270,56 @@ class MainView extends Component {
 
   render() {
     return (
-      <div id="controller" className={this.playerId}>
-        <Header
-          className="controllerBookend"
-          isTurn={this.isTurn}
-          remainingMoves={this.remainingMoves}
-          playerId={this.playerId}
-        />
-
-        {this.state.currentView === 'move' && (
-          <MoveView state={this.state} goToCity={this.goToCity} />
-        )}
-
-        {this.state.currentView === 'hand' && (
-          <PlayerHand
-            playerId={this.state.playerId}
-            playerHand={this.state.playerHand}
-            playerDiscard={this.state.playerDiscard}
+      <div>
+        {this.state.showRules ? (
+          <Rules
+            show={this.show}
+            open={this.state.showRules}
+            onClose={this.close}
           />
-        )}
+        ) : null}
+        <div id="controller" className={this.playerId}>
+          <Header
+            className="controllerBookend"
+            isTurn={this.isTurn}
+            remainingMoves={this.remainingMoves}
+            playerId={this.playerId}
+            toggle={this.toggleRules}
+          />
 
-        {this.state.currentView === 'event' && <h1>YOUR EVENTS</h1>}
-        {this.state.currentView === 'special' && <h1>SPECIAL MOVES</h1>}
+          {this.state.currentView === 'move' && (
+            <MoveView
+              isTurn={this.state.playerInfo.isTurn}
+              state={this.state}
+              goToCity={this.goToCity}
+              actions={this.state.playerInfo.actions}
+            />
+          )}
 
-        <Footer
-          playerCity={this.state.playerCity}
-          buildResearchStation={this.buildResearchStation}
-          drawInfectionCard={this.drawInfectionCard}
-          infectionDeck={this.state.infectionDeck}
-          onClick={this.handleViewChange}
-          drawPlayerCard={this.drawPlayerCard}
-          //temporary
+          {this.state.currentView === 'hand' && (
+            <div className="controllerMiddle">VIEW IS HAND</div>
+          )}
+          {this.state.currentView === 'event' && (
+            <div className="controllerMiddle">YOUR EVENTS</div>
+          )}
+          {this.state.currentView === 'special' && (
+            <div className="controllerMiddle">SPECIAL MOVES</div>
+          )}
 
-          color={this.state.playerCityInfo.color}
-          count={this.state.playerCityInfo.diseases}
-          infectionStatus={this.state.infectionStatus}
-          outbreakTracker={this.state.outbreakTracker}
-        />
+          <Footer
+            playerCity={this.state.playerCity}
+            buildResearchStation={this.buildResearchStation}
+            drawInfectionCard={this.drawInfectionCard}
+            infectionDeck={this.state.infectionDeck}
+            onClick={this.handleViewChange}
+            //temporary
+            color={this.state.playerCityInfo.color}
+            count={this.state.playerCityInfo.diseases}
+            infectionStatus={this.state.infectionStatus}
+            actions={this.state.playerInfo.actions}
+            isTurn={this.state.playerInfo.isTurn}
+          />
+        </div>
       </div>
     )
   }
