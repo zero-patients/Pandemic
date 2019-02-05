@@ -15,28 +15,43 @@ const HomePage = () => {
   return (
     <div style={styles}>
       <h1>PANDEMIC</h1>
-      <hr />
-      <Link to="/board">View the Board</Link>
-      <br />
-      <br />
-      <Link to="/controller/1" style={{color: 'royalblue'}}>
-        Join as Player 1
-      </Link>
-      <br />
-      <br />
-      <Link to="/controller/2" style={{color: 'gold'}}>
-        Join as Player 2
-      </Link>
-      <br />
-      <br />
-      <Link to="/controller/3" style={{color: 'crimson'}}>
-        Join as Player 3
-      </Link>
-      <br />
-      <br />
-      <Link to="/controller/4" style={{color: 'green'}}>
-        Join as Player 4
-      </Link>
+      <hr
+        style={{
+          border: '5px solid lightgrey',
+          borderRadius: '5px',
+          width: '350px'
+        }}
+      />
+      <p>
+        <Link to="/board">View the Board</Link>
+      </p>
+      <hr
+        style={{
+          border: '5px solid lightgrey',
+          borderRadius: '5px',
+          width: '350px'
+        }}
+      />
+      <div>
+        <Link to="/controller/1" style={{color: 'royalblue'}}>
+          Join as Player 1
+        </Link>
+        <br />
+        <br />
+        <Link to="/controller/2" style={{color: 'gold'}}>
+          Join as Player 2
+        </Link>
+        <br />
+        <br />
+        <Link to="/controller/3" style={{color: 'crimson'}}>
+          Join as Player 3
+        </Link>
+        <br />
+        <br />
+        <Link to="/controller/4" style={{color: 'green'}}>
+          Join as Player 4
+        </Link>
+      </div>
     </div>
   )
 }
