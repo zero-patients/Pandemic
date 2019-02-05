@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 /* eslint-disable react/button-has-type */
 import React, {Component} from 'react'
 import db from '../../../server/db'
@@ -7,8 +8,7 @@ import {MoveView} from './MoveView'
 import {PlayerHand} from './PlayerHand'
 import {addInfection} from '../../funcs/utils'
 import CURRENT_GAME from '../../../secrets'
-import OutbreakTracker from '../OutbreakTracker'
-import cities from '../../data/cities'
+// import OutbreakTracker from '../OutbreakTracker'
 
 class MainView extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class MainView extends Component {
       currentView: 'hand',
       infectionStatus: {},
       outbreakTracker: 0,
-      cities
+      cities: []
     }
 
     this.game = db.collection('rooms').doc(CURRENT_GAME)
@@ -154,7 +154,7 @@ class MainView extends Component {
   componentDidMount() {
     this.game.onSnapshot(async doc => {
       const data = await doc.data()
-      const citiesData = data.cities
+      const {cities} = data.cities
       let playerInfo = data[`${this.playerId}Info`]
       console.log(playerInfo, 'playerInfo')
       let playerHand = playerInfo.hand
@@ -205,6 +205,7 @@ class MainView extends Component {
       })
     })
   }
+
   // componentDidUpdate(prevProps,prevState) {
   //   console.log('got to component did update, but like, actually')
   //   this.game.onSnapshot(async doc => {
