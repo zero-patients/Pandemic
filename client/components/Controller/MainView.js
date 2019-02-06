@@ -229,7 +229,6 @@ class MainView extends Component {
       let playerInfo = data[`${this.playerId}Info`]
       // console.log(playerInfo, 'playerInfo')
       let playerHand = playerInfo.hand
-      console.log(playerHand, 'playerHand')
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
       let playerDeck = data.playerDeck
@@ -311,9 +310,9 @@ class MainView extends Component {
         <div id="controller" className={this.playerId}>
           <Header
             className="controllerBookend"
-            isTurn={this.isTurn}
-            remainingMoves={this.remainingMoves}
-            playerId={this.playerId}
+            isTurn={this.state.playerInfo.isTurn}
+            remainingMoves={this.state.playerInfo.actions}
+            color={this.state.playerInfo.fillStyle}
             toggle={this.toggleRules}
           />
 

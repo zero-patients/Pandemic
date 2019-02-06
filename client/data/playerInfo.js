@@ -5,7 +5,7 @@ const player1Info = {
   location: 'Atlanta',
   role: {description: '', name: ''},
   offset: [0, -10],
-  actions: 0,
+  actions: 4,
   isTurn: true
 }
 const player2Info = {
