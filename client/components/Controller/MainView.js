@@ -150,10 +150,7 @@ class MainView extends Component {
       },
       {merge: true}
     )
-    this.turnShouldChange(
-      this.state.playerInfo,
-      `player${this.state.playerId}Info`
-    )
+    this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
   }
 
   drawPlayerCard = async () => {
@@ -271,17 +268,32 @@ class MainView extends Component {
     let remainingActions = playerObj.actions
     let turn = playerObj.isTurn
     console.log(remainingActions, turn, 'remaining actions and turn ')
+    const turnCounter = this.state.turnCounter
+    const nextPlayer = turnCounter.players[turnCounter.currentTurn + 1 % 4]
 
-    if (remainingActions < 1 && turn === true) {
-      await this.drawInfectionCard()
-      await this.drawInfectionCard()
-      await this.drawPlayerCard()
-      await this.drawPlayerCard()
-      await this.game.set(
+    if (remainingActions === 1 && turn === true) {
+      console.log('got here')
+      this.drawInfectionCard()
+      this.drawInfectionCard()
+      this.drawPlayerCard()
+      this.drawPlayerCard()
+      this.game.set(
         {
           [playerName]: {
-            isTurn: false,
+            isTurn: false
+          },
+          [nextPlayer]: {
+            isTurn: true,
             actions: 4
+          }
+        },
+        {merge: true}
+      )
+
+      this.game.set(
+        {
+          turnCounter: {
+            currentTurn: this.game.currentTurn + 1
           }
         },
         {merge: true}
