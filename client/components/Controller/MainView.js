@@ -112,8 +112,8 @@ class MainView extends Component {
       epidemicCity: ''
     })
 
-  goToCity = city => {
-    this.game.set(
+  goToCity = async city => {
+    await this.game.set(
       {
         [`${this.playerId}Info`]: {
           location: city,
@@ -122,14 +122,15 @@ class MainView extends Component {
       },
       {merge: true}
     )
+    this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
   }
 
-  buildResearchStation = city => {
+  buildResearchStation = async city => {
     if (
       !this.state.researchStations.includes(city) &&
       this.state.researchStations.length < 6
     ) {
-      this.game.set(
+      await this.game.set(
         {researchStations: [...this.state.researchStations, city]},
         {merge: true}
       )
@@ -140,9 +141,9 @@ class MainView extends Component {
     ) {
       const temp = this.state.researchStations
       temp.shift()
-      this.game.set({researchStations: [...temp, city]}, {merge: true})
+      await this.game.set({researchStations: [...temp, city]}, {merge: true})
     }
-    this.game.set(
+    await this.game.set(
       {
         [`${this.playerId}Info`]: {
           actions: this.state.playerInfo.actions - 1
@@ -150,10 +151,7 @@ class MainView extends Component {
       },
       {merge: true}
     )
-    this.turnShouldChange(
-      this.state.playerInfo,
-      `player${this.state.playerId}Info`
-    )
+    this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
   }
 
   drawPlayerCard = async () => {
@@ -352,17 +350,32 @@ class MainView extends Component {
     let remainingActions = playerObj.actions
     let turn = playerObj.isTurn
     console.log(remainingActions, turn, 'remaining actions and turn ')
+    const turnCounter = this.state.turnCounter
+    const nextPlayer = turnCounter.players[turnCounter.currentTurn + 1 % 4]
 
-    if (remainingActions < 1 && turn === true) {
-      await this.drawInfectionCard()
-      await this.drawInfectionCard()
-      await this.drawPlayerCard()
-      await this.drawPlayerCard()
-      await this.game.set(
+    if (remainingActions === 1 && turn === true) {
+      console.log('got here')
+      this.drawInfectionCard()
+      this.drawInfectionCard()
+      this.drawPlayerCard()
+      this.drawPlayerCard()
+      this.game.set(
         {
           [playerName]: {
-            isTurn: false,
+            isTurn: false
+          },
+          [nextPlayer]: {
+            isTurn: true,
             actions: 4
+          }
+        },
+        {merge: true}
+      )
+
+      this.game.set(
+        {
+          turnCounter: {
+            currentTurn: this.game.currentTurn + 1
           }
         },
         {merge: true}
@@ -384,6 +397,7 @@ class MainView extends Component {
       let playerDiscard = data.playerDiscard
       let playerCityNeighbors = playerCityInfo.neighbors
       let researchStations = data.researchStations
+      let turnCounter = data.turnCounter
       let neighborCardColors = playerCityNeighbors.map(elem => {
         if (data.cities[elem].color === 'black') {
           return 'grey'
@@ -421,8 +435,10 @@ class MainView extends Component {
         infectionDiscard: data.infectionDiscard,
         infectionStatus: infectionStatus,
         outbreakTracker: outbreakTracker,
-        cities
+        cities,
+        turnCounter
       })
+      console.log(this.state)
     })
   }
 
@@ -522,6 +538,7 @@ class MainView extends Component {
               infectionStatus={this.state.infectionStatus}
               playerInfo={this.state.playerInfo}
               playerId={this.state.playerId}
+              nextTurn={this.turnShouldChange}
             />
           )}
           {this.state.currentView === 'special' && (
