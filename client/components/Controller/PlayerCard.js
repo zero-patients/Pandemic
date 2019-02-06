@@ -3,11 +3,13 @@ import {discardPlayerCard} from '../../funcs/utils'
 
 export const PlayerCard = props => {
   return (
-    <div className="playerCard">
-      <h1>{props.cardName}</h1>
-      <img src={props.image} />
+    <div className="playerCardInHand" style={{backgroundColor: props.color}}>
+      <h3 style={{position: 'absolute', alignSelf: 'flex-start'}}>
+        {props.cardName}
+      </h3>
+      <img className="playerCardImage" src={props.image} />
 
-      <button
+      {/* <button
         onClick={() => {
           discardPlayerCard(
             props.playerId,
@@ -18,7 +20,7 @@ export const PlayerCard = props => {
         }}
       >
         Play
-      </button>
+      </button> */}
     </div>
   )
 }

@@ -12,6 +12,8 @@ import CURRENT_GAME from '../../../secrets'
 import {shuffle, addEpidemics} from '../../funcs/utils'
 import OutbreakTracker from '../OutbreakTracker'
 import {TreatView} from './TreatView'
+import {Modal, Button} from 'semantic-ui-react'
+import {Header as SemanticHeader} from 'semantic-ui-react'
 
 class MainView extends Component {
   constructor(props) {
@@ -34,6 +36,8 @@ class MainView extends Component {
       gameStarted: false,
       outbreakTracker: 0,
       cities: [],
+      epidemicInfection: false,
+      epidemicCity: '',
       showRules: false
     }
 
@@ -100,7 +104,13 @@ class MainView extends Component {
   }
 
   show = dimmer => () => this.setState({dimmer, showRules: true})
-  close = () => this.setState({showRules: false})
+
+  close = () =>
+    this.setState({
+      showRules: false,
+      epidemicInfection: false,
+      epidemicCity: ''
+    })
 
   goToCity = city => {
     this.game.set(
@@ -167,32 +177,89 @@ class MainView extends Component {
     }
   }
 
-  drawInfectionCard = async () => {
-    // blue, yellow, black red
-    const [card] = this.state.infectionDeck.slice(-1)
-    const city = card.replace(/ /g, '-')
-    const docRef = await this.game.get()
+  // drawInfectionCard = async () => {
+  //   // blue, yellow, black red
+  //   const colorIndexes = {
+  //     blue: 0,
+  //     yellow: 1,
+  //     darkgoldenrod: 1,
+  //     black: 2,
+  //     red: 3
+  //   }
+  //   const [topCard] = this.state.infectionDeck.slice(-1)
+  //   const [bottomCard] = this.state.infectionDeck.slice(0, 1)
+  //   const topCardCity = topCard.replace(/ /g, '-')
+  //   const bottomCardCity = bottomCard.replace(/ /g, '-')
+  //   const docRef = await this.game.get()
 
-    if (city.toLowerCase().trim() === 'epidemic') {
-      console.log('Epidemic')
-      const {infectionIdx} = await docRef.data()
-      if (infectionIdx < 6) {
-        await this.game.set({infectionIdx: infectionIdx + 1}, {merge: true})
-      }
-    } else {
-      let {
-        cities: {[city]: {diseases, color}},
-        infectionStatus,
-        outbreakTracker
-      } = await docRef.data()
-      color = color === 'darkgoldenrod' ? 'yellow' : color
-      addInfection(city, color, diseases, infectionStatus, outbreakTracker)
-    }
+  //   console.log(`Top City => ${topCardCity}\tBottom City => ${bottomCardCity}`)
+
+  //   if (topCardCity.toLowerCase().trim() === 'epidemic') {
+  //     let {
+  //       cities: {[bottomCardCity]: {diseases, color}},
+  //       infectionStatus,
+  //       outbreakTracker,
+  //       infectionIdx
+  //     } = await docRef.data()
+
+  //     if (infectionIdx < 6) {
+  //       diseases[colorIndexes[color]] = 3
+  //       // console.log('The bottom card is', bottomCard)
+  //       await this.game.set(
+  //         {
+  //           infectionIdx: infectionIdx + 1,
+  //           infectionDiscard: [...this.state.infectionDiscard, bottomCard],
+  //           infectionDeck: [...this.state.infectionDeck.slice(1)],
+  //           cities: {[bottomCardCity]: {diseases}}
+  //         },
+  //         {merge: true}
+  //       )
+  //       await this.setState(prevState => ({
+  //         //   infectionDiscard: [...prevState.infectionDiscard, bottomCard],
+  //         //   infectionDeck: [...prevState.infectionDeck.slice(1)],
+  //         epidemicInfection: true,
+  //         epidemicCity: bottomCardCity
+  //       }))
+  //     }
+  //   } else {
+  //     let {
+  //       cities: {[topCardCity]: {diseases, color}},
+  //       infectionStatus,
+  //       outbreakTracker,
+  //       infectionIdx
+  //     } = await docRef.data()
+
+  //     color = color === 'darkgoldenrod' ? 'yellow' : color
+  //     addInfection(
+  //       topCardCity,
+  //       color,
+  //       diseases,
+  //       infectionStatus,
+  //       outbreakTracker
+  //     )
+  //   }
+
+  //   await this.game.set(
+  //     {
+  //       infectionDiscard: [...this.state.infectionDiscard, topCard],
+  //       infectionDeck: [...this.state.infectionDeck.slice(0, -1)]
+  //     },
+  //     {merge: true}
+  //   )
+  // }
+
+  drawInfectionCard = async () => {
+    //  Get data from database
+    const docRef = await this.game.get()
+    const dbData = await docRef.data()
+    //  Get relevant cards
+    const {infectionDeck, infectionDiscard} = dbData
+    const [topCard] = infectionDeck.slice(-1)
 
     await this.game.set(
       {
-        infectionDiscard: [...this.state.infectionDiscard, card],
-        infectionDeck: [...this.state.infectionDeck.slice(0, -1)]
+        infectionDeck: [...infectionDeck.slice(0, -1)],
+        infectionDiscard: [...infectionDiscard, topCard]
       },
       {merge: true}
     )
@@ -229,6 +296,7 @@ class MainView extends Component {
       let playerInfo = data[`${this.playerId}Info`]
       // console.log(playerInfo, 'playerInfo')
       let playerHand = playerInfo.hand
+      // console.log(playerHand, 'playerHand')
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
       let playerDeck = data.playerDeck
@@ -310,6 +378,39 @@ class MainView extends Component {
             onClose={this.close}
           />
         ) : null}
+        {this.state.epidemicInfection ? (
+          <Modal
+            dimmer="blurring"
+            open={this.state.epidemicInfection}
+            onClose={this.close}
+          >
+            <Modal.Actions>
+              <Button icon="close" />
+            </Modal.Actions>
+            <Modal.Header>Epidemic Infection</Modal.Header>
+            <Modal.Content>
+              <Modal.Description>
+                <SemanticHeader>
+                  A city from the deck has been infected.
+                </SemanticHeader>
+                <ul>
+                  <li>
+                    The infection level of{' '}
+                    <span style={{fontWeight: 'bold'}}>
+                      {this.state.epidemicCity}
+                    </span>{' '}
+                    has been set to the maximum level.
+                  </li>
+                  <li>The infection tracker has been increased</li>
+                  <li>
+                    The infection discard pile is being shuffled and added back
+                    to the infection deck
+                  </li>
+                </ul>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
+        ) : null}
         <div id="controller" className={this.playerId}>
           <Header
             className="controllerBookend"
@@ -329,7 +430,11 @@ class MainView extends Component {
           )}
 
           {this.state.currentView === 'hand' && (
-            <div className="controllerMiddle">VIEW IS HAND</div>
+            <PlayerHand
+              playerHand={this.state.playerHand}
+              playerId={this.state.playerId}
+              playerDiscard={this.state.playerDiscard}
+            />
           )}
           {this.state.currentView === 'treat' && (
             <TreatView
