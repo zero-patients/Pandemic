@@ -1,8 +1,8 @@
 /* eslint-disable complexity */
 /* eslint-disable max-statements */
 const infectionDeck = require('../data/infectionDeck')
-import db from '../../server/db'
-import CURRENT_GAME from '../../secrets'
+const db = require('../../server/db')
+const CURRENT_GAME = require('../../secrets')
 
 const game = db.collection('rooms').doc(CURRENT_GAME)
 
@@ -25,10 +25,8 @@ const generateGroups = (arr, size) => {
   }
   return arrayList
 }
-const shufflePlayerDeck = () => {
+const addEpidemics = playerDeck => {
   // NEEDS REFACTOR!!!
-
-  let playerDeckNoEpidemics = shuffle()
   const epidemic = {
     name: 'Epidemic',
     type: 'epidemic',
@@ -36,13 +34,8 @@ const shufflePlayerDeck = () => {
       '1-INCREASE\nMove the infection rate marker forward 1 space.\n2-INFECT\nDraw the bottom card from the infection deck and put 3 infection cubes on that city. Discard that card.\n3-INTENSIFY\nShuffle the cards in the infection discard pile and put them on top of the infection discard deck.'
   }
 
-  let cardsDealtToPlayers = [[], [], [], []] //deal 2 cards to each player
-  for (let i = 0; i < 8; i++) {
-    cardsDealtToPlayers[i % 4].push(playerDeckNoEpidemics.pop())
-  }
-
-  let pileLength = Math.ceil(playerDeckNoEpidemics.length / 4)
-  let smallPiles = generateGroups(playerDeckNoEpidemics, pileLength)
+  let pileLength = Math.ceil(playerDeck.length / 4)
+  let smallPiles = generateGroups(playerDeck, pileLength)
   let finalShuffle = []
 
   smallPiles.map(pile => {
@@ -50,7 +43,7 @@ const shufflePlayerDeck = () => {
     finalShuffle = finalShuffle.concat(shuffle(pile))
   })
 
-  return {finalShuffle, cardsDealtToPlayers}
+  return finalShuffle
 }
 
 const epidemicShuffle = (drawPile, discardPile) => {
@@ -273,11 +266,11 @@ const researchCure = async (playerId, hand, playerDiscard, infectionStatus) => {
 module.exports = {
   shuffle,
   generateGroups,
-  shufflePlayerDeck,
   epidemicShuffle,
   addInfection,
   treatInfection,
   discardPlayerCard,
+  addEpidemics,
   researchCure,
   resetDidOutbreak
 }

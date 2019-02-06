@@ -9,6 +9,7 @@ import {PlayerHand} from './PlayerHand'
 import {addInfection} from '../../funcs/utils'
 import {Rules} from './Rules'
 import CURRENT_GAME from '../../../secrets'
+import {shuffle, addEpidemics} from '../../funcs/utils'
 import OutbreakTracker from '../OutbreakTracker'
 import {TreatView} from './TreatView'
 
@@ -30,6 +31,7 @@ class MainView extends Component {
       infectionDiscard: [],
       currentView: 'hand',
       infectionStatus: {},
+      gameStarted: false,
       outbreakTracker: 0,
       cities: [],
       showRules: false
@@ -39,10 +41,6 @@ class MainView extends Component {
     this.userId = props.match.params.userId
     this.playerId = `player${this.userId}`
     this.specificPlayer = `player${this.userId}Info`
-
-    // this.isTurn = true
-    // this.remainingMoves = 4
-    // this.currentView = 'move'
     this.turnShouldChange = this.turnShouldChange.bind(this)
     this.buildResearchStation = this.buildResearchStation.bind(this)
     this.drawInfectionCard = this.drawInfectionCard.bind(this)
@@ -52,6 +50,40 @@ class MainView extends Component {
     this.close = this.close.bind(this)
     this.toggleRules = this.toggleRules.bind(this)
     this.drawPlayerCard = this.drawPlayerCard.bind(this)
+  }
+
+  initializeGame = async () => {
+    const game = await this.game.get()
+    const gameData = game.data()
+
+    const shuffledPlayerDeck = shuffle(this.state.playerDeck)
+    const shuffledInfectionDeck = shuffle(this.state.infectionDeck)
+
+    this.game.set({gameStarted: true}, {merge: true})
+
+    for (let i = 0; i < 8; i++) {
+      const playerInfo = await gameData[`player${i % 4 + 1}Info`]
+      console.log(playerInfo)
+      const card = shuffledPlayerDeck.pop()
+      const hand = await playerInfo.hand
+      console.log(hand)
+      await this.game.set(
+        {
+          [`player${i % 4 + 1}Info`]: {hand: [...hand, card]}
+        },
+        {merge: true}
+      )
+    }
+    const playerDeck = addEpidemics(shuffledPlayerDeck)
+
+    this.game.set(
+      {
+        playerDeck: playerDeck,
+        infectionDeck: shuffledInfectionDeck,
+        gameStarted: true
+      },
+      {merge: true}
+    )
   }
 
   handleOpen = () => {
