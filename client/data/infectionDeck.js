@@ -6,7 +6,7 @@ const infectionDeck = [
   'Bangkok',
   'Beijing',
   'Bogota',
-  'Buenos Aires',
+  'Buenos-Aires',
 
   'Cairo',
   'Chennai',
@@ -15,8 +15,8 @@ const infectionDeck = [
   'Delhi',
   'Essen',
 
-  'Ho Chi Minh City',
-  'Hong Kong',
+  'Ho-Chi-Minh-City',
+  'Hong-Kong',
 
   'Istanbul',
   'Jakarta',
@@ -30,29 +30,29 @@ const infectionDeck = [
   'Lagos',
   'Lima',
   'London',
-  'Los Angeles',
+  'Los-Angeles',
 
   'Madrid',
   'Manila',
-  'Mexico City',
+  'Mexico-City',
   'Miami',
   'Milan',
   'Montreal',
   'Moscow',
   'Mumbai',
 
-  'New York',
+  'New-York',
   'Osaka',
 
   'Paris',
   'Riyadh',
 
-  'San Francisco',
+  'San-Francisco',
   'Santiago',
-  'Sao Paulo',
+  'Sao-Paulo',
   'Seoul',
   'Shanghai',
-  'St Petersburg',
+  'St-Petersburg',
   'Sydney',
 
   'Taipei',

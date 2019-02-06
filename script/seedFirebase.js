@@ -29,6 +29,34 @@ const showRules = true
 
 const shuffledPlayerDeck = shuffle(playerDeck)
 const shuffledInfectionDeck = shuffle(infectionDeck)
+
+const diseaseOrder = ['blue', 'darkgoldenrod', 'black', 'red']
+
+for (let i = 0; i < 3; i++) {
+  const city = shuffledInfectionDeck.pop()
+  infectionDiscard.push(city)
+  const color = cities[city].color
+  const infectionIndex = diseaseOrder.indexOf(color)
+  // console.log(infectionIdx)
+  cities[city].diseases[infectionIndex] = 3
+}
+
+for (let i = 0; i < 3; i++) {
+  const city = shuffledInfectionDeck.pop()
+  infectionDiscard.push(city)
+  const color = cities[city].color
+  const infectionIndex = diseaseOrder.indexOf(color)
+  cities[city].diseases[infectionIndex] = 2
+}
+
+for (let i = 0; i < 3; i++) {
+  const city = shuffledInfectionDeck.pop()
+  infectionDiscard.push(city)
+  const color = cities[city].color
+  const infectionIndex = diseaseOrder.indexOf(color)
+  cities[city].diseases[infectionIndex] = 1
+}
+
 const turnCounter = {
   players: ['player1Info', 'player2Info', 'player3Info', 'player4Info'],
   currentTurn: 0
