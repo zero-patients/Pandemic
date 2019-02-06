@@ -9,7 +9,7 @@ export const PlayerCard = props => {
       </h3>
       <img className="playerCardImage" src={props.image} />
 
-      {/* <button
+      <button
         onClick={() => {
           discardPlayerCard(
             props.playerId,
@@ -19,8 +19,8 @@ export const PlayerCard = props => {
           )
         }}
       >
-        Play
-      </button> */}
+        Discard
+      </button>
     </div>
   )
 }
