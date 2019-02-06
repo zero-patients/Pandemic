@@ -19,6 +19,8 @@ const {shuffle, addEpidemics} = require('../client/funcs/utils')
 const infectionIdx = 0
 const infectionRate = [2, 2, 2, 3, 3, 4, 4]
 const outbreakTracker = 0
+const epidemicInfection = false
+const epidemicCity = ''
 const gameStarted = false
 const gameStatus = 'inPlay'
 
@@ -38,13 +40,15 @@ for (let i = 0; i < 8; i++) {
 
 playerDeck = addEpidemics(shuffledPlayerDeck)
 
-console.log(player1Info)
+// console.log(player1Info)
 
 const seedFirestore = async () => {
   const game = db.collection('rooms').doc(gameSession)
   await game.set(
     {
       cities,
+      epidemicCity,
+      epidemicInfection,
       infectionDeck: shuffledInfectionDeck,
       infectionDiscard,
       player1Info,
