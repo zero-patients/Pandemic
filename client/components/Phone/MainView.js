@@ -302,9 +302,20 @@ class MainView extends Component {
         >
           Home
         </button>
-        <div>{`Current player: ${this.state.playerNo}`}</div>
-        <div>{`Remaining Actions: ${this.state.playerInfo.actions}`}</div>
-        <div>{`Current Location: ${this.state.playerCity}`}</div>
+        <button
+          onClick={() => {
+            this.setState({currentView: 'rules'})
+          }}
+        >
+          Rules
+        </button>
+        {this.state.currentView !== 'rules' ? (
+          <div>
+            <div>{`Current player: ${this.state.playerNo}`}</div>
+            <div>{`Remaining Actions: ${this.state.playerInfo.actions}`}</div>
+            <div>{`Current Location: ${this.state.playerCity}`}</div>
+          </div>
+        ) : null}
         {this.state.currentView === 'home' ? (
           <div>
             <button
@@ -402,13 +413,14 @@ class MainView extends Component {
         {this.state.currentView === 'cure' ? <h1>cure</h1> : null}
         {this.state.currentView === 'build' ? <h1>build</h1> : null}
         {this.state.currentView === 'pass' ? <h1>pass</h1> : null}
-        {this.state.currentView === 'info' ? (
+        {this.state.currentView === 'rules' ? (
           <Rules
             show={this.show}
             open={this.state.showRules}
             onClose={this.close}
           />
         ) : null}
+        {this.state.currentView === 'info' ? <h1>info</h1> : null}
       </div>
     )
   }
