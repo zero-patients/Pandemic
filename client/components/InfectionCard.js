@@ -44,7 +44,6 @@ const InfectionCard = props => {
     backgroundColor = colorTranslations[cities[cityKey].color]
   }
 
-  console.log(props.city)
   return props.city === 'Epidemic' ? (
     <Card fluid color="green">
       <Image src="images/epidemic.jpg" />

@@ -197,7 +197,6 @@ class MainView extends Component {
       let playerInfo = data[`${this.playerId}Info`]
       // console.log(playerInfo, 'playerInfo')
       let playerHand = playerInfo.hand
-      console.log(playerHand, 'playerHand')
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
       let playerDeck = data.playerDeck
