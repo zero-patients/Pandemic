@@ -1,3 +1,3 @@
-const CURRENT_GAME = 'ryan'
+const CURRENT_GAME = 'willy'
 
 module.exports = CURRENT_GAME
