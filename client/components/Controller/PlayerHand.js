@@ -3,11 +3,15 @@ import {PlayerCard} from './PlayerCard'
 
 export const PlayerHand = props => {
   return (
-    <div className="controllerMiddle" style={{width: '100vw'}}>
+    <div
+      className="controllerMiddle"
+      style={{width: '100vw', justifyContent: 'space-evenly'}}
+    >
       {props.playerHand.map(card => {
         if (card.type === 'city') {
           return (
             <PlayerCard
+              // className="playerCardInHand"
               key={card.name}
               playerId={props.playerId}
               playerHand={props.playerHand}

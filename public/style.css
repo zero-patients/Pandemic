@@ -195,6 +195,28 @@ form div {
   align-items: center;
 }
 
+.playerCardImage {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 13vw;
+  height: 27vh;
+  align-items: center;
+}
+
+.playerCardInHand {
+  display: flex;
+  flex-direction: column;
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
+  width: 15vw;
+  height: 30vh;
+  align-items: space-between;
+  justify-content: space-evenly;
+  margin: 1px;
+}
+
 div.polaroid {
   width: 250px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

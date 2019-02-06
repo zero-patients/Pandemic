@@ -427,7 +427,11 @@ class MainView extends Component {
           )}
 
           {this.state.currentView === 'hand' && (
-            <div className="controllerMiddle">VIEW IS HAND</div>
+            <PlayerHand
+              playerHand={this.state.playerHand}
+              playerId={this.state.playerId}
+              playerDiscard={this.state.playerDiscard}
+            />
           )}
           {this.state.currentView === 'treat' && (
             <TreatView
