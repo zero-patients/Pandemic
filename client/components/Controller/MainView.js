@@ -265,6 +265,26 @@ class MainView extends Component {
     )
   }
 
+  executeEpidemic = async () => {
+    await this.increaseInfectionRate()
+  }
+
+  getFirestoreData = async () => {
+    const docRef = await this.game.get()
+    const dbData = await docRef.data()
+
+    return dbData
+  }
+
+  increaseInfectionRate = async () => {
+    const dbData = await this.getFirestoreData()
+    const {infectionIdx} = dbData
+
+    if (infectionIdx < 6) {
+      await this.game.set({infectionIdx: infectionIdx + 1})
+    }
+  }
+
   turnShouldChange = async (playerObj, playerName) => {
     console.log('got to turnShouldChange,')
     //assume currPlayer is the db object player1Info{}
