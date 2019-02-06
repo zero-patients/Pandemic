@@ -141,7 +141,7 @@ const cities = {
   Johannesburg: {
     color: 'darkgoldenrod',
     diseases: [0, 0, 0, 0],
-    location: [1035, 820],
+    location: [1035, 770],
     neighbors: ['Kinshasa', 'Khartoum'],
     didOutbreak: false
   },

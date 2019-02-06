@@ -93,7 +93,7 @@ class Board extends React.Component {
     // create drawing area
     let oCTX = oCanvas.getContext('2d')
     oCTX.clearRect(0, 0, iCanvasWidth, iCanvasHeight)
-    oCTX.lineWidth = oSettings.borderwidth || 1
+    oCTX.lineWidth = oSettings.borderwidth || 2
     const oWorldMap = worldMap
 
     // calculate zoom: create variables
@@ -239,12 +239,12 @@ class Board extends React.Component {
           ) {
             ctx.beginPath()
             ctx.moveTo(
-              cities[city].location[0] + 17,
-              cities[city].location[1] + 33
+              cities[city].location[0] + 21,
+              cities[city].location[1] + 37
             )
             ctx.lineTo(
-              cities[neighbor].location[0] + 17,
-              cities[neighbor].location[1] + 33
+              cities[neighbor].location[0] + 21,
+              cities[neighbor].location[1] + 37
             )
             ctx.stroke()
           }
@@ -253,16 +253,16 @@ class Board extends React.Component {
         // LA to Sydney
         ctx.beginPath()
         ctx.moveTo(
-          cities['Los-Angeles'].location[0] + 17,
-          cities['Los-Angeles'].location[1] + 33
+          cities['Los-Angeles'].location[0] + 21,
+          cities['Los-Angeles'].location[1] + 37
         )
         ctx.lineTo(0, 670)
         ctx.stroke()
 
         ctx.beginPath()
         ctx.moveTo(
-          cities.Sydney.location[0] + 17,
-          cities.Sydney.location[1] + 33
+          cities.Sydney.location[0] + 21,
+          cities.Sydney.location[1] + 37
         )
         ctx.lineTo(1920, 670)
         ctx.stroke()
@@ -270,21 +270,21 @@ class Board extends React.Component {
         // SF to Tokyo
         ctx.beginPath()
         ctx.moveTo(
-          cities['San-Francisco'].location[0] + 17,
+          cities['San-Francisco'].location[0] + 21,
           cities['San-Francisco'].location[1] + 31
         )
         ctx.lineTo(0, 440)
         ctx.stroke()
 
         ctx.beginPath()
-        ctx.moveTo(cities.Tokyo.location[0] + 17, cities.Tokyo.location[1] + 31)
+        ctx.moveTo(cities.Tokyo.location[0] + 21, cities.Tokyo.location[1] + 31)
         ctx.lineTo(1920, 450)
         ctx.stroke()
 
         // SF to Manila
         ctx.beginPath()
         ctx.moveTo(
-          cities['San-Francisco'].location[0] + 17,
+          cities['San-Francisco'].location[0] + 21,
           cities['San-Francisco'].location[1] + 31
         )
         ctx.lineTo(0, 550)
@@ -292,7 +292,7 @@ class Board extends React.Component {
 
         ctx.beginPath()
         ctx.moveTo(
-          cities.Manila.location[0] + 17,
+          cities.Manila.location[0] + 21,
           cities.Manila.location[1] + 31
         )
         ctx.lineTo(1920, 600)

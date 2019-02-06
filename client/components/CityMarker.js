@@ -39,14 +39,17 @@ class CityMarker extends Component {
       position: 'absolute',
       left: `${this.state.location[0]}px`,
       top: `${this.state.location[1]}px`,
-      fontSize: '12px',
+      fontSize: '16px',
       color: `${this.state.color}`
     }
 
     return (
       <div style={divStyles}>
         <p className="city-label">{this.props.name}</p>
-        <div className="jewel diamond" />
+        <div
+          className="jewel diamond"
+          style={{width: '30px', height: '30px'}}
+        />
         {this.state.isResearchStation ? <ResearchStation /> : null}
         {this.state.blueInfections ? (
           <InfectionGroup

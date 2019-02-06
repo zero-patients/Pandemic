@@ -15,8 +15,8 @@ const ResearchStation = () => {
     msTransform: 'rotate(45deg) scale(0.8)',
     OTransform: 'rotate(45deg) scale(0.8)',
     transform: 'rotate(45deg) scale(0.8)',
-    width: '10px',
-    height: '10px',
+    width: '30px',
+    height: '30px',
     float: 'left',
     margin: '6px',
     position: 'absolute'

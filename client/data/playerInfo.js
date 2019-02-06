@@ -4,7 +4,7 @@ const player1Info = {
   hand: [],
   location: 'Atlanta',
   role: {description: '', name: ''},
-  offset: [0, -10],
+  offset: [6, 4],
   actions: 4,
   isTurn: true
 }
@@ -14,7 +14,7 @@ const player2Info = {
   hand: [],
   location: 'Atlanta',
   role: {description: '', name: ''},
-  offset: [10, 0],
+  offset: [16, 14],
   actions: 0,
   isTurn: false
 }
@@ -25,7 +25,7 @@ const player3Info = {
   location: 'Atlanta',
 
   role: {description: '', name: ''},
-  offset: [0, 10],
+  offset: [6, 24],
   actions: 0,
   isTurn: false
 }
@@ -36,7 +36,7 @@ const player4Info = {
   location: 'Atlanta',
 
   role: {description: '', name: ''},
-  offset: [-10, 0],
+  offset: [-4, 14],
   actions: 0,
   isTurn: false
 }
