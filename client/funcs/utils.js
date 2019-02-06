@@ -263,6 +263,26 @@ const researchCure = async (playerId, hand, playerDiscard, infectionStatus) => {
   }
 }
 
+const goToCity = async (player, city) => {
+  const docRef = await game.get()
+  const data = await docRef.data()
+  const playerInfo = data[player]
+
+  await game.set(
+    {
+      [player]: {
+        location: city,
+        actions: playerInfo.actions - 1
+      }
+    },
+    {merge: true}
+  )
+}
+
+// To Do
+// updateStatusBar function (similar logic as resetDidOutbreak)
+// updateOutbreakTracker function. count how many cities have didOutbreak=true and increment tracker. call it in resetDidOutbreak?
+
 module.exports = {
   shuffle,
   generateGroups,
@@ -272,5 +292,6 @@ module.exports = {
   discardPlayerCard,
   addEpidemics,
   researchCure,
-  resetDidOutbreak
+  resetDidOutbreak,
+  goToCity
 }
