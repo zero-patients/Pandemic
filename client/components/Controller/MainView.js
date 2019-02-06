@@ -56,40 +56,6 @@ class MainView extends Component {
     this.drawPlayerCard = this.drawPlayerCard.bind(this)
   }
 
-  initializeGame = async () => {
-    const game = await this.game.get()
-    const gameData = game.data()
-
-    const shuffledPlayerDeck = shuffle(this.state.playerDeck)
-    const shuffledInfectionDeck = shuffle(this.state.infectionDeck)
-
-    await this.game.set({gameStarted: true}, {merge: true})
-
-    for (let i = 0; i < 8; i++) {
-      const playerInfo = await gameData[`player${i % 4 + 1}Info`]
-      console.log(playerInfo)
-      const card = shuffledPlayerDeck.pop()
-      const hand = await playerInfo.hand
-      console.log(hand)
-      await this.game.set(
-        {
-          [`player${i % 4 + 1}Info`]: {hand: [...hand, card]}
-        },
-        {merge: true}
-      )
-    }
-    const playerDeck = addEpidemics(shuffledPlayerDeck)
-
-    await this.game.set(
-      {
-        playerDeck: playerDeck,
-        infectionDeck: shuffledInfectionDeck,
-        gameStarted: true
-      },
-      {merge: true}
-    )
-  }
-
   handleOpen = () => {
     this.setState({showRules: true})
   }
@@ -163,15 +129,24 @@ class MainView extends Component {
     const [card] = this.state.playerDeck.slice(-1)
 
     if (card !== undefined) {
-      if (card.name.toLowerCase() === 'epidemic') this.executeEpidemic()
-
-      await this.game.set(
-        {
-          [`${this.playerId}Info`]: {hand: [...this.state.playerHand, card]},
-          playerDeck: [...this.state.playerDeck.slice(0, -1)]
-        },
-        {merge: true}
-      )
+      if (card.name.toLowerCase() === 'epidemic') {
+        this.executeEpidemic()
+        await this.game.set(
+          {
+            playerDeck: [...this.state.playerDeck.slice(0, -1)],
+            playerDiscard: [...this.state.playerDiscard, card]
+          },
+          {merge: true}
+        )
+      } else {
+        await this.game.set(
+          {
+            [`${this.playerId}Info`]: {hand: [...this.state.playerHand, card]},
+            playerDeck: [...this.state.playerDeck.slice(0, -1)]
+          },
+          {merge: true}
+        )
+      }
     } else {
       await this.game.set(
         {
