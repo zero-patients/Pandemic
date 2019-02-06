@@ -160,6 +160,8 @@ class MainView extends Component {
     const [card] = this.state.playerDeck.slice(-1)
 
     if (card !== undefined) {
+      if (card === 'Epidemic') this.executeEpidemic()
+
       await this.game.set(
         {
           [`${this.playerId}Info`]: {hand: [...this.state.playerHand, card]},
