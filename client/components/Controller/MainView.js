@@ -160,6 +160,8 @@ class MainView extends Component {
     const [card] = this.state.playerDeck.slice(-1)
 
     if (card !== undefined) {
+      if (card.toLowerCase() === 'epidemic') this.executeEpidemic()
+
       await this.game.set(
         {
           [`${this.playerId}Info`]: {hand: [...this.state.playerHand, card]},
@@ -263,6 +265,85 @@ class MainView extends Component {
       },
       {merge: true}
     )
+  }
+
+  executeEpidemic = async () => {
+    await this.increaseInfectionRate()
+    const bottomCard = await this.drawBottomInfectionCard()
+    await this.createEpidemic(bottomCard)
+    await this.intensifyEpidemic()
+  }
+
+  getFirestoreData = async () => {
+    const docRef = await this.game.get()
+    const dbData = await docRef.data()
+
+    return dbData
+  }
+
+  increaseInfectionRate = async () => {
+    const dbData = await this.getFirestoreData()
+    const {infectionIdx} = dbData
+
+    if (infectionIdx < 6) {
+      await this.game.set({infectionIdx: infectionIdx + 1})
+    }
+  }
+
+  drawBottomInfectionCard = async () => {
+    const dbData = await this.getFirestoreData()
+    const {infectionDeck, infectionDiscard} = dbData
+
+    const [bottomCard] = infectionDeck.slice(0, 1)
+    await this.game.set(
+      {
+        infectionDeck: [...infectionDeck.slice(1)],
+        infectionDiscard: [...infectionDiscard, bottomCard]
+      },
+      {merge: true}
+    )
+
+    return bottomCard
+  }
+
+  createEpidemic = async cityName => {
+    const colorIndexes = {
+      blue: 0,
+      yellow: 1,
+      darkgoldenrod: 1,
+      black: 2,
+      red: 3
+    }
+    const dbData = await this.getFirestoreData()
+    const {cities} = dbData
+    const {color, diseases} = cities[cityName]
+
+    diseases[colorIndexes[color]] = 3
+    addInfection(cityName, color)
+
+    // await this.game.set(
+    //   {
+    //     cities: {
+    //       [cityName]: {
+    //         diseases
+    //       },
+    //       didOutbreak: true
+    //     }
+    //   },
+    //   {merge: true}
+    // )
+  }
+
+  intensifyEpidemic = async () => {
+    const dbData = await this.getFirestoreData()
+    const {infectionDeck, infectionDiscard} = dbData
+
+    const shuffledDiscards = shuffle(infectionDiscard)
+
+    await this.game.set({
+      infectionDeck: [...infectionDeck, ...shuffledDiscards],
+      infectionDiscard: []
+    })
   }
 
   turnShouldChange = async (playerObj, playerName) => {
