@@ -160,7 +160,7 @@ class MainView extends Component {
     const [card] = this.state.playerDeck.slice(-1)
 
     if (card !== undefined) {
-      if (card === 'Epidemic') this.executeEpidemic()
+      if (card.toLowerCase() === 'epidemic') this.executeEpidemic()
 
       await this.game.set(
         {
