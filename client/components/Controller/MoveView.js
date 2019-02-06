@@ -3,7 +3,6 @@ import {Moves} from './Moves'
 import {CDCMoves} from './cdcMoves'
 import {AirplaneMoves} from './airplaneMoves'
 
-console.log('update disable on footer')
 export const MoveView = props => {
   return (
     <div className="controllerMiddle">
