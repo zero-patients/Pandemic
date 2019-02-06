@@ -235,6 +235,7 @@ class MainView extends Component {
       let playerDiscard = data.playerDiscard
       let playerCityNeighbors = playerCityInfo.neighbors
       let researchStations = data.researchStations
+      let turnCounter = data.turnCounter
       let neighborCardColors = playerCityNeighbors.map(elem => {
         if (data.cities[elem].color === 'black') {
           return 'grey'
@@ -272,8 +273,10 @@ class MainView extends Component {
         infectionDiscard: data.infectionDiscard,
         infectionStatus: infectionStatus,
         outbreakTracker: outbreakTracker,
-        cities
+        cities,
+        turnCounter
       })
+      console.log(this.state)
     })
   }
 

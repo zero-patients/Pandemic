@@ -27,6 +27,10 @@ const showRules = true
 
 const shuffledPlayerDeck = shuffle(playerDeck)
 const shuffledInfectionDeck = shuffle(infectionDeck)
+const turnCounter = {
+  players: ['player1Info', 'player2Info', 'player3Info', 'player4Info'],
+  currentTurn: 0
+}
 
 const players = [player1Info, player2Info, player3Info, player4Info]
 for (let i = 0; i < 8; i++) {
@@ -59,6 +63,7 @@ const seedFirestore = async () => {
       outbreakTracker,
       researchStations,
       roles,
+      turnCounter,
       gameStarted,
       showRules,
       gameStatus
