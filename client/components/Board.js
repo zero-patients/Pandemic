@@ -23,6 +23,8 @@ class Board extends React.Component {
     this.canvasRef = React.createRef()
     this.state = {
       showRules: false,
+      epidemicCity: '',
+      epidemicInfection: false,
       gameStatus: 'inPlay'
     }
   }
@@ -46,10 +48,17 @@ class Board extends React.Component {
   componentDidMount() {
     const game = db.collection('rooms').doc(CURRENT_GAME)
     game.onSnapshot(async doc => {
-      const data = await doc.data()
+      const {
+        showRules,
+        gameStatus,
+        epidemicCity,
+        epidemicInfection
+      } = await doc.data()
       this.setState({
-        showRules: data.showRules,
-        gameStatus: data.gameStatus
+        showRules,
+        gameStatus,
+        epidemicCity,
+        epidemicInfection
       })
     })
 
@@ -295,6 +304,35 @@ class Board extends React.Component {
   render() {
     return (
       <div>
+        {this.state.epidemicInfection ? (
+          <Modal
+            dimmer="blurring"
+            open={this.state.epidemicInfection}
+            onClose={this.close}
+          >
+            <Modal.Header>Epidemic Infection</Modal.Header>
+            <Modal.Content>
+              <Modal.Description>
+                <Header>A city from the deck has been infected.</Header>
+                <ul>
+                  <li>
+                    The infection level of{' '}
+                    <span style={{fontWeight: 'bold'}}>
+                      {this.state.epidemicCity}
+                    </span>{' '}
+                    has been set to the maximum level.
+                  </li>
+                  <li>The infection tracker has been increased</li>
+                  <li>
+                    The infection discard pile is being shuffled and added back
+                    to the infection deck
+                  </li>
+                </ul>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
+        ) : null}
+
         {this.state.showRules ? (
           <div>
             <Button onClick={this.show(true)}>Default</Button>
