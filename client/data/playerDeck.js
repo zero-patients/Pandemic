@@ -36,7 +36,7 @@ const playerDeck = [
     population: 8702000
   },
   {
-    name: 'Buenos Aires',
+    name: 'Buenos-Aires',
     type: 'city',
     color: 'yellow',
     population: 13639000
@@ -72,13 +72,13 @@ const playerDeck = [
     population: 575000
   },
   {
-    name: 'Ho Chi Minh City',
+    name: 'Ho-Chi-Minh-City',
     type: 'city',
     color: 'red',
     population: 8314000
   },
   {
-    name: 'Hong Kong',
+    name: 'Hong-Kong',
     type: 'city',
     color: 'red',
     population: 7106000
@@ -144,7 +144,7 @@ const playerDeck = [
     population: 8586000
   },
   {
-    name: 'Los Angeles',
+    name: 'Los-Angeles',
     type: 'city',
     color: 'yellow',
     population: 14900000
@@ -162,7 +162,7 @@ const playerDeck = [
     population: 20767000
   },
   {
-    name: 'Mexico City',
+    name: 'Mexico-City',
     type: 'city',
     color: 'yellow',
     population: 19463000
@@ -198,7 +198,7 @@ const playerDeck = [
     population: 16910000
   },
   {
-    name: 'New York',
+    name: 'New-York',
     type: 'city',
     color: 'blue',
     population: 20464000
@@ -222,7 +222,7 @@ const playerDeck = [
     population: 5037000
   },
   {
-    name: 'San Francisco',
+    name: 'San-Francisco',
     type: 'city',
     color: 'blue',
     population: 5864000
@@ -234,7 +234,7 @@ const playerDeck = [
     population: 6015000
   },
   {
-    name: 'Sao Paulo',
+    name: 'Sao-Paulo',
     type: 'city',
     color: 'yellow',
     population: 20186000
@@ -252,7 +252,7 @@ const playerDeck = [
     population: 13482000
   },
   {
-    name: 'St Petersburg',
+    name: 'St-Petersburg',
     type: 'city',
     color: 'blue',
     population: 4879000
