@@ -5,8 +5,8 @@ import CURRENT_GAME from '../../../secrets'
 
 const game = db.collection('rooms').doc(CURRENT_GAME)
 
-const decrementActions = (player, remainingActions) => {
-  game.set(
+const decrementActions = async (player, remainingActions) => {
+  await game.set(
     {
       [player]: {actions: remainingActions - 1}
     },
@@ -24,14 +24,14 @@ export const TreatView = props => {
           props.playerCityInfo.diseases[0] === 0 ||
           props.playerInfo.actions === 0
         }
-        onClick={() => {
+        onClick={async () => {
           treatInfection(
             props.playerCity,
             'blue',
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          decrementActions(props.playerId, props.playerInfo.actions)
+          await decrementActions(props.playerId, props.playerInfo.actions)
           props.nextTurn(props.playerInfo, `${props.playerId}`)
         }}
       >
@@ -45,14 +45,14 @@ export const TreatView = props => {
           props.playerCityInfo.diseases[1] === 0 ||
           props.playerInfo.actions === 0
         }
-        onClick={() => {
+        onClick={async () => {
           treatInfection(
             props.playerCity,
             'darkgoldenrod',
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          decrementActions(props.playerId, props.playerInfo.actions)
+          await decrementActions(props.playerId, props.playerInfo.actions)
           props.nextTurn(props.playerInfo, `${props.playerId}`)
         }}
       >
@@ -66,14 +66,14 @@ export const TreatView = props => {
           props.playerCityInfo.diseases[2] === 0 ||
           props.playerInfo.actions === 0
         }
-        onClick={() => {
+        onClick={async () => {
           treatInfection(
             props.playerCity,
             'black',
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          decrementActions(props.playerId, props.playerInfo.actions)
+          await decrementActions(props.playerId, props.playerInfo.actions)
           props.nextTurn(props.playerInfo, `${props.playerId}`)
         }}
       >
@@ -87,14 +87,14 @@ export const TreatView = props => {
           props.playerCityInfo.diseases[3] === 0 ||
           props.playerInfo.actions === 0
         }
-        onClick={() => {
+        onClick={async () => {
           treatInfection(
             props.playerCity,
             'red',
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          decrementActions(props.playerId, props.playerInfo.actions)
+          await decrementActions(props.playerId, props.playerInfo.actions)
           props.nextTurn(props.playerInfo, `${props.playerId}`)
         }}
       >

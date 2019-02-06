@@ -2,7 +2,6 @@ import React from 'react'
 import {discardPlayerCard} from '../../funcs/utils'
 
 export const AirplaneMoves = props => {
-  console.log(props, 'UPDATETETETTE')
   return (
     <button
       disabled={props.restrict}
