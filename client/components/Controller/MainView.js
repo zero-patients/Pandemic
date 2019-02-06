@@ -131,7 +131,12 @@ class MainView extends Component {
       this.state.researchStations.length < 6
     ) {
       await this.game.set(
-        {researchStations: [...this.state.researchStations, city]},
+        {
+          researchStations: [...this.state.researchStations, city],
+          [`${this.playerId}Info`]: {
+            actions: this.state.playerInfo.actions - 1
+          }
+        },
         {merge: true}
       )
     }
@@ -141,16 +146,16 @@ class MainView extends Component {
     ) {
       const temp = this.state.researchStations
       temp.shift()
-      await this.game.set({researchStations: [...temp, city]}, {merge: true})
+      await this.game.set(
+        {
+          researchStations: [...temp, city],
+          [`${this.playerId}Info`]: {
+            actions: this.state.playerInfo.actions - 1
+          }
+        },
+        {merge: true}
+      )
     }
-    await this.game.set(
-      {
-        [`${this.playerId}Info`]: {
-          actions: this.state.playerInfo.actions - 1
-        }
-      },
-      {merge: true}
-    )
     this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
   }
 
