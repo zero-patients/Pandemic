@@ -3,10 +3,10 @@ import React, {Component} from 'react'
 const getX = (centerX, angle, radius) => centerX + Math.cos(angle) * radius
 const getY = (centerY, angle, radius) => centerY + Math.sin(angle) * radius
 
-const radius = 10
+const radius = 15
 const speed = 0.05
-const xShift = 13
-const yShift = 28
+const xShift = 16
+const yShift = 36
 
 class Infection extends Component {
   constructor(props) {
@@ -53,8 +53,8 @@ class Infection extends Component {
       background: this.props.color,
       border: '1px solid #000',
       borderRadius: '50%',
-      width: '5px',
-      height: '5px'
+      width: '10px',
+      height: '10px'
     }
     return <div style={styles} />
   }
