@@ -30,7 +30,7 @@ export const Footer = props => {
       >
         BUILD
       </button>
-
+      {/*
       <button
         className="controllerPanel"
         onClick={() =>
@@ -45,6 +45,7 @@ export const Footer = props => {
       >
         INFECT
       </button>
+      */}
       {/* <button
         className="controllerPanel"
         onClick={() => props.drawPlayerCard()}
