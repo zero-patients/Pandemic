@@ -11,20 +11,18 @@ export const Header = props => {
     player4: 'green'
   }
   return (
-    <div className="controllerHeader">
-      {props.isTurn && props.remainingMoves > 0 ? (
-        <p className="controllerPanel">
+    <div style={{alignItems: 'center'}} className="controllerHeader">
+      {props.isTurn === true && props.remainingMoves > 0 ? (
+        <h3 style={{alignSelf: 'center'}} className="controllerPanel">
           Its your turn, the world is counting on you. You have{' '}
           {props.remainingMoves} moves left. Choose carefully.
-        </p>
+        </h3>
       ) : (
-        <p className="controllerPanel">Its not your turn, be a good teammate</p>
+        <h3 style={{alignSelf: 'center'}} className="controllerPanel">
+          Its not your turn, be a good teammate
+        </h3>
       )}
-      <Button
-        color={playerColors[props.playerId]}
-        icon="help"
-        onClick={() => props.toggle()}
-      />
+      <Button color="red" icon="help" onClick={() => props.toggle()} />
     </div>
   )
 }
