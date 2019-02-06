@@ -258,7 +258,7 @@ class MainView extends Component {
     const docRef = await this.game.get()
     const dbData = await docRef.data()
     //  Get relevant cards
-    const {infectionDeck, infectionDiscard} = dbData
+    const {infectionDeck, infectionDiscard, cities} = dbData
     const [topCard] = infectionDeck.slice(-1)
 
     await this.game.set(
@@ -268,6 +268,8 @@ class MainView extends Component {
       },
       {merge: true}
     )
+
+    addInfection(topCard, cities[topCard].color)
   }
 
   executeEpidemic = async () => {
