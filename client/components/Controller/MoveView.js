@@ -68,6 +68,7 @@ export const MoveView = props => {
                   move={props.goToCity}
                   color={elem.color}
                   name={elem.name}
+                  state={props.state}
                 />
               )
             })

@@ -1,6 +1,8 @@
+/* eslint-disable complexity */
+/* eslint-disable max-statements */
 const infectionDeck = require('../data/infectionDeck')
-import db from '../../server/db'
-import CURRENT_GAME from '../../secrets'
+const db = require('../../server/db')
+const CURRENT_GAME = require('../../secrets')
 
 const game = db.collection('rooms').doc(CURRENT_GAME)
 
@@ -23,10 +25,8 @@ const generateGroups = (arr, size) => {
   }
   return arrayList
 }
-const shufflePlayerDeck = () => {
+const addEpidemics = playerDeck => {
   // NEEDS REFACTOR!!!
-
-  let playerDeckNoEpidemics = shuffle()
   const epidemic = {
     name: 'Epidemic',
     type: 'epidemic',
@@ -34,13 +34,8 @@ const shufflePlayerDeck = () => {
       '1-INCREASE\nMove the infection rate marker forward 1 space.\n2-INFECT\nDraw the bottom card from the infection deck and put 3 infection cubes on that city. Discard that card.\n3-INTENSIFY\nShuffle the cards in the infection discard pile and put them on top of the infection discard deck.'
   }
 
-  let cardsDealtToPlayers = [[], [], [], []] //deal 2 cards to each player
-  for (let i = 0; i < 8; i++) {
-    cardsDealtToPlayers[i % 4].push(playerDeckNoEpidemics.pop())
-  }
-
-  let pileLength = Math.ceil(playerDeckNoEpidemics.length / 4)
-  let smallPiles = generateGroups(playerDeckNoEpidemics, pileLength)
+  let pileLength = Math.ceil(playerDeck.length / 4)
+  let smallPiles = generateGroups(playerDeck, pileLength)
   let finalShuffle = []
 
   smallPiles.map(pile => {
@@ -48,7 +43,7 @@ const shufflePlayerDeck = () => {
     finalShuffle = finalShuffle.concat(shuffle(pile))
   })
 
-  return {finalShuffle, cardsDealtToPlayers}
+  return finalShuffle
 }
 
 const epidemicShuffle = (drawPile, discardPile) => {
@@ -63,10 +58,11 @@ const epidemicShuffle = (drawPile, discardPile) => {
   return [newPile, bottomCard]
 }
 
-const addInfection = (city, color, count, infectionStatus, outbreakTracker) => {
+const addInfection = async (city, color, c, is, ot) => {
   const infectionColors = {
     blue: 0,
     darkgoldenrod: 1,
+    yellow: 1,
     black: 2,
     red: 3
   }
@@ -77,54 +73,99 @@ const addInfection = (city, color, count, infectionStatus, outbreakTracker) => {
   } else {
     cureColor = color
   }
+
+  const docRef = await game.get()
+  const data = await docRef.data()
+  const neighbors = data.cities[city].neighbors
+  const count = data.cities[city].diseases
+  const infectionStatus = data.infectionStatus
+  const outbreakTracker = data.outbreakTracker
+  const cities = data.cities
+  const didOutbreak = data.cities[city].didOutbreak
+
   const isCured = infectionStatus[cureColor].isCured
 
   const newCount = count
-  if (isCured && infectionStatus[cureColor].count === 0) {
-    console.log('This disease has been eradicated')
-  }
 
-  if (newCount[infectionColors[color]] >= 3) {
-    let newOutbreak = outbreakTracker + 1
-    game.set(
-      {
-        outbreakTracker: newOutbreak
-      },
-      {merge: true}
-    )
+  if (!didOutbreak) {
+    if (isCured && infectionStatus[cureColor].count === 0) {
+      console.log('This disease has been eradicated')
+    }
+
+    if (newCount[infectionColors[color]] >= 3 && outbreakTracker < 8) {
+      await outbreak(city, color)
+    } else {
+      newCount[infectionColors[color]]++
+      infectionStatus[cureColor].count++
+
+      await game.set(
+        {
+          cities: {[city]: {diseases: newCount}},
+          infectionStatus
+        },
+        {merge: true}
+      )
+    }
+    if (infectionStatus[cureColor].count > 24) {
+      await game.set(
+        {
+          gameStatus: 'lost'
+        },
+        {merge: true}
+      )
+    }
   } else {
-    newCount[infectionColors[color]]++
-    infectionStatus[cureColor].count++
-
-    game.set(
-      {
-        cities: {[city]: {diseases: newCount}},
-        infectionStatus
-      },
-      {merge: true}
-    )
-  }
-
-  if (outbreakTracker >= 7) {
-    game.set(
-      {
-        gameStatus: 'lost'
-      },
-      {merge: true}
-    )
-  }
-
-  if (infectionStatus[cureColor].count > 24) {
-    game.set(
-      {
-        gameStatus: 'lost'
-      },
-      {merge: true}
-    )
+    console.log('No infection added, this city has already had an outbreak')
   }
 }
 
-const treatInfection = (city, color, count, infectionStatus) => {
+const outbreak = async (city, color) => {
+  const docRef = await game.get()
+  const data = await docRef.data()
+  const neighbors = data.cities[city].neighbors
+  const outbreakTracker = data.outbreakTracker
+
+  let newOutbreak = outbreakTracker + 1
+
+  if (newOutbreak >= 8) {
+    await game.set(
+      {
+        gameStatus: 'lost'
+      },
+      {merge: true}
+    )
+  }
+  await game.set(
+    {
+      outbreakTracker: newOutbreak,
+      cities: {[city]: {didOutbreak: true}}
+    },
+    {merge: true}
+  )
+
+  neighbors.map(async elem => {
+    await addInfection(elem, color)
+  })
+}
+
+const resetDidOutbreak = async () => {
+  const docRef = await game.get()
+  const data = await docRef.data()
+  const cities = data.cities
+
+  Object.keys(cities).forEach(city => {
+    cities[city].didOutbreak = false
+  })
+
+  await game.set(
+    {
+      cities
+    },
+    {merge: true}
+  )
+}
+
+const treatInfection = async (city, color, count, infectionStatus) => {
   const infectionColors = {
     blue: 0,
     darkgoldenrod: 1,
@@ -154,7 +195,7 @@ const treatInfection = (city, color, count, infectionStatus) => {
     newCount[infectionColors[color]] = 0
   }
 
-  game.set(
+  await game.set(
     {
       cities: {[city]: {diseases: newCount}},
       infectionStatus: newStatus
@@ -163,10 +204,10 @@ const treatInfection = (city, color, count, infectionStatus) => {
   )
 }
 
-const discardPlayerCard = (playerId, hand, card, playerDiscard) => {
+const discardPlayerCard = async (playerId, hand, card, playerDiscard) => {
   const newHand = hand.filter(elem => elem.name !== card)
 
-  game.set(
+  await game.set(
     {
       playerDiscard: [...playerDiscard, card],
       [playerId]: {hand: newHand}
@@ -175,7 +216,7 @@ const discardPlayerCard = (playerId, hand, card, playerDiscard) => {
   )
 }
 
-const researchCure = (playerId, hand, playerDiscard, infectionStatus) => {
+const researchCure = async (playerId, hand, playerDiscard, infectionStatus) => {
   const colorCounts = {}
   hand.map(card => {
     if (card.type === 'city') {
@@ -198,7 +239,7 @@ const researchCure = (playerId, hand, playerDiscard, infectionStatus) => {
   }
   let newHand = hand.filter(card => !discardedCards.includes(card))
 
-  game.set(
+  await game.set(
     {
       playerDiscard: [...playerDiscard, ...discardedCards],
       [playerId]: {hand: newHand},
@@ -213,7 +254,7 @@ const researchCure = (playerId, hand, playerDiscard, infectionStatus) => {
     newInfectionStatus.black.isCured &&
     newInfectionStatus.red.isCured
   ) {
-    game.set(
+    await game.set(
       {
         gameStatus: 'win'
       },
@@ -225,10 +266,11 @@ const researchCure = (playerId, hand, playerDiscard, infectionStatus) => {
 module.exports = {
   shuffle,
   generateGroups,
-  shufflePlayerDeck,
   epidemicShuffle,
   addInfection,
   treatInfection,
   discardPlayerCard,
-  researchCure
+  addEpidemics,
+  researchCure,
+  resetDidOutbreak
 }

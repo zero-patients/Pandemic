@@ -1,6 +1,8 @@
 import React from 'react'
+import {discardPlayerCard} from '../../funcs/utils'
 
 export const AirplaneMoves = props => {
+  console.log(props, 'UPDATETETETTE')
   return (
     <button
       disabled={props.restrict}
@@ -8,6 +10,12 @@ export const AirplaneMoves = props => {
       className="playerCard"
       onClick={() => {
         props.move(props.name)
+        discardPlayerCard(
+          props.state.playerId,
+          props.state.playerHand,
+          props.name,
+          props.state.playerDiscard
+        )
       }}
     >
       <a>

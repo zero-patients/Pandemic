@@ -1,7 +1,12 @@
 /* eslint-disable react/button-has-type */
 import React, {Component} from 'react'
 import db from '../../../server/db'
-import {addInfection, treatInfection, researchCure} from '../../funcs/utils'
+import {
+  addInfection,
+  treatInfection,
+  researchCure,
+  resetDidOutbreak
+} from '../../funcs/utils'
 
 export const Footer = props => {
   return (
@@ -127,6 +132,14 @@ export const Footer = props => {
         disabled={props.infectionDeck.length === 0}
       >
         Draw Infection Card
+      </button>
+
+      <button
+        className="controllerPanel"
+        onClick={() => resetDidOutbreak()}
+        disabled={props.infectionDeck.length === 0}
+      >
+        Reset DidOutbreak
       </button>
     </div>
   )

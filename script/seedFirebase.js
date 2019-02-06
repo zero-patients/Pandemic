@@ -5,7 +5,7 @@ const infectionDiscard = require('../client/data/infectionDiscard')
 const infectionStatus = require('../client/data/infectionStatus')
 const researchStations = require('../client/data/researchStations')
 const roles = require('../client/data/roles')
-const playerDeck = require('../client/data/playerDeck')
+let playerDeck = require('../client/data/playerDeck')
 const playerDiscard = require('../client/data/playerDiscard')
 const {
   player1Info,
@@ -14,25 +14,42 @@ const {
   player4Info
 } = require('../client/data/playerInfo')
 const CURRENT_GAME = require('../secrets')
+const {shuffle, addEpidemics} = require('../client/funcs/utils')
 
 const infectionIdx = 0
 const infectionRate = [2, 2, 2, 3, 3, 4, 4]
 const outbreakTracker = 0
 const epidemicInfection = false
 const epidemicCity = ''
+const gameStarted = false
 const gameStatus = 'inPlay'
 
 const gameSession = CURRENT_GAME
+const showRules = true
+
+const shuffledPlayerDeck = shuffle(playerDeck)
+const shuffledInfectionDeck = shuffle(infectionDeck)
+
+const players = [player1Info, player2Info, player3Info, player4Info]
+for (let i = 0; i < 8; i++) {
+  let player = players[i % 4]
+  const card = shuffledPlayerDeck.pop()
+
+  player.hand.push(card)
+}
+
+playerDeck = addEpidemics(shuffledPlayerDeck)
+
+console.log(player1Info)
 
 const seedFirestore = async () => {
   const game = db.collection('rooms').doc(gameSession)
-  const showRules = false
   await game.set(
     {
       cities,
       epidemicCity,
       epidemicInfection,
-      infectionDeck,
+      infectionDeck: shuffledInfectionDeck,
       infectionDiscard,
       player1Info,
       player2Info,
@@ -46,6 +63,7 @@ const seedFirestore = async () => {
       outbreakTracker,
       researchStations,
       roles,
+      gameStarted,
       showRules,
       gameStatus
     },

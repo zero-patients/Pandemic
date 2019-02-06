@@ -70,4 +70,4 @@ npm-debug.log
 yarn-error.log
 
 public/worldmap.js
-secrets.js
+*secrets.js
