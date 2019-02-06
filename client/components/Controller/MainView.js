@@ -319,17 +319,17 @@ class MainView extends Component {
     diseases[colorIndexes[color]] = 3
     addInfection(cityName, color)
 
-    await this.game.set(
-      {
-        cities: {
-          [cityName]: {
-            diseases
-          },
-          didOutbreak: true
-        }
-      },
-      {merge: true}
-    )
+    // await this.game.set(
+    //   {
+    //     cities: {
+    //       [cityName]: {
+    //         diseases
+    //       },
+    //       didOutbreak: true
+    //     }
+    //   },
+    //   {merge: true}
+    // )
   }
 
   intensifyEpidemic = async () => {
