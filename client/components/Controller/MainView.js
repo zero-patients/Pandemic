@@ -177,72 +177,89 @@ class MainView extends Component {
     }
   }
 
+  // drawInfectionCard = async () => {
+  //   // blue, yellow, black red
+  //   const colorIndexes = {
+  //     blue: 0,
+  //     yellow: 1,
+  //     darkgoldenrod: 1,
+  //     black: 2,
+  //     red: 3
+  //   }
+  //   const [topCard] = this.state.infectionDeck.slice(-1)
+  //   const [bottomCard] = this.state.infectionDeck.slice(0, 1)
+  //   const topCardCity = topCard.replace(/ /g, '-')
+  //   const bottomCardCity = bottomCard.replace(/ /g, '-')
+  //   const docRef = await this.game.get()
+
+  //   console.log(`Top City => ${topCardCity}\tBottom City => ${bottomCardCity}`)
+
+  //   if (topCardCity.toLowerCase().trim() === 'epidemic') {
+  //     let {
+  //       cities: {[bottomCardCity]: {diseases, color}},
+  //       infectionStatus,
+  //       outbreakTracker,
+  //       infectionIdx
+  //     } = await docRef.data()
+
+  //     if (infectionIdx < 6) {
+  //       diseases[colorIndexes[color]] = 3
+  //       // console.log('The bottom card is', bottomCard)
+  //       await this.game.set(
+  //         {
+  //           infectionIdx: infectionIdx + 1,
+  //           infectionDiscard: [...this.state.infectionDiscard, bottomCard],
+  //           infectionDeck: [...this.state.infectionDeck.slice(1)],
+  //           cities: {[bottomCardCity]: {diseases}}
+  //         },
+  //         {merge: true}
+  //       )
+  //       await this.setState(prevState => ({
+  //         //   infectionDiscard: [...prevState.infectionDiscard, bottomCard],
+  //         //   infectionDeck: [...prevState.infectionDeck.slice(1)],
+  //         epidemicInfection: true,
+  //         epidemicCity: bottomCardCity
+  //       }))
+  //     }
+  //   } else {
+  //     let {
+  //       cities: {[topCardCity]: {diseases, color}},
+  //       infectionStatus,
+  //       outbreakTracker,
+  //       infectionIdx
+  //     } = await docRef.data()
+
+  //     color = color === 'darkgoldenrod' ? 'yellow' : color
+  //     addInfection(
+  //       topCardCity,
+  //       color,
+  //       diseases,
+  //       infectionStatus,
+  //       outbreakTracker
+  //     )
+  //   }
+
+  //   await this.game.set(
+  //     {
+  //       infectionDiscard: [...this.state.infectionDiscard, topCard],
+  //       infectionDeck: [...this.state.infectionDeck.slice(0, -1)]
+  //     },
+  //     {merge: true}
+  //   )
+  // }
+
   drawInfectionCard = async () => {
-    // blue, yellow, black red
-    const colorIndexes = {
-      blue: 0,
-      yellow: 1,
-      darkgoldenrod: 1,
-      black: 2,
-      red: 3
-    }
-    const [topCard] = this.state.infectionDeck.slice(-1)
-    const [bottomCard] = this.state.infectionDeck.slice(0, 1)
-    const topCardCity = topCard.replace(/ /g, '-')
-    const bottomCardCity = bottomCard.replace(/ /g, '-')
+    //  Get data from database
     const docRef = await this.game.get()
-
-    console.log(`Top City => ${topCardCity}\tBottom City => ${bottomCardCity}`)
-
-    if (topCardCity.toLowerCase().trim() === 'epidemic') {
-      let {
-        cities: {[bottomCardCity]: {diseases, color}},
-        infectionStatus,
-        outbreakTracker,
-        infectionIdx
-      } = await docRef.data()
-
-      if (infectionIdx < 6) {
-        diseases[colorIndexes[color]] = 3
-        // console.log('The bottom card is', bottomCard)
-        await this.game.set(
-          {
-            infectionIdx: infectionIdx + 1,
-            infectionDiscard: [...this.state.infectionDiscard, bottomCard],
-            infectionDeck: [...this.state.infectionDeck.slice(1)],
-            cities: {[bottomCardCity]: {diseases}}
-          },
-          {merge: true}
-        )
-        await this.setState(prevState => ({
-          //   infectionDiscard: [...prevState.infectionDiscard, bottomCard],
-          //   infectionDeck: [...prevState.infectionDeck.slice(1)],
-          epidemicInfection: true,
-          epidemicCity: bottomCardCity
-        }))
-      }
-    } else {
-      let {
-        cities: {[topCardCity]: {diseases, color}},
-        infectionStatus,
-        outbreakTracker,
-        infectionIdx
-      } = await docRef.data()
-
-      color = color === 'darkgoldenrod' ? 'yellow' : color
-      addInfection(
-        topCardCity,
-        color,
-        diseases,
-        infectionStatus,
-        outbreakTracker
-      )
-    }
+    const dbData = await docRef.data()
+    //  Get relevant cards
+    const {infectionDeck, infectionDiscard} = dbData
+    const [topCard] = infectionDeck.slice(-1)
 
     await this.game.set(
       {
-        infectionDiscard: [...this.state.infectionDiscard, topCard],
-        infectionDeck: [...this.state.infectionDeck.slice(0, -1)]
+        infectionDeck: [...infectionDeck.slice(0, -1)],
+        infectionDiscard: [...infectionDiscard, topCard]
       },
       {merge: true}
     )

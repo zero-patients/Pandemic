@@ -40,7 +40,7 @@ for (let i = 0; i < 8; i++) {
 
 playerDeck = addEpidemics(shuffledPlayerDeck)
 
-console.log(player1Info)
+// console.log(player1Info)
 
 const seedFirestore = async () => {
   const game = db.collection('rooms').doc(gameSession)
