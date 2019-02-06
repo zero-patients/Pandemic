@@ -112,8 +112,8 @@ class MainView extends Component {
       epidemicCity: ''
     })
 
-  goToCity = city => {
-    this.game.set(
+  goToCity = async city => {
+    await this.game.set(
       {
         [`${this.playerId}Info`]: {
           location: city,
@@ -122,14 +122,15 @@ class MainView extends Component {
       },
       {merge: true}
     )
+    this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
   }
 
-  buildResearchStation = city => {
+  buildResearchStation = async city => {
     if (
       !this.state.researchStations.includes(city) &&
       this.state.researchStations.length < 6
     ) {
-      this.game.set(
+      await this.game.set(
         {researchStations: [...this.state.researchStations, city]},
         {merge: true}
       )
@@ -140,9 +141,9 @@ class MainView extends Component {
     ) {
       const temp = this.state.researchStations
       temp.shift()
-      this.game.set({researchStations: [...temp, city]}, {merge: true})
+      await this.game.set({researchStations: [...temp, city]}, {merge: true})
     }
-    this.game.set(
+    await this.game.set(
       {
         [`${this.playerId}Info`]: {
           actions: this.state.playerInfo.actions - 1
@@ -456,6 +457,7 @@ class MainView extends Component {
               infectionStatus={this.state.infectionStatus}
               playerInfo={this.state.playerInfo}
               playerId={this.state.playerId}
+              nextTurn={this.turnShouldChange}
             />
           )}
           {this.state.currentView === 'special' && (

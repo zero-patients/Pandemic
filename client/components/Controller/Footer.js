@@ -126,7 +126,7 @@ export const Footer = props => {
         Research Cure
       </button>
 
-      <button
+      {/* <button
         className="controllerPanel"
         onClick={() => props.drawInfectionCard()}
         disabled={props.infectionDeck.length === 0}
@@ -140,7 +140,7 @@ export const Footer = props => {
         disabled={props.infectionDeck.length === 0}
       >
         Reset DidOutbreak
-      </button>
+      </button> */}
     </div>
   )
 }

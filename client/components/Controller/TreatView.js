@@ -32,6 +32,7 @@ export const TreatView = props => {
             props.infectionStatus
           )
           decrementActions(props.playerId, props.playerInfo.actions)
+          props.nextTurn(props.playerInfo, `${props.playerId}`)
         }}
       >
         TREAT
@@ -52,6 +53,7 @@ export const TreatView = props => {
             props.infectionStatus
           )
           decrementActions(props.playerId, props.playerInfo.actions)
+          props.nextTurn(props.playerInfo, `${props.playerId}`)
         }}
       >
         TREAT
@@ -72,6 +74,7 @@ export const TreatView = props => {
             props.infectionStatus
           )
           decrementActions(props.playerId, props.playerInfo.actions)
+          props.nextTurn(props.playerInfo, `${props.playerId}`)
         }}
       >
         TREAT
@@ -92,6 +95,7 @@ export const TreatView = props => {
             props.infectionStatus
           )
           decrementActions(props.playerId, props.playerInfo.actions)
+          props.nextTurn(props.playerInfo, `${props.playerId}`)
         }}
       >
         TREAT
