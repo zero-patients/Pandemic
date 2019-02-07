@@ -160,25 +160,31 @@ class MainView extends Component {
   }
 
   drawPlayerCard = async () => {
-    const [card] = this.state.playerDeck.slice(-1)
-
-    if (card !== undefined) {
-      if (card.name.toLowerCase() === 'epidemic') this.executeEpidemic()
-
-      await this.game.set(
-        {
-          [`${this.playerId}Info`]: {hand: [...this.state.playerHand, card]},
-          playerDeck: [...this.state.playerDeck.slice(0, -1)]
-        },
-        {merge: true}
-      )
-    } else {
+    if (this.state.playerDeck.length === 0) {
       await this.game.set(
         {
           gameStatus: 'lost'
         },
         {merge: true}
       )
+      return
+    }
+
+    const [card] = this.state.playerDeck.slice(-1)
+    console.log(`Drew ${card.name} card from player deck`)
+
+    if (card !== undefined) {
+      if (card.name.toLowerCase() === 'epidemic') {
+        await this.executeEpidemic()
+      } else {
+        await this.game.set(
+          {
+            [`${this.playerId}Info`]: {hand: [...this.state.playerHand, card]},
+            playerDeck: [...this.state.playerDeck.slice(0, -1)]
+          },
+          {merge: true}
+        )
+      }
     }
   }
 
@@ -189,6 +195,7 @@ class MainView extends Component {
     //  Get relevant cards
     const {infectionDeck, infectionDiscard, cities} = dbData
     const [topCard] = infectionDeck.slice(-1)
+    console.log(`Drew ${topCard} card from infection deck`)
 
     await this.game.set(
       {
@@ -202,10 +209,15 @@ class MainView extends Component {
   }
 
   executeEpidemic = async () => {
+    console.group('Epidemic actions')
+    console.log('Beginning execution of epidemic')
     await this.increaseInfectionRate()
     const bottomCard = await this.drawBottomInfectionCard()
+    console.log('Epidemic will be created in ', bottomCard)
     await this.createEpidemic(bottomCard)
     await this.intensifyEpidemic()
+    console.log('Finished executing epidemic')
+    console.groupEnd()
   }
 
   getFirestoreData = async () => {
@@ -216,15 +228,17 @@ class MainView extends Component {
   }
 
   increaseInfectionRate = async () => {
+    console.log('Increasing infection rate')
     const dbData = await this.getFirestoreData()
     const {infectionIdx} = dbData
 
     if (infectionIdx < 6) {
-      await this.game.set({infectionIdx: infectionIdx + 1})
+      await this.game.set({infectionIdx: infectionIdx + 1}, {merge: true})
     }
   }
 
   drawBottomInfectionCard = async () => {
+    console.log('Drawing the bottom card')
     const dbData = await this.getFirestoreData()
     const {infectionDeck, infectionDiscard} = dbData
 
@@ -248,36 +262,32 @@ class MainView extends Component {
       black: 2,
       red: 3
     }
+    console.log('Creating epidemic:', cityName)
     const dbData = await this.getFirestoreData()
     const {cities} = dbData
     const {color, diseases} = cities[cityName]
-
+    // debugger
+    console.log('Diseases before:', diseases)
     diseases[colorIndexes[color]] = 3
+    await this.game.set({cities: {[cityName]: {diseases}}}, {merge: true})
+    console.log('Disease after:', diseases)
     addInfection(cityName, color)
-
-    // await this.game.set(
-    //   {
-    //     cities: {
-    //       [cityName]: {
-    //         diseases
-    //       },
-    //       didOutbreak: true
-    //     }
-    //   },
-    //   {merge: true}
-    // )
   }
 
   intensifyEpidemic = async () => {
+    console.log('Intensifying epidemic')
     const dbData = await this.getFirestoreData()
     const {infectionDeck, infectionDiscard} = dbData
 
     const shuffledDiscards = shuffle(infectionDiscard)
 
-    await this.game.set({
-      infectionDeck: [...infectionDeck, ...shuffledDiscards],
-      infectionDiscard: []
-    })
+    await this.game.set(
+      {
+        infectionDeck: [...infectionDeck, ...shuffledDiscards],
+        infectionDiscard: []
+      },
+      {merge: true}
+    )
   }
 
   turnShouldChange = async (playerObj, playerName) => {
@@ -286,15 +296,23 @@ class MainView extends Component {
     let remainingActions = playerObj.actions
     let turn = playerObj.isTurn
     console.log(remainingActions, turn, 'remaining actions and turn ')
-    const turnCounter = this.state.turnCounter
-    const nextPlayer = turnCounter.players[turnCounter.currentTurn + 1 % 4]
+    // const turnCounter = this.state.turnCounter
+    // const nextPlayer = turnCounter.players[turnCounter.currentTurn + 1 % 4]
 
     if (remainingActions === 0 && turn === true) {
+      console.group('Player Cards')
       console.log('Drawing cards')
-      this.drawInfectionCard()
-      this.drawInfectionCard()
-      this.drawPlayerCard()
-      this.drawPlayerCard()
+      await this.drawPlayerCard()
+      console.log('Drew 1st player card')
+      await this.drawPlayerCard()
+      console.log('Drew 2nd player card')
+      console.groupEnd()
+      console.group('Infection Cards')
+      await this.drawInfectionCard()
+      console.log('Drew 1st infection card')
+      await this.drawInfectionCard()
+      console.log('Drew 2nd infectioncard')
+      console.groupEnd()
     }
   }
 
