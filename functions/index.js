@@ -16,6 +16,7 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 
 exports.updateUser = functions.firestore
   .document('rooms/frankRoom')
+  // .document(`rooms/${CURRENT_GAME}`)
   .onUpdate((change, context) => {
     const playerBefore = change.before.data()
     const playerAfter = change.after.data()
@@ -56,7 +57,7 @@ exports.updateUser = functions.firestore
             isTurn: true
           },
           turnCounter: {
-            currentTurn: 1
+            currentTurn: 2
           }
         },
         {merge: true}
@@ -75,7 +76,7 @@ exports.updateUser = functions.firestore
             isTurn: true
           },
           turnCounter: {
-            currentTurn: 1
+            currentTurn: 3
           }
         },
         {merge: true}
@@ -94,7 +95,7 @@ exports.updateUser = functions.firestore
             isTurn: true
           },
           turnCounter: {
-            currentTurn: 1
+            currentTurn: 0
           }
         },
         {merge: true}

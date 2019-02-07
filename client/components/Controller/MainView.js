@@ -67,10 +67,10 @@ class MainView extends Component {
 
     for (let i = 0; i < 8; i++) {
       const playerInfo = await gameData[`player${i % 4 + 1}Info`]
-      console.log(playerInfo)
+      // console.log(playerInfo)
       const card = shuffledPlayerDeck.pop()
       const hand = await playerInfo.hand
-      console.log(hand)
+      // console.log(hand)
       await this.game.set(
         {
           [`player${i % 4 + 1}Info`]: {hand: [...hand, card]}
@@ -356,12 +356,12 @@ class MainView extends Component {
     //assume currPlayer is the db object player1Info{}
     let remainingActions = playerObj.actions
     let turn = playerObj.isTurn
-    console.log(remainingActions, turn, 'remaining actions and turn ')
+    // console.log(remainingActions, turn, 'remaining actions and turn ')
     const turnCounter = this.state.turnCounter
     const nextPlayer = turnCounter.players[turnCounter.currentTurn + 1 % 4]
 
     if (remainingActions === 0 && turn === true) {
-      console.log('got here')
+      console.log('Drawing cards')
       this.drawInfectionCard()
       this.drawInfectionCard()
       this.drawPlayerCard()
@@ -445,7 +445,6 @@ class MainView extends Component {
         cities,
         turnCounter
       })
-      console.log(this.state)
     })
   }
 
