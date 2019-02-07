@@ -8,23 +8,36 @@ import {
   resetDidOutbreak
 } from '../../funcs/utils'
 
+const flexCenter = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: '5%'
+}
+
 export const Footer = props => {
   return (
     <div className="controllerFooter">
       <button
         disabled={props.actions < 1 || !props.isTurn}
         className="controllerPanel"
+        style={{...flexCenter}}
         onClick={() => props.onClick('move')}
       >
         MOVE
       </button>
 
-      <button className="controllerPanel" onClick={() => props.onClick('hand')}>
+      <button
+        style={{...flexCenter}}
+        className="controllerPanel"
+        onClick={() => props.onClick('hand')}
+      >
         HAND
       </button>
 
       <button
         className="controllerPanel"
+        style={{...flexCenter}}
         onClick={() => props.buildResearchStation(props.playerCity)}
         disabled={props.actions < 1 || !props.isTurn}
       >
@@ -53,6 +66,7 @@ export const Footer = props => {
         DRAW PLAYER CARD
       </button> */}
       <button
+        style={{...flexCenter}}
         className="controllerPanel"
         onClick={() => props.onClick('treat')}
       >
@@ -113,6 +127,7 @@ export const Footer = props => {
       </button> */}
 
       <button
+        style={{...flexCenter}}
         className="controllerPanel"
         onClick={() =>
           researchCure(
@@ -124,7 +139,7 @@ export const Footer = props => {
         }
         disabled={props.infectionDeck.length === 0}
       >
-        Research Cure
+        CURE
       </button>
 
       {/* <button
