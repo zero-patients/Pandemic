@@ -280,19 +280,28 @@ const updateActions = async player => {
 
   if (currentPlayerInfo.actions > 1 && currentPlayerInfo.isTurn === true) {
     currentPlayerInfo.actions--
+    console.log('actions > 1, decrement only', player, currentPlayerInfo)
     await game.set(
       {
         [player]: currentPlayerInfo
       },
       {merge: true}
     )
-  }
-  if (currentPlayerInfo.actions <= 1) {
+  } else if (
+    currentPlayerInfo.actions <= 1 &&
+    currentPlayerInfo.isTurn === true
+  ) {
     currentPlayerInfo.actions = 0
     currentPlayerInfo.isTurn = false
     nextPlayerInfo.actions = 4
     nextPlayerInfo.isTurn = true
-
+    console.log(
+      'actions = 1, set to 0 and switch players',
+      player,
+      currentPlayerInfo,
+      nextPlayer,
+      nextPlayerInfo
+    )
     await game.set(
       {
         [player]: currentPlayerInfo,

@@ -116,14 +116,14 @@ class MainView extends Component {
     await this.game.set(
       {
         [`${this.playerId}Info`]: {
-          location: city,
-          actions: this.state.playerInfo.actions - 1
+          location: city
+          // actions: this.state.playerInfo.actions - 1
         }
       },
       {merge: true}
     )
     // this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
-    updateActions(this.state.playerInfo)
+    updateActions(`${this.playerId}Info`)
   }
 
   buildResearchStation = async city => {
@@ -158,7 +158,7 @@ class MainView extends Component {
       )
     }
     // this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
-    updateActions(this.state.playerInfo)
+    updateActions(`${this.playerId}Info`)
   }
 
   drawPlayerCard = async () => {
@@ -447,7 +447,6 @@ class MainView extends Component {
         cities,
         turnCounter
       })
-      console.log(this.state)
     })
   }
 
@@ -548,7 +547,6 @@ class MainView extends Component {
               playerInfo={this.state.playerInfo}
               playerId={this.state.playerId}
               // nextTurn={this.turnShouldChange}
-              nextTurn={updateActions}
             />
           )}
           {this.state.currentView === 'special' && (
