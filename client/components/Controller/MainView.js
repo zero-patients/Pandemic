@@ -9,7 +9,12 @@ import {PlayerHand} from './PlayerHand'
 import {addInfection} from '../../funcs/utils'
 import {Rules} from './Rules'
 import CURRENT_GAME from '../../../secrets'
-import {shuffle, addEpidemics} from '../../funcs/utils' //updateActions
+import {
+  shuffle,
+  addEpidemics,
+  resetDidOutbreak,
+  updateBoardStatus
+} from '../../funcs/utils' //updateActions
 import OutbreakTracker from '../OutbreakTracker'
 import {TreatView} from './TreatView'
 import {Modal, Button} from 'semantic-ui-react'
@@ -440,6 +445,9 @@ class MainView extends Component {
       await this.drawPlayerCard()
       await this.drawInfectionCard()
       await this.drawInfectionCard()
+
+      await resetDidOutbreak()
+      await updateBoardStatus()
     }
   }
 
@@ -524,7 +532,21 @@ class MainView extends Component {
   render() {
     return (
       <div>
-        {/* <button onClick={() => { this.executeEpidemic() }}>executeEpidemic</button> */}
+        <button
+          onClick={() => {
+            this.executeEpidemic()
+          }}
+        >
+          executeEpidemic
+        </button>
+        <button
+          onClick={() => {
+            updateBoardStatus()
+          }}
+        >
+          updateBoardStatus
+        </button>
+
         {this.state.showRules ? (
           <Rules
             show={this.show}
