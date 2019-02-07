@@ -9,7 +9,7 @@ import {PlayerHand} from './PlayerHand'
 import {addInfection} from '../../funcs/utils'
 import {Rules} from './Rules'
 import CURRENT_GAME from '../../../secrets'
-import {shuffle, addEpidemics, updateActions} from '../../funcs/utils'
+import {shuffle, addEpidemics} from '../../funcs/utils' //updateActions
 import OutbreakTracker from '../OutbreakTracker'
 import {TreatView} from './TreatView'
 import {Modal, Button} from 'semantic-ui-react'
@@ -45,7 +45,7 @@ class MainView extends Component {
     this.userId = props.match.params.userId
     this.playerId = `player${this.userId}`
     this.specificPlayer = `player${this.userId}Info`
-    this.turnShouldChange = this.turnShouldChange.bind(this)
+    // this.turnShouldChange = this.turnShouldChange.bind(this)
     this.buildResearchStation = this.buildResearchStation.bind(this)
     this.drawInfectionCard = this.drawInfectionCard.bind(this)
     this.goToCity = this.goToCity.bind(this)
@@ -54,6 +54,7 @@ class MainView extends Component {
     this.close = this.close.bind(this)
     this.toggleRules = this.toggleRules.bind(this)
     this.drawPlayerCard = this.drawPlayerCard.bind(this)
+    this.updateActions = this.updateActions.bind(this)
   }
 
   initializeGame = async () => {
@@ -123,7 +124,7 @@ class MainView extends Component {
       {merge: true}
     )
     // this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
-    updateActions(`${this.playerId}Info`)
+    this.updateActions(`${this.playerId}Info`)
   }
 
   buildResearchStation = async city => {
@@ -158,14 +159,15 @@ class MainView extends Component {
       )
     }
     // this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
-    updateActions(`${this.playerId}Info`)
+    this.updateActions(`${this.playerId}Info`)
   }
 
   drawPlayerCard = async () => {
     const [card] = this.state.playerDeck.slice(-1)
+    console.log('player card', card)
 
     if (card !== undefined) {
-      if (card.toLowerCase() === 'epidemic') this.executeEpidemic()
+      if (card.name.toLowerCase() === 'epidemic') this.executeEpidemic()
 
       await this.game.set(
         {
@@ -275,10 +277,11 @@ class MainView extends Component {
   }
 
   executeEpidemic = async () => {
-    await this.increaseInfectionRate()
-    const bottomCard = await this.drawBottomInfectionCard()
-    await this.createEpidemic(bottomCard)
-    await this.intensifyEpidemic()
+    // await this.increaseInfectionRate()
+    // const bottomCard = await this.drawBottomInfectionCard()
+    // await this.createEpidemic(bottomCard)
+    // await this.intensifyEpidemic()
+    console.log('EPIDEMIC')
   }
 
   getFirestoreData = async () => {
@@ -358,9 +361,6 @@ class MainView extends Component {
     //assume currPlayer is the db object player1Info{}
     let remainingActions = playerObj.actions
     let turn = playerObj.isTurn
-    console.log(remainingActions, turn, 'remaining actions and turn ')
-    const turnCounter = this.state.turnCounter
-    const nextPlayer = turnCounter.players[turnCounter.currentTurn + 1 % 4]
 
     if (remainingActions === 1 && turn === true) {
       console.log('got here')
@@ -368,27 +368,53 @@ class MainView extends Component {
       this.drawInfectionCard()
       this.drawPlayerCard()
       this.drawPlayerCard()
-      this.game.set(
+    }
+  }
+
+  updateActions = async player => {
+    const docRef = await this.game.get()
+    const data = await docRef.data()
+
+    const whoIsNext = {
+      player1Info: 'player2Info',
+      player2Info: 'player3Info',
+      player3Info: 'player4Info',
+      player4Info: 'player1Info'
+    }
+
+    const currentPlayerInfo = data[player]
+    const nextPlayer = whoIsNext[player]
+    const nextPlayerInfo = data[nextPlayer]
+
+    if (currentPlayerInfo.actions > 1 && currentPlayerInfo.isTurn === true) {
+      currentPlayerInfo.actions--
+      await this.game.set(
         {
-          [playerName]: {
-            isTurn: false
-          },
-          [nextPlayer]: {
-            isTurn: true,
-            actions: 4
-          }
+          [player]: currentPlayerInfo
+        },
+        {merge: true}
+      )
+    } else if (
+      currentPlayerInfo.actions <= 1 &&
+      currentPlayerInfo.isTurn === true
+    ) {
+      currentPlayerInfo.actions = 0
+      currentPlayerInfo.isTurn = false
+      nextPlayerInfo.actions = 4
+      nextPlayerInfo.isTurn = true
+
+      await this.game.set(
+        {
+          [player]: currentPlayerInfo,
+          [nextPlayer]: nextPlayerInfo
         },
         {merge: true}
       )
 
-      this.game.set(
-        {
-          turnCounter: {
-            currentTurn: this.game.currentTurn + 1
-          }
-        },
-        {merge: true}
-      )
+      await this.drawInfectionCard()
+      await this.drawInfectionCard()
+      await this.drawPlayerCard()
+      await this.drawPlayerCard()
     }
   }
 
@@ -547,6 +573,7 @@ class MainView extends Component {
               playerInfo={this.state.playerInfo}
               playerId={this.state.playerId}
               // nextTurn={this.turnShouldChange}
+              updateActions={this.updateActions}
             />
           )}
           {this.state.currentView === 'special' && (
