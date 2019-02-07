@@ -360,33 +360,33 @@ class MainView extends Component {
     const turnCounter = this.state.turnCounter
     const nextPlayer = turnCounter.players[turnCounter.currentTurn + 1 % 4]
 
-    if (remainingActions === 1 && turn === true) {
+    if (remainingActions === 0 && turn === true) {
       console.log('got here')
       this.drawInfectionCard()
       this.drawInfectionCard()
       this.drawPlayerCard()
       this.drawPlayerCard()
-      this.game.set(
-        {
-          [playerName]: {
-            isTurn: false
-          },
-          [nextPlayer]: {
-            isTurn: true,
-            actions: 4
-          }
-        },
-        {merge: true}
-      )
+      // this.game.set(
+      //   {
+      //     [playerName]: {
+      //       isTurn: false
+      //     },
+      //     [nextPlayer]: {
+      //       isTurn: true,
+      //       actions: 4
+      //     }
+      //   },
+      //   {merge: true}
+      // )
 
-      this.game.set(
-        {
-          turnCounter: {
-            currentTurn: this.game.currentTurn + 1
-          }
-        },
-        {merge: true}
-      )
+      // this.game.set(
+      //   {
+      //     turnCounter: {
+      //       currentTurn: this.game.currentTurn + 1
+      //     }
+      //   },
+      //   {merge: true}
+      // )
     }
   }
 
