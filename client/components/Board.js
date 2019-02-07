@@ -402,7 +402,7 @@ class Board extends React.Component {
           className="board"
           ref={this.canvasRef}
           width={1916}
-          height={1076}
+          height={1074}
         />
         {locations.map((elem, idx) => {
           return (
