@@ -15,7 +15,7 @@ const player2Info = {
   location: 'Atlanta',
   role: {description: '', name: ''},
   offset: [16, 14],
-  actions: 0,
+  actions: -1,
   isTurn: false
 }
 const player3Info = {
@@ -26,7 +26,7 @@ const player3Info = {
 
   role: {description: '', name: ''},
   offset: [6, 24],
-  actions: 0,
+  actions: -1,
   isTurn: false
 }
 const player4Info = {
@@ -37,7 +37,7 @@ const player4Info = {
 
   role: {description: '', name: ''},
   offset: [-4, 14],
-  actions: 0,
+  actions: -1,
   isTurn: false
 }
 

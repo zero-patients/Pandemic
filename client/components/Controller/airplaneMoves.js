@@ -2,9 +2,9 @@ import React from 'react'
 import {discardPlayerCard} from '../../funcs/utils'
 
 export const AirplaneMoves = props => {
-  console.log(props, 'UPDATETETETTE')
   return (
     <button
+      type="button"
       disabled={props.restrict}
       style={{backgroundColor: props.color, borderRadius: '5%'}}
       className="playerCard"
