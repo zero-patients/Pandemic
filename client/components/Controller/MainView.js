@@ -277,11 +277,11 @@ class MainView extends Component {
   }
 
   executeEpidemic = async () => {
-    // await this.increaseInfectionRate()
-    // const bottomCard = await this.drawBottomInfectionCard()
-    // await this.createEpidemic(bottomCard)
-    // await this.intensifyEpidemic()
     console.log('EPIDEMIC')
+    await this.increaseInfectionRate()
+    const bottomCard = await this.drawBottomInfectionCard()
+    await this.createEpidemic(bottomCard)
+    await this.intensifyEpidemic()
   }
 
   getFirestoreData = async () => {
@@ -292,16 +292,24 @@ class MainView extends Component {
   }
 
   increaseInfectionRate = async () => {
-    const dbData = await this.getFirestoreData()
-    const {infectionIdx} = dbData
+    const docRef = await this.game.get()
+    const dbData = await docRef.data()
+    let infectionIdx = dbData.infectionIdx
+    infectionIdx++
 
     if (infectionIdx < 6) {
-      await this.game.set({infectionIdx: infectionIdx + 1})
+      await this.game.set(
+        {
+          infectionIdx
+        },
+        {merge: true}
+      )
     }
   }
 
   drawBottomInfectionCard = async () => {
-    const dbData = await this.getFirestoreData()
+    const docRef = await this.game.get()
+    const dbData = await docRef.data()
     const {infectionDeck, infectionDiscard} = dbData
 
     const [bottomCard] = infectionDeck.slice(0, 1)
@@ -324,36 +332,53 @@ class MainView extends Component {
       black: 2,
       red: 3
     }
-    const dbData = await this.getFirestoreData()
+    const docRef = await this.game.get()
+    const dbData = await docRef.data()
     const {cities} = dbData
     const {color, diseases} = cities[cityName]
 
-    diseases[colorIndexes[color]] = 3
-    addInfection(cityName, color)
-
-    // await this.game.set(
-    //   {
-    //     cities: {
-    //       [cityName]: {
-    //         diseases
-    //       },
-    //       didOutbreak: true
-    //     }
-    //   },
-    //   {merge: true}
-    // )
+    if (diseases[colorIndexes[color]] > 0) {
+      diseases[colorIndexes[color]] = 3
+      await this.game.set(
+        {
+          cities: {
+            [cityName]: {
+              diseases
+            }
+          }
+        },
+        {merge: true}
+      )
+      await addInfection(cityName, color)
+    } else {
+      diseases[colorIndexes[color]] = 3
+      await this.game.set(
+        {
+          cities: {
+            [cityName]: {
+              diseases
+            }
+          }
+        },
+        {merge: true}
+      )
+    }
   }
 
   intensifyEpidemic = async () => {
-    const dbData = await this.getFirestoreData()
+    const docRef = await this.game.get()
+    const dbData = await docRef.data()
     const {infectionDeck, infectionDiscard} = dbData
 
     const shuffledDiscards = shuffle(infectionDiscard)
 
-    await this.game.set({
-      infectionDeck: [...infectionDeck, ...shuffledDiscards],
-      infectionDiscard: []
-    })
+    await this.game.set(
+      {
+        infectionDeck: [...infectionDeck, ...shuffledDiscards],
+        infectionDiscard: []
+      },
+      {merge: true}
+    )
   }
 
   turnShouldChange = async (playerObj, playerName) => {
@@ -411,10 +436,10 @@ class MainView extends Component {
         {merge: true}
       )
 
-      await this.drawInfectionCard()
-      await this.drawInfectionCard()
       await this.drawPlayerCard()
       await this.drawPlayerCard()
+      await this.drawInfectionCard()
+      await this.drawInfectionCard()
     }
   }
 
@@ -499,6 +524,7 @@ class MainView extends Component {
   render() {
     return (
       <div>
+        {/* <button onClick={() => { this.executeEpidemic() }}>executeEpidemic</button> */}
         {this.state.showRules ? (
           <Rules
             show={this.show}
