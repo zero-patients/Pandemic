@@ -4,6 +4,7 @@ import {discardPlayerCard} from '../../funcs/utils'
 export const AirplaneMoves = props => {
   return (
     <button
+      type="button"
       disabled={props.restrict}
       style={{backgroundColor: props.color, borderRadius: '5%'}}
       className="playerCard"

@@ -163,7 +163,7 @@ class MainView extends Component {
     const [card] = this.state.playerDeck.slice(-1)
 
     if (card !== undefined) {
-      if (card.toLowerCase() === 'epidemic') this.executeEpidemic()
+      if (card.name.toLowerCase() === 'epidemic') this.executeEpidemic()
 
       await this.game.set(
         {
@@ -285,7 +285,7 @@ class MainView extends Component {
     //assume currPlayer is the db object player1Info{}
     let remainingActions = playerObj.actions
     let turn = playerObj.isTurn
-    // console.log(remainingActions, turn, 'remaining actions and turn ')
+    console.log(remainingActions, turn, 'remaining actions and turn ')
     const turnCounter = this.state.turnCounter
     const nextPlayer = turnCounter.players[turnCounter.currentTurn + 1 % 4]
 
