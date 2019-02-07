@@ -9,7 +9,7 @@ import {PlayerHand} from './PlayerHand'
 import {addInfection} from '../../funcs/utils'
 import {Rules} from './Rules'
 import CURRENT_GAME from '../../../secrets'
-import {shuffle, addEpidemics} from '../../funcs/utils'
+import {shuffle, addEpidemics, updateActions} from '../../funcs/utils'
 import OutbreakTracker from '../OutbreakTracker'
 import {TreatView} from './TreatView'
 import {Modal, Button} from 'semantic-ui-react'
@@ -122,7 +122,8 @@ class MainView extends Component {
       },
       {merge: true}
     )
-    this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
+    // this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
+    updateActions(this.state.playerInfo)
   }
 
   buildResearchStation = async city => {
@@ -156,7 +157,8 @@ class MainView extends Component {
         {merge: true}
       )
     }
-    this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
+    // this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
+    updateActions(this.state.playerInfo)
   }
 
   drawPlayerCard = async () => {
@@ -545,7 +547,8 @@ class MainView extends Component {
               infectionStatus={this.state.infectionStatus}
               playerInfo={this.state.playerInfo}
               playerId={this.state.playerId}
-              nextTurn={this.turnShouldChange}
+              // nextTurn={this.turnShouldChange}
+              nextTurn={updateActions}
             />
           )}
           {this.state.currentView === 'special' && (

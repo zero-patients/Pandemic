@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 import React from 'react'
 import {treatInfection} from '../../funcs/utils'
 import db from '../../../server/db'
@@ -32,7 +33,8 @@ export const TreatView = props => {
             props.infectionStatus
           )
           decrementActions(props.playerId, props.playerInfo.actions)
-          props.nextTurn(props.playerInfo, `${props.playerId}`)
+          // props.nextTurn(props.playerInfo, `${props.playerId}`)
+          props.nextTurn(props.playerInfo)
         }}
       >
         TREAT
@@ -53,7 +55,8 @@ export const TreatView = props => {
             props.infectionStatus
           )
           decrementActions(props.playerId, props.playerInfo.actions)
-          props.nextTurn(props.playerInfo, `${props.playerId}`)
+          // props.nextTurn(props.playerInfo, `${props.playerId}`)
+          props.nextTurn(props.playerInfo)
         }}
       >
         TREAT
@@ -74,7 +77,8 @@ export const TreatView = props => {
             props.infectionStatus
           )
           decrementActions(props.playerId, props.playerInfo.actions)
-          props.nextTurn(props.playerInfo, `${props.playerId}`)
+          // props.nextTurn(props.playerInfo, `${props.playerId}`)
+          props.nextTurn(props.playerInfo)
         }}
       >
         TREAT
@@ -95,7 +99,8 @@ export const TreatView = props => {
             props.infectionStatus
           )
           decrementActions(props.playerId, props.playerInfo.actions)
-          props.nextTurn(props.playerInfo, `${props.playerId}`)
+          // props.nextTurn(props.playerInfo, `${props.playerId}`)
+          props.nextTurn(props.playerInfo)
         }}
       >
         TREAT

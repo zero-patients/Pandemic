@@ -263,6 +263,46 @@ const researchCure = async (playerId, hand, playerDiscard, infectionStatus) => {
   }
 }
 
+const updateActions = async player => {
+  const docRef = await game.get()
+  const data = await docRef.data()
+
+  const whoIsNext = {
+    player1Info: 'player2Info',
+    player2Info: 'player3Info',
+    player3Info: 'player4Info',
+    player4Info: 'player1Info'
+  }
+
+  const currentPlayerInfo = data[player]
+  const nextPlayer = whoIsNext[player]
+  const nextPlayerInfo = data[nextPlayer]
+
+  if (currentPlayerInfo.actions > 1 && currentPlayerInfo.isTurn === true) {
+    currentPlayerInfo.actions--
+    await game.set(
+      {
+        [player]: currentPlayerInfo
+      },
+      {merge: true}
+    )
+  }
+  if (currentPlayerInfo.actions <= 1) {
+    currentPlayerInfo.actions = 0
+    currentPlayerInfo.isTurn = false
+    nextPlayerInfo.actions = 4
+    nextPlayerInfo.isTurn = true
+
+    await game.set(
+      {
+        [player]: currentPlayerInfo,
+        [nextPlayer]: nextPlayerInfo
+      },
+      {merge: true}
+    )
+  }
+}
+
 module.exports = {
   shuffle,
   generateGroups,
@@ -272,5 +312,6 @@ module.exports = {
   discardPlayerCard,
   addEpidemics,
   researchCure,
-  resetDidOutbreak
+  resetDidOutbreak,
+  updateActions
 }
