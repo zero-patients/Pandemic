@@ -14,7 +14,11 @@ const {
   player4Info
 } = require('../client/data/playerInfo')
 const CURRENT_GAME = require('../secrets')
-const {shuffle, addEpidemics} = require('../client/funcs/utils')
+const {
+  shuffle,
+  addEpidemics,
+  updateBoardStatus
+} = require('../client/funcs/utils')
 
 const infectionIdx = 0
 const infectionRate = [2, 2, 2, 3, 3, 4, 4]
@@ -118,3 +122,4 @@ async function runSeed() {
 }
 
 runSeed()
+updateBoardStatus()

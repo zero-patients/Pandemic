@@ -1,5 +1,6 @@
+/* eslint-disable react/button-has-type */
 import React from 'react'
-import {treatInfection} from '../../funcs/utils'
+import {treatInfection} from '../../funcs/utils' //, updateActions
 import db from '../../../server/db'
 import CURRENT_GAME from '../../../secrets'
 
@@ -31,8 +32,9 @@ export const TreatView = props => {
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          decrementActions(props.playerId, props.playerInfo.actions)
-          props.nextTurn(props.playerInfo, `${props.playerId}`)
+          // decrementActions(props.playerId, props.playerInfo.actions)
+          // props.nextTurn(props.playerInfo, `${props.playerId}`)
+          props.updateActions(props.playerId)
         }}
       >
         TREAT
@@ -52,8 +54,9 @@ export const TreatView = props => {
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          decrementActions(props.playerId, props.playerInfo.actions)
-          props.nextTurn(props.playerInfo, `${props.playerId}`)
+          // decrementActions(props.playerId, props.playerInfo.actions)
+          // props.nextTurn(props.playerInfo, `${props.playerId}`)
+          props.updateActions(props.playerId)
         }}
       >
         TREAT
@@ -73,8 +76,9 @@ export const TreatView = props => {
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          decrementActions(props.playerId, props.playerInfo.actions)
-          props.nextTurn(props.playerInfo, `${props.playerId}`)
+          // decrementActions(props.playerId, props.playerInfo.actions)
+          // props.nextTurn(props.playerInfo, `${props.playerId}`)
+          props.updateActions(props.playerId)
         }}
       >
         TREAT
@@ -94,8 +98,9 @@ export const TreatView = props => {
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          decrementActions(props.playerId, props.playerInfo.actions)
-          props.nextTurn(props.playerInfo, `${props.playerId}`)
+          // decrementActions(props.playerId, props.playerInfo.actions)
+          // props.nextTurn(props.playerInfo, `${props.playerId}`)
+          props.updateActions(props.playerId)
         }}
       >
         TREAT
