@@ -2,26 +2,54 @@ import React from 'react'
 import {discardPlayerCard} from '../../funcs/utils'
 
 export const AirplaneMoves = props => {
-  console.log(props, 'UPDATETETETTE')
+  const text = {
+    color: 'white',
+    textShadow: '-1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000',
+    padding: '3px'
+  }
   return (
-    <button
-      disabled={props.restrict}
-      style={{backgroundColor: props.color, borderRadius: '5%'}}
-      className="playerCard"
-      onClick={() => {
-        props.move(props.name)
-        discardPlayerCard(
-          props.state.playerId,
-          props.state.playerHand,
-          props.name,
-          props.state.playerDiscard
-        )
-      }}
-    >
-      <a>
-        <b>{props.name}</b>
-      </a>
-      <img src="/airplane.png" />
-    </button>
+    <div>
+      {!props.color === 'black' ? (
+        <button
+          disabled={props.restrict}
+          style={{...text, backgroundColor: props.color, borderRadius: '5%'}}
+          className="playerCard"
+          onClick={() => {
+            props.move(props.name)
+            discardPlayerCard(
+              props.state.playerId,
+              props.state.playerHand,
+              props.name,
+              props.state.playerDiscard
+            )
+          }}
+        >
+          <a style={{...text}}>
+            <b>{props.name}</b>
+          </a>
+          <img src="/airplane.png" />
+        </button>
+      ) : (
+        <button
+          disabled={props.restrict}
+          style={{...text, backgroundColor: 'gray', borderRadius: '5%'}}
+          className="playerCard"
+          onClick={() => {
+            props.move(props.name)
+            discardPlayerCard(
+              props.state.playerId,
+              props.state.playerHand,
+              props.name,
+              props.state.playerDiscard
+            )
+          }}
+        >
+          <a style={{...text}}>
+            <b>{props.name}</b>
+          </a>
+          <img src="/airplane.png" />
+        </button>
+      )}
+    </div>
   )
 }
