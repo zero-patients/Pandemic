@@ -143,8 +143,8 @@ const outbreak = async (city, color) => {
   }
   await game.set(
     {
-      outbreakTracker: newOutbreak,
-      cities: {[city]: {didOutbreak: true}}
+      outbreakTracker: newOutbreak
+      // cities: {[city]: {didOutbreak: true}}
     },
     {merge: true}
   )

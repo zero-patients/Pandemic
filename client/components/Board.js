@@ -46,6 +46,43 @@ class Board extends React.Component {
   close = () => this.setState({showRules: false})
 
   componentDidMount() {
+    let container = document.getElementById('container')
+
+    function openFullscreen() {
+      if (container.requestFullscreen) {
+        container.requestFullscreen()
+      } else if (container.mozRequestFullScreen) {
+        /* Firefox */
+        container.mozRequestFullScreen()
+      } else if (container.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        container.webkitRequestFullscreen()
+      } else if (container.msRequestFullscreen) {
+        /* IE/Edge */
+        container.msRequestFullscreen()
+      } else {
+        // Do nothing
+      }
+    }
+
+    openFullscreen()
+
+    let lockOrientationUniversal = arg => {
+      if (screen.lockOrientation) {
+        screen.lockOrientation(arg)
+      } else if (screen.mozLockOrientation) {
+        screen.mozLockOrientation(arg)
+      } else if (screen.msLockOrientation) {
+        screen.msLockOrientation(arg)
+      } else if (screen.orientation.lock) {
+        screen.orientation.lock(arg)
+      } else {
+        // Do nothing
+      }
+    }
+
+    lockOrientationUniversal('landscape')
+
     const game = db.collection('rooms').doc(CURRENT_GAME)
     game.onSnapshot(async doc => {
       const {
@@ -303,7 +340,7 @@ class Board extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="container">
         {this.state.epidemicInfection ? (
           <Modal
             dimmer="blurring"
@@ -335,10 +372,6 @@ class Board extends React.Component {
 
         {this.state.gameStatus === 'lost' ? (
           <div>
-            <Button onClick={this.show(true)}>Default</Button>
-            <Button onClick={this.show('inverted')}>Inverted</Button>
-            <Button onClick={this.show('blurring')}>Blurring</Button>
-
             <Modal dimmer="blurring" open={this.state.gameStatus}>
               <Modal.Header>Game Over. You lost.</Modal.Header>
               <Modal.Content>

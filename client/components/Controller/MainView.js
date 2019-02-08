@@ -452,6 +452,43 @@ class MainView extends Component {
   }
 
   componentDidMount() {
+    let container = document.getElementById('container')
+
+    function openFullscreen() {
+      if (container.requestFullscreen) {
+        container.requestFullscreen()
+      } else if (container.mozRequestFullScreen) {
+        /* Firefox */
+        container.mozRequestFullScreen()
+      } else if (container.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        container.webkitRequestFullscreen()
+      } else if (container.msRequestFullscreen) {
+        /* IE/Edge */
+        container.msRequestFullscreen()
+      } else {
+        // Do nothing
+      }
+    }
+
+    openFullscreen()
+
+    let lockOrientationUniversal = arg => {
+      if (screen.lockOrientation) {
+        screen.lockOrientation(arg)
+      } else if (screen.mozLockOrientation) {
+        screen.mozLockOrientation(arg)
+      } else if (screen.msLockOrientation) {
+        screen.msLockOrientation(arg)
+      } else if (screen.orientation.lock) {
+        screen.orientation.lock(arg)
+      } else {
+        // Do nothing
+      }
+    }
+
+    lockOrientationUniversal('landscape')
+
     this.game.onSnapshot(async doc => {
       const data = await doc.data()
       const {cities} = data.cities
@@ -531,14 +568,15 @@ class MainView extends Component {
 
   render() {
     return (
-      <div>
-        <button
+      <div id="container">
+        {/* <button
           onClick={() => {
             this.executeEpidemic()
           }}
         >
           executeEpidemic
         </button>
+        
         <button
           onClick={() => {
             updateBoardStatus()
@@ -546,6 +584,21 @@ class MainView extends Component {
         >
           updateBoardStatus
         </button>
+
+        <button
+          onClick={() => {
+            addInfection('Karachi', 'black')
+          }}
+        >
+          addInfection Karachi
+        </button>
+        <button
+          onClick={() => {
+            addInfection('Delhi', 'black')
+          }}
+        >
+          addInfection Delhi
+        </button> */}
 
         {this.state.showRules ? (
           <Rules
