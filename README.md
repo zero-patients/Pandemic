@@ -10,11 +10,11 @@ Zero Patient is a clone of the board game Pandemic, with separate views for the 
 
 ### Who are we?
 
-We are a team of 4 students at Fullstack Academy in New York, and Zero Patients was our capstone project. Our team consists of [Frank]: /https://github.com/FrankRose "Frank Rose" [Frank], [Mitchell]: /https://github.com/MitchellSam "Mitchell Sam" [Mitchell], [Charles]: /https://github.com/willy-mello "Charles Mello" [Charles], and [Ryan]: /https://github.com/rkerins91 "Ryan Kerins"[Ryan]. We really enjoyed building this project together, and hope that everyone else has as much fun playing it.
+We are a team of 4 students at Fullstack Academy in New York, and Zero Patients was our capstone project. Our team consists of [Frank]: https://github.com/FrankRose "Frank Rose" [Frank], [Mitchell]: https://github.com/MitchellSam "Mitchell Sam" [Mitchell], [Charles]: https://github.com/willy-mello "Charles Mello" [Charles], and [Ryan]: https://github.com/rkerins91 "Ryan Kerins"[Ryan]. We really enjoyed building this project together, and hope that everyone else has as much fun playing it.
 
 ### Where can you play?
 
-We are currently deployed [deployedLink]: /http://pandemic-clone.firebaseapp.com "here". [deployedLink]
+We are currently deployed [deployedLink]: http://pandemic-clone.firebaseapp.com "here". [deployedLink]
 
 ---
 
