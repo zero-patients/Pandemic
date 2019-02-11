@@ -23,10 +23,6 @@ class InfectionDeck extends React.Component {
       })
   }
 
-  componentDidUpdate() {
-    // console.log(this.state.cards)
-  }
-
   render() {
     const styles = {
       position: 'absolute',

@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-// import { isAbsolute } from 'path';
 import db from '../../server/db'
 import InfectionGroup from './InfectionGroup'
 import ResearchStation from './ResearchStation'

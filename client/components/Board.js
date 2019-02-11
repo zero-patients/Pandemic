@@ -11,7 +11,7 @@ import PlayerCardContainer from './PlayerCardContainer'
 import InfectionRate from './InfectionRate'
 import OutbreakTracker from './OutbreakTracker'
 import StatusBar from './StatusBar'
-import {Button, Header, Image, Modal} from 'semantic-ui-react'
+import {Button, Header, Modal} from 'semantic-ui-react'
 import db from '../../server/db'
 import CURRENT_GAME from '../../secrets'
 
@@ -37,15 +37,51 @@ class Board extends React.Component {
     this.setState({showRules: false})
   }
 
-  componentDidUpdate() {
-    // console.log('The board was updated')
-    // console.log(this.state.showRules)
-  }
-
   show = dimmer => () => this.setState({dimmer, showRules: true})
   close = () => this.setState({showRules: false})
 
   componentDidMount() {
+    let container = document.getElementById('container')
+
+    function openFullscreen() {
+      if (container.requestFullscreen) {
+        container.requestFullscreen()
+      } else if (container.mozRequestFullScreen) {
+        /* Firefox */
+        container.mozRequestFullScreen()
+      } else if (container.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        container.webkitRequestFullscreen()
+      } else if (container.msRequestFullscreen) {
+        /* IE/Edge */
+        container.msRequestFullscreen()
+      } else {
+        // Do nothing
+      }
+    }
+
+    openFullscreen()
+
+    let lockOrientationUniversal = arg => {
+      if (screen.lockOrientation) {
+        screen.lockOrientation(arg)
+      }
+
+      if (screen.mozLockOrientation) {
+        screen.mozLockOrientation(arg)
+      }
+
+      if (screen.msLockOrientation) {
+        screen.msLockOrientation(arg)
+      }
+
+      if (screen.orientation.lock) {
+        screen.orientation.lock(arg)
+      }
+    }
+
+    lockOrientationUniversal('landscape')
+
     const game = db.collection('rooms').doc(CURRENT_GAME)
     game.onSnapshot(async doc => {
       const {
@@ -303,7 +339,7 @@ class Board extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="container">
         {this.state.epidemicInfection ? (
           <Modal
             dimmer="blurring"
@@ -335,10 +371,6 @@ class Board extends React.Component {
 
         {this.state.gameStatus === 'lost' ? (
           <div>
-            <Button onClick={this.show(true)}>Default</Button>
-            <Button onClick={this.show('inverted')}>Inverted</Button>
-            <Button onClick={this.show('blurring')}>Blurring</Button>
-
             <Modal dimmer="blurring" open={this.state.gameStatus}>
               <Modal.Header>Game Over. You lost.</Modal.Header>
               <Modal.Content>
@@ -373,27 +405,6 @@ class Board extends React.Component {
 
             <Modal dimmer="blurring" open={this.state.gameStatus}>
               <Modal.Header>Congratulations! You Won!</Modal.Header>
-              {/* <Modal.Content>
-                <Modal.Description>
-                  <Header>
-                    Pandemic is a cooperative game. The players all win or lose
-                    together
-                  </Header>
-                  <p>The goal is to discover cures for all 4 disieases</p>
-                  <p>The Players lose if:</p>
-                  <ul>
-                    <li>8 outbreaks occur (a worldwide panic happens)</li>
-                    <li>
-                      not enough disease cubes are available when needed (a
-                      disease spreads too much)
-                    </li>
-                    <li>
-                      not enough player cards are left when needed (your team
-                      runs out of time)
-                    </li>
-                  </ul>
-                </Modal.Description>
-              </Modal.Content> */}
             </Modal>
           </div>
         ) : null}

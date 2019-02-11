@@ -1,118 +1,57 @@
-/* eslint-disable react/button-has-type */
-import React, {Component} from 'react'
-import db from '../../../server/db'
-import {
-  addInfection,
-  treatInfection,
-  researchCure,
-  resetDidOutbreak
-} from '../../funcs/utils'
+import React from 'react'
+import {researchCure} from '../../funcs/utils'
+
+const flexCenter = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: '5%'
+}
 
 export const Footer = props => {
   return (
     <div className="controllerFooter">
       <button
+        type="button"
         disabled={props.actions < 1 || !props.isTurn}
         className="controllerPanel"
+        style={{...flexCenter}}
         onClick={() => props.onClick('move')}
       >
         MOVE
       </button>
 
-      <button className="controllerPanel" onClick={() => props.onClick('hand')}>
+      <button
+        type="button"
+        style={{...flexCenter}}
+        className="controllerPanel"
+        onClick={() => props.onClick('hand')}
+      >
         HAND
       </button>
 
       <button
+        type="button"
         className="controllerPanel"
+        style={{...flexCenter}}
         onClick={() => props.buildResearchStation(props.playerCity)}
         disabled={props.actions < 1 || !props.isTurn}
       >
         BUILD
       </button>
-      {/*
+
       <button
-        className="controllerPanel"
-        onClick={() =>
-          addInfection(
-            props.playerCity,
-            props.color,
-            props.count,
-            props.infectionStatus,
-            props.outbreakTracker
-          )
-        }
-      >
-        INFECT
-      </button>
-      */}
-      {/* <button
-        className="controllerPanel"
-        onClick={() => props.drawPlayerCard()}
-      >
-        DRAW PLAYER CARD
-      </button> */}
-      <button
+        type="button"
+        style={{...flexCenter}}
         className="controllerPanel"
         onClick={() => props.onClick('treat')}
       >
         TREAT
       </button>
-      {/* <button
-        className="controllerPanel"
-        onClick={() =>
-          treatInfection(
-            props.playerCity,
-            'darkgoldenrod',
-            props.count,
-            props.infectionStatus
-          )
-        }
-      >
-        TREAT YELLOW
-      </button>
-      <button
-        className="controllerPanel"
-        onClick={() =>
-          treatInfection(
-            props.playerCity,
-            'black',
-            props.count,
-            props.infectionStatus
-          )
-        }
-      >
-        TREAT BLACK
-      </button>
-      <button
-        className="controllerPanel"
-        onClick={() =>
-          treatInfection(
-            props.playerCity,
-            'red',
-            props.count,
-            props.infectionStatus
-          )
-        }
-      >
-        TREAT RED
-      </button>
 
       <button
-        className="controllerPanel"
-        onClick={() => props.onClick('event')}
-      >
-        EVENT
-      </button>
-
-      <button
-        className="controllerPanel"
-        onClick={() => props.onClick('special')}
-      >
-        SPECIALS
-      </button> */}
-
-      <button
+        type="button"
+        style={{...flexCenter}}
         className="controllerPanel"
         onClick={() =>
           researchCure(
@@ -124,24 +63,8 @@ export const Footer = props => {
         }
         disabled={props.infectionDeck.length === 0}
       >
-        Research Cure
+        CURE
       </button>
-
-      {/* <button
-        className="controllerPanel"
-        onClick={() => props.drawInfectionCard()}
-        disabled={props.infectionDeck.length === 0}
-      >
-        Draw Infection Card
-      </button>
-
-      <button
-        className="controllerPanel"
-        onClick={() => resetDidOutbreak()}
-        disabled={props.infectionDeck.length === 0}
-      >
-        Reset DidOutbreak
-      </button> */}
     </div>
   )
 }

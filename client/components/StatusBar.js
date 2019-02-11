@@ -7,7 +7,8 @@ class StatusBar extends Component {
     super(props)
     this.state = {
       infectionStatus: {},
-      researchStations: 0
+      researchStations: 0,
+      playerIndex: null
     }
   }
 
@@ -17,10 +18,13 @@ class StatusBar extends Component {
       const data = await doc.data()
       const infectionStatus = data.infectionStatus
       const researchStations = data.researchStations.length
+      const counterNumber = data.turnCounter.currentTurn
+      const playerIndex = counterNumber % 4 + 1
 
       this.setState({
         infectionStatus,
-        researchStations
+        researchStations,
+        playerIndex
       })
     })
   }
@@ -28,7 +32,7 @@ class StatusBar extends Component {
   render() {
     const styles = {
       position: 'absolute',
-      left: '950px',
+      left: '785px',
       top: '0px',
       display: 'flex',
       flexDirection: 'row',
@@ -38,7 +42,7 @@ class StatusBar extends Component {
       borderRadius: '5%',
       border: '1px solid #000',
       padding: '8px 8px',
-      width: '300px'
+      width: '350px'
     }
     const text = {
       color: 'white',
@@ -48,6 +52,11 @@ class StatusBar extends Component {
 
     return (
       <div style={styles}>
+        <div>
+          <span style={{...text, marginRight: '24px', fontSize: '18px'}}>
+            Player <b>{this.state.playerIndex}</b>'s Turn
+          </span>
+        </div>
         {Object.entries(this.state.infectionStatus).map(([key, val], idx) => {
           return (
             <div key={key} styles={{color: key}}>

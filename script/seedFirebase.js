@@ -14,7 +14,11 @@ const {
   player4Info
 } = require('../client/data/playerInfo')
 const CURRENT_GAME = require('../secrets')
-const {shuffle, addEpidemics} = require('../client/funcs/utils')
+const {
+  shuffle,
+  addEpidemics,
+  updateBoardStatus
+} = require('../client/funcs/utils')
 
 const infectionIdx = 0
 const infectionRate = [2, 2, 2, 3, 3, 4, 4]
@@ -37,7 +41,6 @@ for (let i = 0; i < 3; i++) {
   infectionDiscard.push(city)
   const color = cities[city].color
   const infectionIndex = diseaseOrder.indexOf(color)
-  // console.log(infectionIdx)
   cities[city].diseases[infectionIndex] = 3
 }
 
@@ -71,8 +74,6 @@ for (let i = 0; i < 8; i++) {
 }
 
 playerDeck = addEpidemics(shuffledPlayerDeck)
-
-// console.log(player1Info)
 
 const seedFirestore = async () => {
   const game = db.collection('rooms').doc(gameSession)
@@ -118,3 +119,4 @@ async function runSeed() {
 }
 
 runSeed()
+updateBoardStatus()

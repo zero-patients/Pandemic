@@ -23,11 +23,6 @@ class InfectionDiscardDeck extends React.Component {
   }
 
   render() {
-    const positioning = {
-      width: '250px',
-      height: '200px'
-    }
-
     return this.state.cards.length === 0 ? null : (
       <InfectionCard
         city={this.state.cards[this.state.cards.length - 1]}

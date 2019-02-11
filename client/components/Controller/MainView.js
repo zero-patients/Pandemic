@@ -1,19 +1,20 @@
-/* eslint-disable react/no-unused-state */
-/* eslint-disable react/button-has-type */
 import React, {Component} from 'react'
 import db from '../../../server/db'
 import {Header} from './Header'
 import {Footer} from './Footer'
 import {MoveView} from './MoveView'
 import {PlayerHand} from './PlayerHand'
-import {addInfection} from '../../funcs/utils'
 import {Rules} from './Rules'
 import CURRENT_GAME from '../../../secrets'
-import {shuffle, addEpidemics} from '../../funcs/utils'
-import OutbreakTracker from '../OutbreakTracker'
+import {
+  shuffle,
+  addEpidemics,
+  addInfection,
+  resetDidOutbreak,
+  updateBoardStatus
+} from '../../funcs/utils' //updateActions
 import {TreatView} from './TreatView'
-import {Modal, Button} from 'semantic-ui-react'
-import {Header as SemanticHeader} from 'semantic-ui-react'
+import {Modal, Button, Header as SemanticHeader} from 'semantic-ui-react'
 
 class MainView extends Component {
   constructor(props) {
@@ -24,18 +25,18 @@ class MainView extends Component {
       playerId: 0,
       playerCity: '',
       playerCityInfo: {},
-      playerCityNeighbors: [],
+      // playerCityNeighbors: [],
       playerHand: [],
       playerDeck: [],
       playerDiscard: [],
       researchStations: [],
       infectionDeck: [],
-      infectionDiscard: [],
+      // infectionDiscard: [],
       currentView: 'hand',
       infectionStatus: {},
-      gameStarted: false,
+      // gameStarted: false,
       outbreakTracker: 0,
-      cities: [],
+      // cities: [],
       epidemicInfection: false,
       epidemicCity: '',
       showRules: false
@@ -45,7 +46,7 @@ class MainView extends Component {
     this.userId = props.match.params.userId
     this.playerId = `player${this.userId}`
     this.specificPlayer = `player${this.userId}Info`
-    this.turnShouldChange = this.turnShouldChange.bind(this)
+    // this.turnShouldChange = this.turnShouldChange.bind(this)
     this.buildResearchStation = this.buildResearchStation.bind(this)
     this.drawInfectionCard = this.drawInfectionCard.bind(this)
     this.goToCity = this.goToCity.bind(this)
@@ -54,6 +55,7 @@ class MainView extends Component {
     this.close = this.close.bind(this)
     this.toggleRules = this.toggleRules.bind(this)
     this.drawPlayerCard = this.drawPlayerCard.bind(this)
+    this.updateActions = this.updateActions.bind(this)
   }
 
   initializeGame = async () => {
@@ -67,10 +69,8 @@ class MainView extends Component {
 
     for (let i = 0; i < 8; i++) {
       const playerInfo = await gameData[`player${i % 4 + 1}Info`]
-      console.log(playerInfo)
       const card = shuffledPlayerDeck.pop()
       const hand = await playerInfo.hand
-      console.log(hand)
       await this.game.set(
         {
           [`player${i % 4 + 1}Info`]: {hand: [...hand, card]}
@@ -116,13 +116,14 @@ class MainView extends Component {
     await this.game.set(
       {
         [`${this.playerId}Info`]: {
-          location: city,
-          actions: this.state.playerInfo.actions - 1
+          location: city
+          // actions: this.state.playerInfo.actions - 1
         }
       },
       {merge: true}
     )
-    this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
+    // this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
+    this.updateActions(`${this.playerId}Info`)
   }
 
   buildResearchStation = async city => {
@@ -156,14 +157,15 @@ class MainView extends Component {
         {merge: true}
       )
     }
-    this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
+    // this.turnShouldChange(this.state.playerInfo, `${this.state.playerId}`)
+    this.updateActions(`${this.playerId}Info`)
   }
 
   drawPlayerCard = async () => {
     const [card] = this.state.playerDeck.slice(-1)
 
     if (card !== undefined) {
-      if (card.toLowerCase() === 'epidemic') this.executeEpidemic()
+      if (card.name.toLowerCase() === 'epidemic') this.executeEpidemic()
 
       await this.game.set(
         {
@@ -181,77 +183,6 @@ class MainView extends Component {
       )
     }
   }
-
-  // drawInfectionCard = async () => {
-  //   // blue, yellow, black red
-  //   const colorIndexes = {
-  //     blue: 0,
-  //     yellow: 1,
-  //     darkgoldenrod: 1,
-  //     black: 2,
-  //     red: 3
-  //   }
-  //   const [topCard] = this.state.infectionDeck.slice(-1)
-  //   const [bottomCard] = this.state.infectionDeck.slice(0, 1)
-  //   const topCardCity = topCard.replace(/ /g, '-')
-  //   const bottomCardCity = bottomCard.replace(/ /g, '-')
-  //   const docRef = await this.game.get()
-
-  //   console.log(`Top City => ${topCardCity}\tBottom City => ${bottomCardCity}`)
-
-  //   if (topCardCity.toLowerCase().trim() === 'epidemic') {
-  //     let {
-  //       cities: {[bottomCardCity]: {diseases, color}},
-  //       infectionStatus,
-  //       outbreakTracker,
-  //       infectionIdx
-  //     } = await docRef.data()
-
-  //     if (infectionIdx < 6) {
-  //       diseases[colorIndexes[color]] = 3
-  //       // console.log('The bottom card is', bottomCard)
-  //       await this.game.set(
-  //         {
-  //           infectionIdx: infectionIdx + 1,
-  //           infectionDiscard: [...this.state.infectionDiscard, bottomCard],
-  //           infectionDeck: [...this.state.infectionDeck.slice(1)],
-  //           cities: {[bottomCardCity]: {diseases}}
-  //         },
-  //         {merge: true}
-  //       )
-  //       await this.setState(prevState => ({
-  //         //   infectionDiscard: [...prevState.infectionDiscard, bottomCard],
-  //         //   infectionDeck: [...prevState.infectionDeck.slice(1)],
-  //         epidemicInfection: true,
-  //         epidemicCity: bottomCardCity
-  //       }))
-  //     }
-  //   } else {
-  //     let {
-  //       cities: {[topCardCity]: {diseases, color}},
-  //       infectionStatus,
-  //       outbreakTracker,
-  //       infectionIdx
-  //     } = await docRef.data()
-
-  //     color = color === 'darkgoldenrod' ? 'yellow' : color
-  //     addInfection(
-  //       topCardCity,
-  //       color,
-  //       diseases,
-  //       infectionStatus,
-  //       outbreakTracker
-  //     )
-  //   }
-
-  //   await this.game.set(
-  //     {
-  //       infectionDiscard: [...this.state.infectionDiscard, topCard],
-  //       infectionDeck: [...this.state.infectionDeck.slice(0, -1)]
-  //     },
-  //     {merge: true}
-  //   )
-  // }
 
   drawInfectionCard = async () => {
     //  Get data from database
@@ -287,16 +218,24 @@ class MainView extends Component {
   }
 
   increaseInfectionRate = async () => {
-    const dbData = await this.getFirestoreData()
-    const {infectionIdx} = dbData
+    const docRef = await this.game.get()
+    const dbData = await docRef.data()
+    let infectionIdx = dbData.infectionIdx
+    infectionIdx++
 
     if (infectionIdx < 6) {
-      await this.game.set({infectionIdx: infectionIdx + 1})
+      await this.game.set(
+        {
+          infectionIdx
+        },
+        {merge: true}
+      )
     }
   }
 
   drawBottomInfectionCard = async () => {
-    const dbData = await this.getFirestoreData()
+    const docRef = await this.game.get()
+    const dbData = await docRef.data()
     const {infectionDeck, infectionDiscard} = dbData
 
     const [bottomCard] = infectionDeck.slice(0, 1)
@@ -319,70 +258,32 @@ class MainView extends Component {
       black: 2,
       red: 3
     }
-    const dbData = await this.getFirestoreData()
+    const docRef = await this.game.get()
+    const dbData = await docRef.data()
     const {cities} = dbData
     const {color, diseases} = cities[cityName]
 
-    diseases[colorIndexes[color]] = 3
-    addInfection(cityName, color)
-
-    // await this.game.set(
-    //   {
-    //     cities: {
-    //       [cityName]: {
-    //         diseases
-    //       },
-    //       didOutbreak: true
-    //     }
-    //   },
-    //   {merge: true}
-    // )
-  }
-
-  intensifyEpidemic = async () => {
-    const dbData = await this.getFirestoreData()
-    const {infectionDeck, infectionDiscard} = dbData
-
-    const shuffledDiscards = shuffle(infectionDiscard)
-
-    await this.game.set({
-      infectionDeck: [...infectionDeck, ...shuffledDiscards],
-      infectionDiscard: []
-    })
-  }
-
-  turnShouldChange = async (playerObj, playerName) => {
-    console.log('got to turnShouldChange,')
-    //assume currPlayer is the db object player1Info{}
-    let remainingActions = playerObj.actions
-    let turn = playerObj.isTurn
-    console.log(remainingActions, turn, 'remaining actions and turn ')
-    const turnCounter = this.state.turnCounter
-    const nextPlayer = turnCounter.players[turnCounter.currentTurn + 1 % 4]
-
-    if (remainingActions === 1 && turn === true) {
-      console.log('got here')
-      this.drawInfectionCard()
-      this.drawInfectionCard()
-      this.drawPlayerCard()
-      this.drawPlayerCard()
-      this.game.set(
+    if (diseases[colorIndexes[color]] > 0) {
+      diseases[colorIndexes[color]] = 3
+      await this.game.set(
         {
-          [playerName]: {
-            isTurn: false
-          },
-          [nextPlayer]: {
-            isTurn: true,
-            actions: 4
+          cities: {
+            [cityName]: {
+              diseases
+            }
           }
         },
         {merge: true}
       )
-
-      this.game.set(
+      await addInfection(cityName, color)
+    } else {
+      diseases[colorIndexes[color]] = 3
+      await this.game.set(
         {
-          turnCounter: {
-            currentTurn: this.game.currentTurn + 1
+          cities: {
+            [cityName]: {
+              diseases
+            }
           }
         },
         {merge: true}
@@ -390,22 +291,138 @@ class MainView extends Component {
     }
   }
 
+  intensifyEpidemic = async () => {
+    const docRef = await this.game.get()
+    const dbData = await docRef.data()
+    const {infectionDeck, infectionDiscard} = dbData
+
+    const shuffledDiscards = shuffle(infectionDiscard)
+
+    await this.game.set(
+      {
+        infectionDeck: [...infectionDeck, ...shuffledDiscards],
+        infectionDiscard: []
+      },
+      {merge: true}
+    )
+  }
+
+  turnShouldChange = async playerObj => {
+    let remainingActions = playerObj.actions
+    let turn = playerObj.isTurn
+
+    if (remainingActions === 1 && turn === true) {
+      await this.drawInfectionCard()
+      await this.drawInfectionCard()
+      await this.drawPlayerCard()
+      await this.drawPlayerCard()
+    }
+  }
+
+  updateActions = async player => {
+    const docRef = await this.game.get()
+    const data = await docRef.data()
+
+    const whoIsNext = {
+      player1Info: 'player2Info',
+      player2Info: 'player3Info',
+      player3Info: 'player4Info',
+      player4Info: 'player1Info'
+    }
+
+    const currentPlayerInfo = data[player]
+    const nextPlayer = whoIsNext[player]
+    const nextPlayerInfo = data[nextPlayer]
+
+    if (currentPlayerInfo.actions > 1 && currentPlayerInfo.isTurn === true) {
+      currentPlayerInfo.actions--
+      await this.game.set(
+        {
+          [player]: currentPlayerInfo
+        },
+        {merge: true}
+      )
+    } else if (
+      currentPlayerInfo.actions <= 1 &&
+      currentPlayerInfo.isTurn === true
+    ) {
+      currentPlayerInfo.actions = 0
+      currentPlayerInfo.isTurn = false
+      nextPlayerInfo.actions = 4
+      nextPlayerInfo.isTurn = true
+
+      await this.game.set(
+        {
+          [player]: currentPlayerInfo,
+          [nextPlayer]: nextPlayerInfo
+        },
+        {merge: true}
+      )
+
+      await this.drawPlayerCard()
+      await this.drawPlayerCard()
+      await this.drawInfectionCard()
+      await this.drawInfectionCard()
+
+      await resetDidOutbreak()
+      await updateBoardStatus()
+    }
+  }
+
   componentDidMount() {
+    let container = document.getElementById('container')
+
+    function openFullscreen() {
+      if (container.requestFullscreen) {
+        container.requestFullscreen()
+      } else if (container.mozRequestFullScreen) {
+        /* Firefox */
+        container.mozRequestFullScreen()
+      } else if (container.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        container.webkitRequestFullscreen()
+      } else if (container.msRequestFullscreen) {
+        /* IE/Edge */
+        container.msRequestFullscreen()
+      } else {
+        // Do nothing
+      }
+    }
+
+    openFullscreen()
+
+    let lockOrientationUniversal = arg => {
+      if (screen.lockOrientation) {
+        screen.lockOrientation(arg)
+      }
+
+      if (screen.mozLockOrientation) {
+        screen.mozLockOrientation(arg)
+      }
+
+      if (screen.msLockOrientation) {
+        screen.msLockOrientation(arg)
+      }
+
+      if (screen.orientation.lock) {
+        screen.orientation.lock(arg)
+      }
+    }
+
+    lockOrientationUniversal('landscape')
+
     this.game.onSnapshot(async doc => {
       const data = await doc.data()
-      const {cities} = data.cities
       let playerInfo = data[`${this.playerId}Info`]
-      // console.log(playerInfo, 'playerInfo')
       let playerHand = playerInfo.hand
-      // console.log(playerHand, 'playerHand')
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
       let playerDeck = data.playerDeck
       let playerDiscard = data.playerDiscard
       let playerCityNeighbors = playerCityInfo.neighbors
       let researchStations = data.researchStations
-      let turnCounter = data.turnCounter
-      let neighborCardColors = playerCityNeighbors.map(elem => {
+
+      playerCityNeighbors.map(elem => {
         if (data.cities[elem].color === 'black') {
           return 'grey'
         } else if (data.cities[elem].color === 'darkgoldenrod') {
@@ -414,7 +431,8 @@ class MainView extends Component {
           return data.cities[elem].color
         }
       })
-      let researchStationCardColors = researchStations.map(elem => {
+
+      researchStations.map(elem => {
         if (data.cities[elem].color === 'black') {
           return 'grey'
         } else if (data.cities[elem].color === 'darkgoldenrod') {
@@ -423,6 +441,7 @@ class MainView extends Component {
           return data.cities[elem].color
         }
       })
+
       let infectionStatus = data.infectionStatus
       let outbreakTracker = data.outbreakTracker
 
@@ -434,34 +453,13 @@ class MainView extends Component {
         playerHand: playerHand,
         playerDeck: playerDeck,
         playerDiscard: playerDiscard,
-        playerCityNeighbors: playerCityNeighbors,
         researchStations: researchStations,
-        neighborCardColors: neighborCardColors,
-        researchStationCardColors: researchStationCardColors,
         infectionDeck: data.infectionDeck,
-        infectionDiscard: data.infectionDiscard,
         infectionStatus: infectionStatus,
-        outbreakTracker: outbreakTracker,
-        cities,
-        turnCounter
+        outbreakTracker: outbreakTracker
       })
-      console.log(this.state)
     })
   }
-
-  // componentDidUpdate(prevProps,prevState) {
-  //   console.log('got to component did update, but like, actually')
-  //   this.game.onSnapshot(async doc => {
-  //     const data = await doc.data()
-  //     let playerName = `player${this.userId}Info`
-  //     let currentPlayer = data[`player${this.userId}Info`]
-  //     if (currentPlayer.actions === 0 && currentPlayer.isTurn) {
-
-  //       this.turnShouldChange(currentPlayer, playerName)
-  //     }
-
-  //   })
-  // }
 
   handleViewChange = newView => {
     this.setState({
@@ -471,7 +469,7 @@ class MainView extends Component {
 
   render() {
     return (
-      <div>
+      <div id="container">
         {this.state.showRules ? (
           <Rules
             show={this.show}
@@ -545,7 +543,7 @@ class MainView extends Component {
               infectionStatus={this.state.infectionStatus}
               playerInfo={this.state.playerInfo}
               playerId={this.state.playerId}
-              nextTurn={this.turnShouldChange}
+              updateActions={this.updateActions}
             />
           )}
           {this.state.currentView === 'special' && (
@@ -558,7 +556,6 @@ class MainView extends Component {
             drawInfectionCard={this.drawInfectionCard}
             infectionDeck={this.state.infectionDeck}
             onClick={this.handleViewChange}
-            //temporary
             color={this.state.playerCityInfo.color}
             count={this.state.playerCityInfo.diseases}
             infectionStatus={this.state.infectionStatus}

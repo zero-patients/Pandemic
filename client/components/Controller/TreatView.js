@@ -1,23 +1,11 @@
 import React from 'react'
-import {treatInfection} from '../../funcs/utils'
-import db from '../../../server/db'
-import CURRENT_GAME from '../../../secrets'
-
-const game = db.collection('rooms').doc(CURRENT_GAME)
-
-const decrementActions = (player, remainingActions) => {
-  game.set(
-    {
-      [player]: {actions: remainingActions - 1}
-    },
-    {merge: true}
-  )
-}
+import {treatInfection} from '../../funcs/utils' //, updateActions
 
 export const TreatView = props => {
   return (
     <div className="controllerMiddle">
       <button
+        type="button"
         style={{backgroundColor: '#42c5f4'}}
         className="treatContainer"
         disabled={
@@ -31,14 +19,14 @@ export const TreatView = props => {
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          decrementActions(props.playerId, props.playerInfo.actions)
-          props.nextTurn(props.playerInfo, `${props.playerId}`)
+
+          props.updateActions(props.playerId)
         }}
       >
-        TREAT
-        <img src="/syringe.png" />
+        TREAT <img src="/syringe.png" />
       </button>
       <button
+        type="button"
         style={{backgroundColor: '#f4eb41'}}
         className="treatContainer"
         disabled={
@@ -52,14 +40,15 @@ export const TreatView = props => {
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          decrementActions(props.playerId, props.playerInfo.actions)
-          props.nextTurn(props.playerInfo, `${props.playerId}`)
+
+          props.updateActions(props.playerId)
         }}
       >
-        TREAT
+        TREAT{/* */}
         <img src="/syringe.png" />
       </button>
       <button
+        type="button"
         style={{backgroundColor: '#6b6d6c'}}
         className="treatContainer"
         disabled={
@@ -73,14 +62,14 @@ export const TreatView = props => {
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          decrementActions(props.playerId, props.playerInfo.actions)
-          props.nextTurn(props.playerInfo, `${props.playerId}`)
+
+          props.updateActions(props.playerId)
         }}
       >
-        TREAT
-        <img src="/syringe.png" />
+        TREAT<img src="/syringe.png" />
       </button>
       <button
+        type="button"
         style={{backgroundColor: '#d84141'}}
         className="treatContainer"
         disabled={
@@ -94,11 +83,11 @@ export const TreatView = props => {
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          decrementActions(props.playerId, props.playerInfo.actions)
-          props.nextTurn(props.playerInfo, `${props.playerId}`)
+
+          props.updateActions(props.playerId)
         }}
       >
-        TREAT
+        TREAT{/* */}
         <img src="/syringe.png" />
       </button>
     </div>

@@ -48,3 +48,5 @@ const epidemicsAndEvents = [
       '1-INCREASE\nMove the infection rate marker forward 1 space.\n2-INFECT\nDraw the bottom card from the infection deck and put 3 infection cubes on that city. Discard that card.\n3-INTENSIFY\nShuffle the cards in the infection discard pile and put them on top of the infection discard deck.'
   }
 ]
+
+module.exports = epidemicsAndEvents

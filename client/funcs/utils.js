@@ -51,7 +51,7 @@ const epidemicShuffle = (drawPile, discardPile) => {
   const discardPileCopy = discardPile
   const bottomCard = drawPileCopy.shift()
   discardPileCopy.push(bottomCard)
-  console.log('discard pile copy after pushing bottom card', discardPileCopy)
+
   shuffle(discardPile)
   const newPile = drawPileCopy.concat(discardPile)
 
@@ -88,10 +88,6 @@ const addInfection = async (city, color, c, is, ot) => {
   const newCount = count
 
   if (!didOutbreak) {
-    if (isCured && infectionStatus[cureColor].count === 0) {
-      console.log('This disease has been eradicated')
-    }
-
     if (newCount[infectionColors[color]] >= 3 && outbreakTracker < 8) {
       await outbreak(city, color)
     } else {
@@ -106,6 +102,7 @@ const addInfection = async (city, color, c, is, ot) => {
         {merge: true}
       )
     }
+
     if (infectionStatus[cureColor].count > 24) {
       await game.set(
         {
@@ -114,8 +111,6 @@ const addInfection = async (city, color, c, is, ot) => {
         {merge: true}
       )
     }
-  } else {
-    console.log('No infection added, this city has already had an outbreak')
   }
 }
 
@@ -137,8 +132,8 @@ const outbreak = async (city, color) => {
   }
   await game.set(
     {
-      outbreakTracker: newOutbreak,
-      cities: {[city]: {didOutbreak: true}}
+      outbreakTracker: newOutbreak
+      // cities: {[city]: {didOutbreak: true}}
     },
     {merge: true}
   )
@@ -263,6 +258,36 @@ const researchCure = async (playerId, hand, playerDiscard, infectionStatus) => {
   }
 }
 
+const updateBoardStatus = async () => {
+  const docRef = await game.get()
+  const data = await docRef.data()
+  const cities = data.cities
+  const infectionStatus = data.infectionStatus
+
+  infectionStatus.blue.count = 0
+  infectionStatus.yellow.count = 0
+  infectionStatus.black.count = 0
+  infectionStatus.red.count = 0
+
+  Object.keys(cities).forEach(city => {
+    infectionStatus.blue.count =
+      infectionStatus.blue.count + cities[city].diseases[0]
+    infectionStatus.yellow.count =
+      infectionStatus.yellow.count + cities[city].diseases[1]
+    infectionStatus.black.count =
+      infectionStatus.black.count + cities[city].diseases[2]
+    infectionStatus.red.count =
+      infectionStatus.red.count + cities[city].diseases[3]
+  })
+
+  await game.set(
+    {
+      infectionStatus
+    },
+    {merge: true}
+  )
+}
+
 module.exports = {
   shuffle,
   generateGroups,
@@ -272,5 +297,6 @@ module.exports = {
   discardPlayerCard,
   addEpidemics,
   researchCure,
-  resetDidOutbreak
+  resetDidOutbreak,
+  updateBoardStatus
 }
