@@ -3,12 +3,6 @@
 const infectionDeck = require('../data/infectionDeck')
 const db = require('../../server/db')
 const CURRENT_GAME = require('../../secrets')
-// import MainView from '../components/Controller/MainView'
-
-// const Player1MainView = new MainView()
-// const Player2MainView = new MainView()
-// const Player3MainView = new MainView()
-// const Player4MainView = new MainView()
 
 const game = db.collection('rooms').doc(CURRENT_GAME)
 
@@ -269,54 +263,6 @@ const researchCure = async (playerId, hand, playerDiscard, infectionStatus) => {
   }
 }
 
-// const updateActions = async player => {
-//   const docRef = await game.get()
-//   const data = await docRef.data()
-
-//   const whoIsNext = {
-//     player1Info: 'player2Info',
-//     player2Info: 'player3Info',
-//     player3Info: 'player4Info',
-//     player4Info: 'player1Info'
-//   }
-
-//   const currentPlayerInfo = data[player]
-//   const nextPlayer = whoIsNext[player]
-//   const nextPlayerInfo = data[nextPlayer]
-
-//   if (currentPlayerInfo.actions > 1 && currentPlayerInfo.isTurn === true) {
-//     currentPlayerInfo.actions--
-//     console.log('actions > 1, decrement only', player, currentPlayerInfo)
-//     await game.set(
-//       {
-//         [player]: currentPlayerInfo
-//       },
-//       { merge: true }
-//     )
-//   } else if (
-//     currentPlayerInfo.actions <= 1 &&
-//     currentPlayerInfo.isTurn === true
-//   ) {
-//     currentPlayerInfo.actions = 0
-//     currentPlayerInfo.isTurn = false
-//     nextPlayerInfo.actions = 4
-//     nextPlayerInfo.isTurn = true
-
-//     await game.set(
-//       {
-//         [player]: currentPlayerInfo,
-//         [nextPlayer]: nextPlayerInfo
-//       },
-//       { merge: true }
-//     )
-
-//     await this.drawInfectionCard()
-//     await this.drawInfectionCard()
-//     await this.drawPlayerCard()
-//     await this.drawPlayerCard()
-//   }
-// }
-
 const updateBoardStatus = async () => {
   const docRef = await game.get()
   const data = await docRef.data()
@@ -357,6 +303,5 @@ module.exports = {
   addEpidemics,
   researchCure,
   resetDidOutbreak,
-  // updateActions
   updateBoardStatus
 }
