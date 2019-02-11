@@ -11,6 +11,7 @@ export const AirplaneMoves = props => {
     <div>
       {!props.color === 'black' ? (
         <button
+          type="button"
           disabled={props.restrict}
           style={{...text, backgroundColor: props.color, borderRadius: '5%'}}
           className="playerCard"
@@ -31,6 +32,7 @@ export const AirplaneMoves = props => {
         </button>
       ) : (
         <button
+          type="button"
           disabled={props.restrict}
           style={{...text, backgroundColor: 'gray', borderRadius: '5%'}}
           className="playerCard"

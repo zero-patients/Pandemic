@@ -8,6 +8,7 @@ export const Moves = props => {
   }
   return (
     <button
+      type="button"
       disabled={props.restrict}
       style={{...text, backgroundColor: props.color, borderRadius: '5%'}}
       className="playerCard"

@@ -1,5 +1,4 @@
 import React from 'react'
-import {discardPlayerCard} from '../../funcs/utils'
 
 export const PlayerCard = props => {
   const text = {
@@ -16,19 +15,6 @@ export const PlayerCard = props => {
         {props.cardName}
       </h3>
       <img className="playerCardImage" src={props.image} />
-
-      {/* <button
-        onClick={() => {
-          discardPlayerCard(
-            props.playerId,
-            props.playerHand,
-            props.cardName,
-            props.playerDiscard
-          )
-        }}
-      >
-        Play
-      </button> */}
     </div>
   )
 }

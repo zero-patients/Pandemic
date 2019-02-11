@@ -1,7 +1,5 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {Button} from 'semantic-ui-react'
-import db from '../../../server/db'
-import CURRENT_GAME from '../../../secrets'
 
 const flexCenter = {
   display: 'flex',
@@ -10,12 +8,6 @@ const flexCenter = {
 }
 
 export const Header = props => {
-  const playerColors = {
-    player1: 'blue',
-    player2: 'yellow',
-    player3: 'red',
-    player4: 'green'
-  }
   return (
     <div style={{alignItems: 'center'}} className="controllerHeader">
       {props.isTurn === true && props.remainingMoves > 0 ? (

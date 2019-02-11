@@ -8,6 +8,7 @@ export const CDCMoves = props => {
   }
   return (
     <button
+      type="button"
       disabled={props.restrict}
       style={{backgroundColor: props.color, borderRadius: '5%'}}
       className="playerCard"
