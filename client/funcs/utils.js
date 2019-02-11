@@ -51,7 +51,7 @@ const epidemicShuffle = (drawPile, discardPile) => {
   const discardPileCopy = discardPile
   const bottomCard = drawPileCopy.shift()
   discardPileCopy.push(bottomCard)
-  console.log('discard pile copy after pushing bottom card', discardPileCopy)
+
   shuffle(discardPile)
   const newPile = drawPileCopy.concat(discardPile)
 
@@ -88,10 +88,6 @@ const addInfection = async (city, color, c, is, ot) => {
   const newCount = count
 
   if (!didOutbreak) {
-    if (isCured && infectionStatus[cureColor].count === 0) {
-      console.log('This disease has been eradicated')
-    }
-
     if (newCount[infectionColors[color]] >= 3 && outbreakTracker < 8) {
       await outbreak(city, color)
     } else {
@@ -106,6 +102,7 @@ const addInfection = async (city, color, c, is, ot) => {
         {merge: true}
       )
     }
+
     if (infectionStatus[cureColor].count > 24) {
       await game.set(
         {
@@ -114,8 +111,6 @@ const addInfection = async (city, color, c, is, ot) => {
         {merge: true}
       )
     }
-  } else {
-    console.log('No infection added, this city has already had an outbreak')
   }
 }
 

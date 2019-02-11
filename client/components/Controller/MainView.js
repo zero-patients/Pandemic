@@ -69,10 +69,8 @@ class MainView extends Component {
 
     for (let i = 0; i < 8; i++) {
       const playerInfo = await gameData[`player${i % 4 + 1}Info`]
-      console.log(playerInfo)
       const card = shuffledPlayerDeck.pop()
       const hand = await playerInfo.hand
-      console.log(hand)
       await this.game.set(
         {
           [`player${i % 4 + 1}Info`]: {hand: [...hand, card]}
@@ -165,7 +163,6 @@ class MainView extends Component {
 
   drawPlayerCard = async () => {
     const [card] = this.state.playerDeck.slice(-1)
-    console.log('player card', card)
 
     if (card !== undefined) {
       if (card.name.toLowerCase() === 'epidemic') this.executeEpidemic()
@@ -207,7 +204,6 @@ class MainView extends Component {
   }
 
   executeEpidemic = async () => {
-    console.log('EPIDEMIC')
     await this.increaseInfectionRate()
     const bottomCard = await this.drawBottomInfectionCard()
     await this.createEpidemic(bottomCard)
@@ -312,13 +308,10 @@ class MainView extends Component {
   }
 
   turnShouldChange = async playerObj => {
-    console.log('got to turnShouldChange,')
-    //assume currPlayer is the db object player1Info{}
     let remainingActions = playerObj.actions
     let turn = playerObj.isTurn
 
     if (remainingActions === 1 && turn === true) {
-      console.log('got here')
       await this.drawInfectionCard()
       await this.drawInfectionCard()
       await this.drawPlayerCard()
@@ -420,18 +413,15 @@ class MainView extends Component {
 
     this.game.onSnapshot(async doc => {
       const data = await doc.data()
-      // const {cities} = data.cities
       let playerInfo = data[`${this.playerId}Info`]
-      // console.log(playerInfo, 'playerInfo')
       let playerHand = playerInfo.hand
-      // console.log(playerHand, 'playerHand')
       let playerCity = playerInfo.location
       let playerCityInfo = data.cities[playerCity]
       let playerDeck = data.playerDeck
       let playerDiscard = data.playerDiscard
       let playerCityNeighbors = playerCityInfo.neighbors
       let researchStations = data.researchStations
-      // let turnCounter = data.turnCounter
+
       playerCityNeighbors.map(elem => {
         if (data.cities[elem].color === 'black') {
           return 'grey'
@@ -441,6 +431,7 @@ class MainView extends Component {
           return data.cities[elem].color
         }
       })
+
       researchStations.map(elem => {
         if (data.cities[elem].color === 'black') {
           return 'grey'
@@ -450,6 +441,7 @@ class MainView extends Component {
           return data.cities[elem].color
         }
       })
+
       let infectionStatus = data.infectionStatus
       let outbreakTracker = data.outbreakTracker
 
@@ -461,16 +453,10 @@ class MainView extends Component {
         playerHand: playerHand,
         playerDeck: playerDeck,
         playerDiscard: playerDiscard,
-        // playerCityNeighbors: playerCityNeighbors,
         researchStations: researchStations,
-        // neighborCardColors: neighborCardColors,
-        // researchStationCardColors: researchStationCardColors,
         infectionDeck: data.infectionDeck,
-        // infectionDiscard: data.infectionDiscard,
         infectionStatus: infectionStatus,
         outbreakTracker: outbreakTracker
-        // cities,
-        // turnCounter
       })
     })
   }
@@ -557,7 +543,6 @@ class MainView extends Component {
               infectionStatus={this.state.infectionStatus}
               playerInfo={this.state.playerInfo}
               playerId={this.state.playerId}
-              // nextTurn={this.turnShouldChange}
               updateActions={this.updateActions}
             />
           )}
@@ -571,7 +556,6 @@ class MainView extends Component {
             drawInfectionCard={this.drawInfectionCard}
             infectionDeck={this.state.infectionDeck}
             onClick={this.handleViewChange}
-            //temporary
             color={this.state.playerCityInfo.color}
             count={this.state.playerCityInfo.diseases}
             infectionStatus={this.state.infectionStatus}
