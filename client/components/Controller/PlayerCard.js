@@ -6,6 +6,7 @@ export const PlayerCard = props => {
     textShadow: '-1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000',
     padding: '3px'
   }
+
   return (
     <div
       className="playerCardInHand"

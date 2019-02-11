@@ -1,18 +1,5 @@
 import React from 'react'
 import {treatInfection} from '../../funcs/utils' //, updateActions
-// import db from '../../../server/db'
-// import CURRENT_GAME from '../../../secrets'
-
-// const game = db.collection('rooms').doc(CURRENT_GAME)
-
-// const decrementActions = (player, remainingActions) => {
-//   game.set(
-//     {
-//       [player]: {actions: remainingActions - 1}
-//     },
-//     {merge: true}
-//   )
-// }
 
 export const TreatView = props => {
   return (
@@ -32,8 +19,7 @@ export const TreatView = props => {
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          // decrementActions(props.playerId, props.playerInfo.actions)
-          // props.nextTurn(props.playerInfo, `${props.playerId}`)
+
           props.updateActions(props.playerId)
         }}
       >
@@ -54,8 +40,7 @@ export const TreatView = props => {
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          // decrementActions(props.playerId, props.playerInfo.actions)
-          // props.nextTurn(props.playerInfo, `${props.playerId}`)
+
           props.updateActions(props.playerId)
         }}
       >
@@ -77,8 +62,7 @@ export const TreatView = props => {
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          // decrementActions(props.playerId, props.playerInfo.actions)
-          // props.nextTurn(props.playerInfo, `${props.playerId}`)
+
           props.updateActions(props.playerId)
         }}
       >
@@ -99,8 +83,7 @@ export const TreatView = props => {
             props.playerCityInfo.diseases,
             props.infectionStatus
           )
-          // decrementActions(props.playerId, props.playerInfo.actions)
-          // props.nextTurn(props.playerInfo, `${props.playerId}`)
+
           props.updateActions(props.playerId)
         }}
       >

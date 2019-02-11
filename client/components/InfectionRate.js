@@ -22,7 +22,6 @@ class InfectionRate extends Component {
     })
   }
 
-  // for (let i = 0; i < props.epidemicCounter; i++) {
   render() {
     const styles = {
       position: 'absolute',

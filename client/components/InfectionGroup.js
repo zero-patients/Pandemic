@@ -27,7 +27,6 @@ const InfectionGroup = props => {
         </div>
       ) : null}
 
-      {/* temporary until outbreaks are implemented */}
       {count > 3 ? (
         <div
           style={{

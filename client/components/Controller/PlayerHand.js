@@ -11,7 +11,6 @@ export const PlayerHand = props => {
         if (card.type === 'city') {
           return (
             <PlayerCard
-              // className="playerCardInHand"
               key={card.name}
               playerId={props.playerId}
               playerHand={props.playerHand}

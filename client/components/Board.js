@@ -11,7 +11,7 @@ import PlayerCardContainer from './PlayerCardContainer'
 import InfectionRate from './InfectionRate'
 import OutbreakTracker from './OutbreakTracker'
 import StatusBar from './StatusBar'
-import {Button, Header, Image, Modal} from 'semantic-ui-react'
+import {Button, Header, Modal} from 'semantic-ui-react'
 import db from '../../server/db'
 import CURRENT_GAME from '../../secrets'
 
@@ -35,11 +35,6 @@ class Board extends React.Component {
 
   handleClose = () => {
     this.setState({showRules: false})
-  }
-
-  componentDidUpdate() {
-    // console.log('The board was updated')
-    // console.log(this.state.showRules)
   }
 
   show = dimmer => () => this.setState({dimmer, showRules: true})
@@ -70,14 +65,18 @@ class Board extends React.Component {
     let lockOrientationUniversal = arg => {
       if (screen.lockOrientation) {
         screen.lockOrientation(arg)
-      } else if (screen.mozLockOrientation) {
+      }
+
+      if (screen.mozLockOrientation) {
         screen.mozLockOrientation(arg)
-      } else if (screen.msLockOrientation) {
+      }
+
+      if (screen.msLockOrientation) {
         screen.msLockOrientation(arg)
-      } else if (screen.orientation.lock) {
+      }
+
+      if (screen.orientation.lock) {
         screen.orientation.lock(arg)
-      } else {
-        // Do nothing
       }
     }
 
@@ -406,27 +405,6 @@ class Board extends React.Component {
 
             <Modal dimmer="blurring" open={this.state.gameStatus}>
               <Modal.Header>Congratulations! You Won!</Modal.Header>
-              {/* <Modal.Content>
-                <Modal.Description>
-                  <Header>
-                    Pandemic is a cooperative game. The players all win or lose
-                    together
-                  </Header>
-                  <p>The goal is to discover cures for all 4 disieases</p>
-                  <p>The Players lose if:</p>
-                  <ul>
-                    <li>8 outbreaks occur (a worldwide panic happens)</li>
-                    <li>
-                      not enough disease cubes are available when needed (a
-                      disease spreads too much)
-                    </li>
-                    <li>
-                      not enough player cards are left when needed (your team
-                      runs out of time)
-                    </li>
-                  </ul>
-                </Modal.Description>
-              </Modal.Content> */}
             </Modal>
           </div>
         ) : null}
